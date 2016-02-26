@@ -183,6 +183,11 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
 
         /*
+         * phpexcel
+         */
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        /*
          * Has to override the Collective\Html\HtmlServiceProvider form singleton
          */
         App\Providers\MacroServiceProvider::class,
@@ -242,6 +247,11 @@ return [
         'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
         'Html'        => Collective\Html\HtmlFacade::class,
         'Socialite'   => Laravel\Socialite\Facades\Socialite::class,
+
+        /*
+         * phpexcel
+         */
+        'Excel'       => Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
 ];
