@@ -72,14 +72,17 @@
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="tab_2">
-                    <div id="reset_img">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img src="{{ $info->pictures->path }}" alt="{{ $info->title }}" class="img-thumbnail" />
+                    @if(isset($info->pictures))
+                        <div id="reset_img">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img src="{{ $info->pictures->path }}" alt="{{ $info->title }}" class="img-thumbnail" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-
+                        @else
+                        <button type="button" class="btn bg-orange margin">没有设置封面</button>
+                    @endif
                 </div>
                 <!-- /.tab-pane -->
             </div>

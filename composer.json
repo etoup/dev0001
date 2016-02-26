@@ -14,7 +14,8 @@
         "davejamesmiller/laravel-breadcrumbs": "^3.0",
         "hieu-le/active": "~2.0",
         "arcanedev/log-viewer": "~3.5.0",
-        "qiniu/php-sdk": "^7.0"
+        "qiniu/php-sdk": "^7.0",
+        "maatwebsite/excel": "2.1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
