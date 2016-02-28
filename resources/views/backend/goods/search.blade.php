@@ -30,7 +30,7 @@
                 <div class="col-lg-4 col-xs-4">
                     <div class="form-group">
                         {!! Form::label('title', '商品名称') !!}
-                        {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => '填写商品名称']) !!}
+                        {!! Form::text('title', request('title', $default = null), ['class' => 'form-control', 'placeholder' => '填写商品名称']) !!}
                     </div>
                 </div>
                 <div class="col-lg-4 col-xs-4">
@@ -39,7 +39,11 @@
                         <select name="status" class="form-control select2">
                             <option value="" selected="selected">全部</option>
                             @foreach($status as $k => $v)
-                                <option value="{{ $k }}">{{ $v }}</option>
+                                @if($k == request('status'))
+                                    <option value="{{ $k }}" selected>{{ $v }}</option>
+                                    @else
+                                    <option value="{{ $k }}">{{ $v }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -52,7 +56,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" name="date" class="form-control pull-right" id="reservation">
+                            <input type="text" name="date" value="{{ request('date', $default = null) }}" class="form-control pull-right" id="reservation">
                         </div>
                         <!-- /.input group -->
                     </div>
@@ -61,9 +65,9 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            <button type="reset" class="btn btn-warning pull-left">
-                <i class="fa fa-circle-o"></i> 重置
-            </button>
+            <a href="{{ route('admin.goods') }}" class="btn btn-warning pull-left">
+                <i class="fa fa-mail-reply-all"></i> 取消搜索
+            </a>
             <button type="button" class="btn btn-success pull-right" style="margin-left: 5px;">
                 <i class="fa fa-download"></i> 导出
             </button>
@@ -76,12 +80,10 @@
 
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab_1" data-toggle="tab">{{ trans('labels.backend.goods.list') }}</a></li>
+            <li class="active"><a href="#tab_1" data-toggle="tab">{{ trans('labels.backend.goods.search.list') }}</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab_1">
-
-
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>

@@ -39,4 +39,11 @@ trait UserRelationship
     {
         return $this->hasMany(SocialLogin::class);
     }
+
+    /**
+     * @return mixed
+     */
+    public function business(){
+        return $this->belongsTo(config('access.business'));
+    }
 }

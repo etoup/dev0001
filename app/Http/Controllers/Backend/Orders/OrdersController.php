@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Orders;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Od\StoreLoopRequest;
+use App\Http\Requests\Backend\Od\SearchOrderRequest;
 use App\Repositories\Backend\Od\OrdersRepositoryContract;
 
 /**
@@ -13,15 +14,30 @@ use App\Repositories\Backend\Od\OrdersRepositoryContract;
 class OrdersController extends Controller
 {
     protected $orders;
+
     public function __construct(OrdersRepositoryContract $orders){
         $this->orders = $orders;
     }
+
     /**
-     * @return \Illuminate\View\View
+     * @return mixed
      */
     public function index()
     {
-        return view('backend.orders.index')->withOrders($this->orders->getOrdersPaginated(20));
+        return view('backend.orders.index')
+            ->withOrders($this->orders->getOrdersPaginated(20))
+            ->withStatus(collect(config('orders.orders_status'))->toArray());
+    }
+
+    /**
+     * @param SearchOrderRequest $request
+     * @return mixed
+     */
+    public function search(SearchOrderRequest $request)
+    {
+        return view('backend.orders.search')
+            ->withOrders($this->orders->getSearchOrdersPaginated($request->all(),20))
+            ->withStatus(collect(config('orders.orders_status'))->toArray());
     }
 
     /**

@@ -20,6 +20,8 @@ return [
     */
     'role' => App\Models\Access\Role\Role::class,
 
+    'business' => App\Models\Access\User\Business::class,
+
     /*
      * Roles table used by Access to save roles to the database.
      */
@@ -117,4 +119,26 @@ return [
      * Makes it so social logins can not change passwords, etc.
      */
     'socialite_session_name' => 'socialite_provider',
+
+    /*
+     * fields
+     */
+    'fields_search' => [
+        'name'  => [
+            'label' => '用户名',
+            'tags'  => "name like CONCAT('%', ?, '%')"
+        ],
+        'mobile'  => [
+            'label' => '手机号码',
+            'tags'  => "mobile like CONCAT('%', ?, '%')"
+        ],
+        'loop_roles'  => [
+            'label' => '属性',
+            'tags'  => "loop_roles = ?"
+        ],
+        'date'  => [
+            'label' => '消息时间',
+            'tags'  => "created_at between ? and ?"
+        ]
+    ],
 ];

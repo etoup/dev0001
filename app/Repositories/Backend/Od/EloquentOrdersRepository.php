@@ -14,6 +14,25 @@ use App\Models\Ods\Orders;
 class EloquentOrdersRepository implements OrdersRepositoryContract
 {
 
+    protected $fields_search = [
+        'orders_numbers' => [
+            'label' => '订单号',
+            'tags' => "orders_numbers like CONCAT('%', ?, '%')"
+        ],
+        'goods_id'  => [
+            'label' => '商品ID',
+            'tags'  => "goods_id = ?"
+        ],
+        'status'  => [
+            'label' => '订单状态',
+            'tags'  => "status = ?"
+        ],
+        'date'  => [
+            'label' => '发布时间',
+            'tags'  => "created_at between ? and ?"
+        ]
+    ];
+
     /**
      * @param  $id
      * @return mixed
@@ -44,6 +63,39 @@ class EloquentOrdersRepository implements OrdersRepositoryContract
         return $list;
     }
 
+    public function getSearchOrdersPaginated($input, $per_page, $order_by = 'id', $sort = 'desc')
+    {
+        $builder = Orders::with('users','goods','business','users_address')
+            ->orderBy($order_by, $sort);
+
+        if(count($input)){
+            foreach($input as $field => $value){
+                if (empty($value)) {
+                    continue;
+                }
+                if (!isset($this->fields_search[$field])) {
+                    continue;
+                }
+
+                switch($field){
+                    case 'date':
+                        $date = explode('-',$value);
+                        $value = [date('Y-m-d h:i:s',strtotime($date[0])),date('Y-m-d h:i:s',strtotime($date[1]))];
+                        break;
+                    default:
+                        $value = [$value];
+                }
+
+                $search = $this->fields_search[$field];
+                $builder->whereRaw($search['tags'], $value);
+            }
+        }
+
+        $list = $builder->paginate($per_page);
+
+        return $list;
+    }
+
     /**
      * @param $per_page
      * @param int $status
@@ -60,6 +112,11 @@ class EloquentOrdersRepository implements OrdersRepositoryContract
         return $list;
     }
 
+    /**
+     * @param $input
+     * @return bool
+     * @throws GeneralException
+     */
     public function store($input){
         $orders = $this->find($input['id']);
         if (isset($input['status'])) {

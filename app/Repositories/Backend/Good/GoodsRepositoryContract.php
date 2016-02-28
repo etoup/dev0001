@@ -30,7 +30,16 @@ interface GoodsRepositoryContract
      * @param string $sort
      * @return mixed
      */
-    public function getLookGoodsPaginated($per_page, $status = 0, $order_by = 'id', $sort = 'asc');
+    public function getLookGoodsPaginated($per_page, $status = 1, $order_by = 'id', $sort = 'asc');
+
+    /**
+     * @param $input
+     * @param $per_page
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function getSearchGoodsPaginated($input, $per_page, $order_by = 'id', $sort = 'asc');
 
     /**
      * @param  $id

@@ -14,7 +14,9 @@ Route::group([
         Route::get('users/deactivated', 'UserController@deactivated')->name('admin.access.users.deactivated');
         Route::get('users/deleted', 'UserController@deleted')->name('admin.access.users.deleted');
         Route::get('account/confirm/resend/{user_id}', 'UserController@resendConfirmationEmail')->name('admin.account.confirm.resend');
-
+        Route::get('users/business/{id}', 'UserController@business')->name('admin.access.users.business');
+        Route::post('users/edit-business', 'UserController@editBusiness')->name('admin.access.users.edit-business');
+        Route::post('users/search', 'UserController@search')->name('admin.access.users.search');
         /**
          * Specific User
          */

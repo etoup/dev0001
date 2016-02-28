@@ -30,7 +30,7 @@
                         <th>{{ trans('labels.backend.access.users.table.email') }}</th>
                         <th>{{ trans('labels.backend.access.users.table.confirmed') }}</th>
                         <th>{{ trans('labels.backend.access.users.table.roles') }}</th>
-                        <th>{{ trans('labels.backend.access.users.table.other_permissions') }}</th>
+                        <th>{{ trans('labels.backend.access.users.table.attr') }}</th>
                         <th class="visible-lg">{{ trans('labels.backend.access.users.table.created') }}</th>
                         <th class="visible-lg">{{ trans('labels.backend.access.users.table.last_updated') }}</th>
                         <th>{{ trans('labels.general.actions') }}</th>
@@ -54,12 +54,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($user->permissions()->count() > 0)
-                                        @foreach ($user->permissions as $perm)
-                                            {!! $perm->display_name !!}<br/>
-                                        @endforeach
+                                    @if ($user->loop_roles == 10)
+                                        圈主
                                     @else
-                                        {{ trans('labels.general.none') }}
+                                        会员
                                     @endif
                                 </td>
                                 <td class="visible-lg">{!! $user->created_at->diffForHumans() !!}</td>

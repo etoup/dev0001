@@ -22,6 +22,7 @@ return [
                 'delete_permanently' => '删除',
                 'resend_email' => '重新验证邮箱',
                 'restore_user' => '还原用户',
+                'business' => '商家信息'
             ],
         ],
     ],
@@ -35,6 +36,7 @@ return [
             'edit' => '编辑',
             'see'  => '查看详情',
             'update' => '更新',
+            'submit' => '提交',
             'up' => '置顶',
             'noup' => '取消置顶',
             'down' => '下架',

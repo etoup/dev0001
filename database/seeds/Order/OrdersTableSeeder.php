@@ -32,7 +32,7 @@ class OrdersTableSeeder extends Seeder
                 'goods_id'          => 1,
                 'users_address_id'  => 1,
                 'price'             => 100.00,
-                'status'            => 0,
+                'status'            => 1,
                 'business_id'       => 1,
                 'remark'            => '请安全包装好1',
                 'created_at'        => Carbon::now(),

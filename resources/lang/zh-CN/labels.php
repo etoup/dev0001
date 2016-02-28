@@ -119,6 +119,7 @@ return [
                     'no_deactivated' => '没有禁用用户',
                     'no_deleted' => '没有软删除用户',
                     'other_permissions' => '其他权限',
+                    'attr' => '属性',
                     'roles' => '角色',
                     'total' => '共计 :total 条记录',
                 ],
@@ -159,7 +160,10 @@ return [
             'main' => '商品管理',
             'list' => '商品列表',
             'look' => '商品审核',
-            'look_list' => '待审列表'
+            'look_list' => '待审列表',
+            'search' => [
+                'list' => '商品搜索列表'
+            ]
         ],
         'orders' => [
             'main' => '订单管理',

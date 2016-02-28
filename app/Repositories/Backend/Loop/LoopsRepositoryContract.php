@@ -25,6 +25,12 @@ interface LoopsRepositoryContract
      * @param $input
      * @return mixed
      */
+    public function getInfoByInput($input);
+
+    /**
+     * @param $input
+     * @return mixed
+     */
     public function store($input);
 
     /**
@@ -64,6 +70,13 @@ interface LoopsRepositoryContract
     public function getLoopsPaginated($per_page);
 
     /**
+     * @param $input
+     * @param $per_page
+     * @return mixed
+     */
+    public function getSearchLoopsPaginated($input,$per_page);
+
+    /**
      * @param $id
      * @param $per_page
      * @param string $order_by
@@ -71,6 +84,15 @@ interface LoopsRepositoryContract
      * @return mixed
      */
     public function getMsgsPaginated($id, $per_page, $order_by = 'id', $sort = 'asc');
+
+    /**
+     * @param $input
+     * @param $per_page
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function getSearchMsgsPaginated($input, $per_page, $order_by = 'id', $sort = 'asc');
 
     /**
      * @param int $expires
@@ -83,6 +105,14 @@ interface LoopsRepositoryContract
      * @return mixed
      */
     public function destroy($id);
+
+    /**
+     * @param $input
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function export($input, $order_by = 'id', $sort = 'desc');
 
     /**
      * @param $id

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->boolean('confirmed')->default(config('access.users.confirm_email') ? false : true);
             $table->rememberToken();
             $table->tinyInteger('loop_roles',false,true)->default(0);//角色 0=用户；10=圈主
+            $table->integer('business_id',false,true)->default(0);//商家信息ID
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default('0000-00-00 00:00');
             $table->softDeletes();

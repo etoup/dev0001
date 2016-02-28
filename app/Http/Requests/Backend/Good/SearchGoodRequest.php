@@ -8,7 +8,7 @@ use App\Http\Requests\Request;
  * Class StoreLoopRequest
  * @package App\Http\Requests\Backend\Good
  */
-class StoreGoodRequest extends Request
+class SearchGoodRequest extends Request
 {
 
     /**
@@ -29,12 +29,7 @@ class StoreGoodRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|max:20',
-            'profiles' => 'required|max:34',
-            'price' => 'required|numeric',
-            'numbers' => 'required|integer',
-            'stocks' => 'required|integer',
-            'remark' => 'max:34',
+
         ];
     }
 }

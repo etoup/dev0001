@@ -38,7 +38,7 @@ trait GoodsAttribute
      * @return string
      */
     public function getDownButtonAttribute(){
-        if ($this->status == 1) {
+        if ($this->status == 10) {
             if (access()->allow('edit-users')) {
                 return '<a href="' . route('admin.goods.down', $this->id) . '" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#down-' . $this->id . '"><i class="fa fa-hand-o-down" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.general.crud.down') . '"></i></a> ';
             }
@@ -62,7 +62,7 @@ trait GoodsAttribute
      * @return string
      */
     public function getLookOkButtonAttribute(){
-        if ($this->status == 0) {
+        if ($this->status == 1) {
             if (access()->allow('edit-users')) {
                 return '<a href="' . route('admin.goods.look-ok', $this->id) . '" name="look-ok" class="btn btn-xs btn-primary"><i class="fa fa-check" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.general.look.ok') . '"></i></a> ';
             }
@@ -75,7 +75,7 @@ trait GoodsAttribute
      */
     public function getLookNoButtonAttribute()
     {
-        if ($this->status == 0) {
+        if ($this->status == 1) {
             if (access()->allow('delete-users')) {
                 return '<a href="' . route('admin.goods.look-no', $this->id) . '" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#look-no-' . $this->id . '"><i class="fa fa-close" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.general.look.no') . '"></i></a>';
             }

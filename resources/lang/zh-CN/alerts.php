@@ -41,6 +41,7 @@ return [
             'restored' => '用户已成功恢复',
             'updated' => '用户信息成功更新',
             'updated_password' => "用户密码成功更新",
+            'edit-business-ok' => '成功操作商家信息'
         ],
 
         'loop' => [

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Backend\Loop\LoopsRepositoryContract;
 use App\Http\Requests\Backend\Loop\StoreLoopRequest;
 use App\Http\Requests\Backend\Loop\UpdateLoopRequest;
+use App\Http\Requests\Backend\Loop\SearchLoopRequest;
+use App\Http\Requests\Backend\Loop\ExportLoopRequest;
+use App\Http\Requests\Backend\Loop\SearchMsgRequest;
 
 
 /**
@@ -16,6 +19,11 @@ class LoopController extends Controller
 {
     protected $loop;
 
+
+
+    /**
+     * @param LoopsRepositoryContract $loop
+     */
     public function __construct(LoopsRepositoryContract $loop){
         $this->loop = $loop;
     }
@@ -29,19 +37,20 @@ class LoopController extends Controller
         return view('backend.loop.index')
             ->withLiveness($this->loop->cacheLiveness(config('loop.expires')))
             ->withLoops($this->loop->getLoopsPaginated(20))
-            ->withTags(collect($this->loop->getTagsArray())->prepend('全部')->toArray());
+            ->withTags(collect($this->loop->getTagsArray())->toArray());
     }
 
     /**
+     * @param SearchLoopRequest $request
      * @return mixed
      */
-    public function search()
+    public function search(SearchLoopRequest $request)
     {
 //        dd(collect($this->loop->getTagsArray())->prepend('全部')->toArray());
-        return view('backend.loop.index')
+        return view('backend.loop.search')
             ->withLiveness($this->loop->cacheLiveness(config('loop.expires')))
-            ->withLoops($this->loop->getLoopsPaginated(20))
-            ->withTags(collect($this->loop->getTagsArray())->prepend('全部')->toArray());
+            ->withLoops($this->loop->getSearchLoopsPaginated($request->all(),20))
+            ->withTags(collect($this->loop->getTagsArray())->toArray());
     }
 
     /**
@@ -95,13 +104,46 @@ class LoopController extends Controller
         return redirect()->back()->withFlashSuccess(trans('alerts.backend.loop.destroy-ok'));
     }
 
+    public function export(ExportLoopRequest $request){
+        $this->loop->export($request->all());
+    }
+
     /**
      * @param $id
      * @return mixed
      */
     public function msgList($id){
-        $this->loop->getMsgsPaginated($id,20);
-        return view('backend.loop.msg-list')->withInfo($this->loop->getInfo($id))->withMsgs($this->loop->getMsgsPaginated($id,20));
+        $list = collect($this->loop->getAuthorityList(1))->toArray();
+        $authority = [];
+        if(count($list)){
+            foreach($list as $val){
+                $authority[$val['id']] = $val['title'];
+            }
+        }
+
+        return view('backend.loop.msg-list')
+            ->withInfo($this->loop->getInfo($id))
+            ->withMsgs($this->loop->getMsgsPaginated($id,20))
+            ->withAuthority($authority);
+    }
+
+    /**
+     * @param SearchMsgRequest $request
+     * @return mixed
+     */
+    public function msgSearch(SearchMsgRequest $request){
+        $list = collect($this->loop->getAuthorityList(1))->toArray();
+        $authority = [];
+        if(count($list)){
+            foreach($list as $val){
+                $authority[$val['id']] = $val['title'];
+            }
+        }
+
+        return view('backend.loop.msg-search')
+            ->withInfo($this->loop->getInfoByInput($request->all()))
+            ->withMsgs($this->loop->getSearchMsgsPaginated($request->all(),20))
+            ->withAuthority($authority);
     }
 
     /**

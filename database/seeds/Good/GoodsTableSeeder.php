@@ -35,7 +35,7 @@ class GoodsTableSeeder extends Seeder
                 'price'             => 100.00,
                 'numbers'           => 100,
                 'stocks'            => 100,
-                'status'            => 1,//上架
+                'status'            => 10,//上架
                 'name'              => 'admin',
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
@@ -49,7 +49,7 @@ class GoodsTableSeeder extends Seeder
                 'price'             => 50.00,
                 'numbers'           => 10,
                 'stocks'            => 10,
-                'status'            => 0,//待审
+                'status'            => 1,//待审
                 'name'              => 'admin',
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),

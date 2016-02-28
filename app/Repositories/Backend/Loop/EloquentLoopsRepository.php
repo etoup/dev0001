@@ -14,6 +14,7 @@ use App\Models\Loop\LoopsUsers;
 use App\Models\Loop\LoopsMessages;
 use App\Models\Pictures\Pictures;
 use App\Exceptions\GeneralException;
+use Maatwebsite\Excel\Facades\Excel;
 
 /**
  * Class EloquentLoopTagsRepository
@@ -21,6 +22,25 @@ use App\Exceptions\GeneralException;
  */
 class EloquentLoopsRepository implements LoopsRepositoryContract
 {
+
+    protected $fields_search = [
+        'title' => [
+            'label' => '圈子名称',
+            'tags' => "title like CONCAT('%', ?, '%')"
+        ],
+        'name' => [
+            'label' => '圈主用户名',
+            'tags' => "name like CONCAT('%', ?, '%')"
+        ],
+        'loops_tags_id'  => [
+            'label' => '圈主用户名',
+            'tags'  => "loops_tags_id = ?"
+        ],
+        'date'  => [
+            'label' => '最后消息时间',
+            'tags'  => "messaged_at between ? and ?"
+        ]
+    ];
 
     /**
      * @param  $id
@@ -37,6 +57,16 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      */
     public function getInfo($id){
         $info = Loops::with('users','loops_tags' , 'pictures')->find($id);
+        return $info;
+    }
+
+    /**
+     * @param $input
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null
+     */
+    public function getInfoByInput($input){
+
+        $info = Loops::with('users','loops_tags' , 'pictures')->find($input['id']);
         return $info;
     }
 
@@ -246,6 +276,65 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
     }
 
     /**
+     * @param $input
+     * @param $per_page
+     * @return mixed
+     */
+    public function getSearchLoopsPaginated($input,$per_page){
+
+        $builder = Loops::with('users','loops_tags')
+            ->orderBy('types')
+            ->orderBy('sort')
+            ->orderBy('created_at','desc');
+
+        if(count($input)){
+            foreach($input as $field => $value){
+                if (empty($value)) {
+                    continue;
+                }
+                if (!isset($this->fields_search[$field])) {
+                    continue;
+                }
+
+                switch($field){
+                    case 'date':
+                        $date = explode('-',$value);
+                        $value = [date('Y-m-d h:i:s',strtotime($date[0])),date('Y-m-d h:i:s',strtotime($date[1]))];
+                        break;
+                    default:
+                        $value = [$value];
+                }
+
+                $search = $this->fields_search[$field];
+                $builder->whereRaw($search['tags'], $value);
+            }
+
+
+//            if(isset($input['name'])){
+//                $list = User::where('name','like','%'.$input['name'].'%')->lists('id');
+//
+//                $builder->whereIn('users_id', collect($list)->flatten()->toArray());
+//            }
+        }
+        $list = $builder->paginate($per_page);
+
+        if(!empty($list)){
+            foreach($list as $k => $v){
+                $where = ['loops_id'=> $v->id];
+                $diaries = LoopsDiaries::where($where)->count();
+                $members = LoopsUsers::where(['loops_id'=> $v->id,'types'=>0])->count();
+                $last_msg_time = LoopsMessages::where($where)->orderBy('id','desc')->pluck('created_at')->first();
+                $list[$k]['diaries'] = $diaries;
+                $list[$k]['members'] = $members;
+                $list[$k]['last_msg_time'] = $last_msg_time;
+            }
+        }
+
+        //dd($list);
+        return $list;
+    }
+
+    /**
      * @param $id
      * @param $per_page
      * @param string $order_by
@@ -265,8 +354,137 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
                     ->get();
             }
         }
-//        dd($list);
         return $list;
+    }
+
+    /**
+     * @param $input
+     * @param $per_page
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function getSearchMsgsPaginated($input, $per_page, $order_by = 'id', $sort = 'desc'){
+
+        $builder = LoopsMessages::where('loops_id',$input['id'])
+            ->orderBy($order_by, $sort)
+            ->groupBy('date_node');
+
+        if(count($input)){
+            $fields_search = config('loop.fields_search_msg');
+
+            foreach($input as $field => $value){
+                if (empty($value)) {
+                    continue;
+                }
+                if (!isset($fields_search[$field])) {
+                    continue;
+                }
+
+                switch($field){
+                    case 'date':
+                        $date = explode('-',$value);
+                        $value = [date('Y-m-d h:i:s',strtotime($date[0])),date('Y-m-d h:i:s',strtotime($date[1]))];
+                        break;
+                    default:
+                        $value = [$value];
+                }
+
+                $search = $fields_search[$field];
+
+                $builder->whereRaw($search['tags'], $value);
+            }
+        }
+
+        $list = $builder->paginate($per_page);
+
+        if(count($list)){
+            foreach($list as $k => $v){
+                $list[$k]['li'] = LoopsMessages::with('users','loops_authority')
+                    ->where(['loops_id'=>$input['id'],'loops_authority_id'=>$input['loops_authority_id'],'date_node'=>$v->date_node])
+                    ->orderBy($order_by, $sort)
+                    ->get();
+            }
+        }
+
+        return $list;
+    }
+
+
+    public function export($input,$order_by = 'id', $sort = 'desc'){
+
+        $builder = Loops::with('users','loops_tags')
+            ->orderBy('types')
+            ->orderBy('sort')
+            ->orderBy('created_at','desc');
+
+        if(count($input)){
+            foreach($input as $field => $value){
+                if (empty($value)) {
+                    continue;
+                }
+                if (!isset($this->fields_search[$field])) {
+                    continue;
+                }
+
+                switch($field){
+                    case 'date':
+                        $date = explode('-',$value);
+                        $value = [date('Y-m-d h:i:s',strtotime($date[0])),date('Y-m-d h:i:s',strtotime($date[1]))];
+                        break;
+                    default:
+                        $value = [$value];
+                }
+
+                $search = $this->fields_search[$field];
+                $builder->whereRaw($search['tags'], $value);
+            }
+        }
+        $list = $builder->get();
+
+        if(!empty($list)){
+            foreach($list as $k => $v){
+                $where = ['loops_id'=> $v->id];
+                $diaries = LoopsDiaries::where($where)->count();
+                $members = LoopsUsers::where(['loops_id'=> $v->id,'types'=>0])->count();
+                $last_msg_time = LoopsMessages::where($where)->orderBy('id','desc')->pluck('created_at')->first();
+                $list[$k]['diaries'] = $diaries;
+                $list[$k]['members'] = $members;
+                $list[$k]['last_msg_time'] = $last_msg_time;
+            }
+        }
+
+        $cellData = collect($list)->toArray();
+
+        if(count($cellData)){
+            foreach($cellData as $k => $v){
+                $cellData[$k] = [
+                    '圈主ID' => $v['id'],
+                    '圈主' => $v['users']['name'],
+                    '日记数量' => $v['diaries']?$v['diaries']:'NULL',
+                    '用户数量' => $v['members']?$v['members']:'NULL',
+                    '活跃度' => $v['liveness']?$v['liveness']:0.00,
+                    '最后消息时间' => $v['last_msg_time'],
+                    '创建时间' => $v['created_at'],
+                    '类别名称' => $v['loops_tags']['title']?$v['loops_tags']['title']:'NULL'
+                ];
+            }
+        }
+
+//        Excel::create(Carbon::now(),function($excel) use ($cellData){
+//            $excel->sheet('score', function($sheet) use ($cellData){
+//                $sheet->rows($cellData);
+//            });
+//        })->store('xls');
+
+        $file_name = 'Loop-'.Carbon::now();
+
+        Excel::create($file_name,function($excel) use ($cellData){
+            $excel->sheet('圈子列表', function($sheet) use ($cellData){
+                $sheet->fromArray($cellData);
+            });
+        })->store('xls')->export('xls');
+
     }
 
     /**

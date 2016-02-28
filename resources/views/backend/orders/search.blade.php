@@ -30,13 +30,13 @@
                 <div class="col-lg-3 col-xs-3">
                     <div class="form-group">
                         {!! Form::label('orders_numbers', '订单号') !!}
-                        {!! Form::text('orders_numbers', null, ['class' => 'form-control', 'placeholder' => '填写订单号']) !!}
+                        {!! Form::text('orders_numbers', request('orders_numbers', $default = null), ['class' => 'form-control', 'placeholder' => '填写订单号']) !!}
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-3">
                     <div class="form-group">
                         {!! Form::label('goods_id', '商品ID') !!}
-                        {!! Form::text('goods_id', null, ['class' => 'form-control', 'placeholder' => '填写商品ID']) !!}
+                        {!! Form::text('goods_id', request('goods_id', $default = null), ['class' => 'form-control', 'placeholder' => '填写商品ID']) !!}
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-3">
@@ -45,7 +45,11 @@
                         <select name="status" class="form-control select2">
                             <option value="" selected="selected">全部</option>
                             @foreach($status as $k => $v)
-                                <option value="{{ $k }}">{{ $v }}</option>
+                                @if($k == request('status'))
+                                    <option value="{{ $k }}" selected>{{ $v }}</option>
+                                @else
+                                    <option value="{{ $k }}">{{ $v }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -58,7 +62,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" name="date" class="form-control pull-right" id="reservation">
+                            <input type="text" name="date" value="{{ request('date', $default = null) }}" class="form-control pull-right" id="reservation">
                         </div>
                         <!-- /.input group -->
                     </div>
@@ -67,9 +71,9 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            <button type="reset" class="btn btn-warning pull-left">
-                <i class="fa fa-circle-o"></i> 重置
-            </button>
+            <a href="{{ route('admin.orders') }}" class="btn btn-warning pull-left">
+                <i class="fa fa-mail-reply-all"></i> 取消搜索
+            </a>
             <button type="button" class="btn btn-success pull-right" style="margin-left: 5px;">
                 <i class="fa fa-download"></i> 导出
             </button>

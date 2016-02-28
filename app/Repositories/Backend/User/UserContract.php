@@ -25,6 +25,16 @@ interface UserContract
     public function getUsersPaginated($per_page, $status = 1, $order_by = 'id', $sort = 'asc');
 
     /**
+     * @param $input
+     * @param $per_page
+     * @param int $status
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function getSearchUsersPaginated($input, $per_page, $status = 1, $order_by = 'id', $sort = 'asc');
+
+    /**
      * @param  $per_page
      * @return \Illuminate\Pagination\Paginator
      */
@@ -85,4 +95,10 @@ interface UserContract
      * @return mixed
      */
     public function updatePassword($id, $input);
+
+    /**
+     * @param $input
+     * @return mixed
+     */
+    public function editBusiness($input);
 }

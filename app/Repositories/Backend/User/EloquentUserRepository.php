@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Backend\User;
 
+use App\Models\Access\User\Business;
 use App\Models\Access\User\User;
 use App\Exceptions\GeneralException;
 use App\Repositories\Backend\Role\RoleRepositoryContract;
@@ -46,7 +47,7 @@ class EloquentUserRepository implements UserContract
     public function findOrThrowException($id, $withRoles = false)
     {
         if ($withRoles) {
-            $user = User::with('roles')->withTrashed()->find($id);
+            $user = User::with('roles','business')->withTrashed()->find($id);
         } else {
             $user = User::withTrashed()->find($id);
         }
@@ -70,6 +71,50 @@ class EloquentUserRepository implements UserContract
         return User::where('status', $status)
             ->orderBy($order_by, $sort)
             ->paginate($per_page);
+    }
+
+    /**
+     * @param $input
+     * @param $per_page
+     * @param int $status
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function getSearchUsersPaginated($input, $per_page, $status = 1, $order_by = 'id', $sort = 'asc')
+    {
+        $builder = User::where('status', $status)
+            ->orderBy($order_by, $sort);
+
+        if(count($input)){
+            $fields_search = config('access.fields_search');
+
+            foreach($input as $field => $value){
+                if (empty($value)) {
+                    continue;
+                }
+                if (!isset($fields_search[$field])) {
+                    continue;
+                }
+
+                switch($field){
+                    case 'date':
+                        $date = explode('-',$value);
+                        $value = [date('Y-m-d h:i:s',strtotime($date[0])),date('Y-m-d h:i:s',strtotime($date[1]))];
+                        break;
+                    default:
+                        $value = [$value];
+                }
+
+                $search = $fields_search[$field];
+
+                $builder->whereRaw($search['tags'], $value);
+            }
+        }
+
+        $list = $builder->paginate($per_page);
+
+        return $list;
     }
 
     /**
@@ -124,6 +169,27 @@ class EloquentUserRepository implements UserContract
         }
 
         throw new GeneralException(trans('exceptions.backend.access.users.create_error'));
+    }
+
+    /**
+     * @param $input
+     * @return bool
+     */
+    public function editBusiness($input){
+        $business = isset($input['id']) ? Business::find($input['id']) : new Business;
+        $business->users_id = $input['users_id'];
+        $business->business_name = $input['business_name'];
+        $business->business_mobile = $input['business_mobile'];
+        $business->business_card = $input['business_card'];
+        $business->business_card_bank = $input['business_card_bank'];
+        $business->save();
+        $business_id = $business->id;
+
+        $user = User::find($input['users_id']);
+        $user->business_id = $business_id;
+        $user->save();
+
+        return true;
     }
 
     /**

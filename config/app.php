@@ -251,7 +251,7 @@ return [
         /*
          * phpexcel
          */
-        'Excel'       => Maatwebsite\Excel\ExcelServiceProvider::class,
+        'Excel'       => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

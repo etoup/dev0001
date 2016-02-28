@@ -31,19 +31,19 @@
                 <div class="col-lg-3 col-xs-3">
                     <div class="form-group">
                         {!! Form::label('name', '用户名') !!}
-                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => '填写用户名']) !!}
+                        {!! Form::text('name', request('name', $default = null), ['class' => 'form-control', 'placeholder' => '填写用户名']) !!}
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-3">
                     <div class="form-group">
                         {!! Form::label('mobile', '手机号码') !!}
-                        {!! Form::text('mobile', null, ['class' => 'form-control', 'placeholder' => '填写手机号码']) !!}
+                        {!! Form::text('mobile', request('mobile', $default = null), ['class' => 'form-control', 'placeholder' => '填写手机号码']) !!}
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-3">
                     <div class="form-group">
                         {!! Form::label('loop_roles', '属性') !!}
-                        {!! Form::select('loop_roles', [''=>'全部','10'=>'圈主'], null, ['class'=>'form-control select2']) !!}
+                        {!! Form::select('loop_roles', [''=>'全部','10'=>'圈主'], request('loop_roles', $default = null), ['class'=>'form-control select2']) !!}
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-3">
@@ -54,7 +54,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" name="date" class="form-control pull-right" id="reservation">
+                            <input type="text" name="date" value="{{ request('date', $default = null) }}" class="form-control pull-right" id="reservation">
                         </div>
                         <!-- /.input group -->
                     </div>
@@ -63,9 +63,9 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            <button type="reset" class="btn btn-warning pull-left">
-                <i class="fa fa-circle-o"></i> 重置
-            </button>
+            <a href="{{ route('admin.access.users.index') }}" class="btn btn-warning pull-left">
+                <i class="fa fa-mail-reply-all"></i> 取消搜索
+            </a>
             <button type="button" class="btn btn-success pull-right" style="margin-left: 5px;">
                 <i class="fa fa-download"></i> 导出
             </button>
@@ -128,13 +128,6 @@
                             <td class="visible-lg">{!! $user->updated_at->diffForHumans() !!}</td>
                             <td>{!! $user->action_buttons !!}</td>
                         </tr>
-                        <div class="modal fade" id="business-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                            <div class="modal-dialog modal-sm">
-                                <div class="modal-content">
-
-                                </div>
-                            </div>
-                        </div>
                     @endforeach
                     </tbody>
                 </table>

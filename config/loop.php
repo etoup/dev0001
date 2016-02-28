@@ -22,4 +22,18 @@ return [
     'loops_authorith_types' => ['目录','功能'],
 
     'expires' => 5,
+
+    /*
+     * fields
+     */
+    'fields_search_msg' => [
+        'loops_authority_id'  => [
+            'label' => '状态',
+            'tags'  => "loops_authority_id = ?"
+        ],
+        'date'  => [
+            'label' => '消息时间',
+            'tags'  => "created_at between ? and ?"
+        ]
+    ],
 ];

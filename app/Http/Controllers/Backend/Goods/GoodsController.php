@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Goods;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Good\DownGoodRequest;
 use App\Http\Requests\Backend\Good\StoreGoodRequest;
+use App\Http\Requests\Backend\Good\SearchGoodRequest;
 use App\Http\Requests\Backend\Good\LookGoodRequest;
 use App\Repositories\Backend\Good\GoodsRepositoryContract;
 
@@ -25,7 +26,20 @@ class GoodsController extends Controller
      */
     public function index()
     {
-        return view('backend.goods.index')->withGoods($this->goods->getGoodsPaginated(20));
+        return view('backend.goods.index')
+            ->withGoods($this->goods->getGoodsPaginated(20))
+            ->withStatus(collect(config('goods.goods_status'))->toArray());
+    }
+
+    /**
+     * @param SearchGoodRequest $request
+     * @return mixed
+     */
+    public function search(SearchGoodRequest $request){
+//        dd($this->goods);
+        return view('backend.goods.search')
+            ->withGoods($this->goods->getSearchGoodsPaginated($request->all(),20))
+            ->withStatus(collect(config('goods.goods_status'))->toArray());
     }
 
     /**
@@ -74,7 +88,7 @@ class GoodsController extends Controller
      * @return mixed
      */
     public function lookOk($id){
-        $this->goods->lookOk($id,1);
+        $this->goods->lookOk($id,10);
         return redirect()->back()->withFlashSuccess(trans('alerts.backend.goods.look-ok'));
     }
 

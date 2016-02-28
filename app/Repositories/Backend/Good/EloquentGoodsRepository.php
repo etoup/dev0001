@@ -13,6 +13,21 @@ use App\Models\Goods\Goods;
 class EloquentGoodsRepository implements GoodsRepositoryContract
 {
 
+    protected $fields_search = [
+        'title' => [
+            'label' => '商品名称',
+            'tags' => "title like CONCAT('%', ?, '%')"
+        ],
+        'status'  => [
+            'label' => '商品状态',
+            'tags'  => "status = ?"
+        ],
+        'date'  => [
+            'label' => '发布时间',
+            'tags'  => "created_at between ? and ?"
+        ]
+    ];
+
     /**
      * @param  $id
      * @return mixed
@@ -21,8 +36,6 @@ class EloquentGoodsRepository implements GoodsRepositoryContract
     {
         return Goods::find($id);
     }
-
-
 
     /**
      * @param  $per_page
@@ -46,11 +59,52 @@ class EloquentGoodsRepository implements GoodsRepositoryContract
      * @param string $sort
      * @return mixed
      */
-    public function getLookGoodsPaginated($per_page, $status = 0, $order_by = 'id', $sort = 'asc'){
+    public function getLookGoodsPaginated($per_page, $status = 1, $order_by = 'id', $sort = 'asc'){
         $list = Goods::with('users')
             ->where('status',$status)
             ->orderBy($order_by, $sort)
             ->paginate($per_page);
+//        dd($list);
+        return $list;
+    }
+
+    /**
+     * @param $input
+     * @param $per_page
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function getSearchGoodsPaginated($input, $per_page, $order_by = 'id', $sort = 'desc')
+    {
+
+        $builder = Goods::with('users')
+            ->orderBy($order_by, $sort);
+
+        if(count($input)){
+            foreach($input as $field => $value){
+                if (empty($value)) {
+                    continue;
+                }
+                if (!isset($this->fields_search[$field])) {
+                    continue;
+                }
+
+                switch($field){
+                    case 'date':
+                        $date = explode('-',$value);
+                        $value = [date('Y-m-d h:i:s',strtotime($date[0])),date('Y-m-d h:i:s',strtotime($date[1]))];
+                        break;
+                    default:
+                        $value = [$value];
+                }
+
+                $search = $this->fields_search[$field];
+                $builder->whereRaw($search['tags'], $value);
+            }
+        }
+
+        $list = $builder->paginate($per_page);
 //        dd($list);
         return $list;
     }
@@ -76,7 +130,7 @@ class EloquentGoodsRepository implements GoodsRepositoryContract
      */
     public function doDown($input){
         $goods = $this->find($input['id']);
-        if($goods->status == 1){
+        if($goods->status == 10){
             $goods->status = -1;
             $goods->remark = $input['remark'];
             $goods->save();

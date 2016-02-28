@@ -91,7 +91,7 @@ trait UserAttribute
     public function getChangePasswordButtonAttribute()
     {
         if (access()->allow('change-user-password')) {
-            return '<a href="' . route('admin.access.user.change-password', $this->id) . '" class="btn btn-xs btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.backend.access.users.change_password') . '"></i></a>';
+            return '<a href="' . route('admin.access.user.change-password', $this->id) . '" class="btn btn-xs btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.backend.access.users.change_password') . '"></i></a> ';
         }
 
         return '';
@@ -145,9 +145,22 @@ trait UserAttribute
     public function getDeleteButtonAttribute()
     {
         if (access()->allow('delete-users')) {
-            return '<a href="' . route('admin.access.users.destroy', $this->id) . '" data-method="delete" class="btn btn-xs btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.general.crud.delete') . '"></i></a>';
+            return '<a href="' . route('admin.access.users.destroy', $this->id) . '" data-method="delete" class="btn btn-xs btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.general.crud.delete') . '"></i></a> ';
         }
 
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getBusinessButtonAttribute()
+    {
+        if ($this->loop_roles == 10) {
+            if (access()->allow('delete-users')) {
+                return '<a href="' . route('admin.access.users.business', $this->id) . '" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#business-' . $this->id . '"><i class="fa fa-credit-card" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.backend.access.users.business') . '"></i></a> ';
+            }
+        }
         return '';
     }
 
@@ -157,6 +170,7 @@ trait UserAttribute
     public function getActionButtonsAttribute()
     {
         return $this->getEditButtonAttribute() .
+        $this->getBusinessButtonAttribute() .
         $this->getChangePasswordButtonAttribute() . ' ' .
         $this->getStatusButtonAttribute() .
         $this->getConfirmedButtonAttribute() .

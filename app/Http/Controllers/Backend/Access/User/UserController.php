@@ -7,6 +7,8 @@ use App\Repositories\Backend\User\UserContract;
 use App\Repositories\Backend\Role\RoleRepositoryContract;
 use App\Http\Requests\Backend\Access\User\CreateUserRequest;
 use App\Http\Requests\Backend\Access\User\StoreUserRequest;
+use App\Http\Requests\Backend\Access\User\EditBusinessRequest;
+use App\Http\Requests\Backend\Access\User\SearchUserRequest;
 use App\Http\Requests\Backend\Access\User\EditUserRequest;
 use App\Http\Requests\Backend\Access\User\MarkUserRequest;
 use App\Http\Requests\Backend\Access\User\UpdateUserRequest;
@@ -62,6 +64,28 @@ class UserController extends Controller
     {
         return view('backend.access.index')
             ->withUsers($this->users->getUsersPaginated(config('access.users.default_per_page'), 1));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function search(SearchUserRequest $request)
+    {
+        return view('backend.access.search')
+            ->withUsers($this->users->getSearchUsersPaginated($request->all(), config('access.users.default_per_page'), 1));
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function business($id){
+        return view('backend.access.business')->withInfo($this->users->findOrThrowException($id,true));
+    }
+
+    public function editBusiness(EditBusinessRequest $request){
+        $this->users->editBusiness($request->all());
+        return redirect()->back()->withFlashSuccess(trans('alerts.backend.users.edit-business-ok'));
     }
 
     /**
