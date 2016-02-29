@@ -2,8 +2,10 @@
 
 namespace App\Repositories\Backend\Good;
 
+use Carbon\Carbon;
 use App\Exceptions\GeneralException;
 use App\Models\Goods\Goods;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 /**
@@ -105,8 +107,71 @@ class EloquentGoodsRepository implements GoodsRepositoryContract
         }
 
         $list = $builder->paginate($per_page);
-//        dd($list);
         return $list;
+    }
+
+    /**
+     * @param $input
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function export($input, $order_by = 'id', $sort = 'desc')
+    {
+
+        $builder = Goods::with('users')
+            ->orderBy($order_by, $sort);
+
+        if(count($input)){
+            foreach($input as $field => $value){
+                if (empty($value)) {
+                    continue;
+                }
+                if (!isset($this->fields_search[$field])) {
+                    continue;
+                }
+
+                switch($field){
+                    case 'date':
+                        $date = explode('-',$value);
+                        $value = [date('Y-m-d h:i:s',strtotime($date[0])),date('Y-m-d h:i:s',strtotime($date[1]))];
+                        break;
+                    default:
+                        $value = [$value];
+                }
+
+                $search = $this->fields_search[$field];
+                $builder->whereRaw($search['tags'], $value);
+            }
+        }
+
+        $list = $builder->get();
+
+        $cellData = collect($list)->toArray();
+        if(count($cellData)){
+            foreach($cellData as $k => $v){
+                $cellData[$k] = [
+                    '商品ID' => $v['id'],
+                    '商品名称' => $v['title'],
+                    '商品介绍' => $v['profiles']?$v['profiles']:'NULL',
+                    '价格' => $v['price']?$v['price']:0.00,
+                    '数量' => $v['numbers']?$v['numbers']:'0',
+                    '库存' => $v['stocks']?$v['stocks']:'0',
+                    '状态' => config('goods.goods_status')[$v['status']],
+                    '卖家' => $v['users']['name'],
+                    '审核' => $v['name']?$v['name']:'NULL',
+                    '发布时间' => $v['created_at']
+                ];
+            }
+        }
+
+        $file_name = 'Goods-'.Carbon::now();
+
+        Excel::create($file_name,function($excel) use ($cellData){
+            $excel->sheet('商品列表', function($sheet) use ($cellData){
+                $sheet->fromArray($cellData);
+            });
+        })->store('xls')->export('xls');
     }
 
     /**

@@ -6,6 +6,7 @@
 Route::group(['namespace' => 'Goods'], function() {
     Route::get('goods', 'GoodsController@index')->name('admin.goods');
     Route::post('goods/search', 'GoodsController@search')->name('admin.goods.search');
+    Route::post('goods/export', 'GoodsController@export')->name('admin.goods.export');
     Route::get('goods/look', 'GoodsController@look')->name('admin.goods.look');
     Route::get('goods/edit/{id}', 'GoodsController@edit')->name('admin.goods.edit');
     Route::post('goods/store', 'GoodsController@store')->name('admin.goods.store');

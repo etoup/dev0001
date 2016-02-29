@@ -9,6 +9,7 @@ use App\Http\Requests\Backend\Access\User\CreateUserRequest;
 use App\Http\Requests\Backend\Access\User\StoreUserRequest;
 use App\Http\Requests\Backend\Access\User\EditBusinessRequest;
 use App\Http\Requests\Backend\Access\User\SearchUserRequest;
+use App\Http\Requests\Backend\Access\User\ExportUserRequest;
 use App\Http\Requests\Backend\Access\User\EditUserRequest;
 use App\Http\Requests\Backend\Access\User\MarkUserRequest;
 use App\Http\Requests\Backend\Access\User\UpdateUserRequest;
@@ -20,6 +21,7 @@ use App\Repositories\Backend\Permission\PermissionRepositoryContract;
 use App\Http\Requests\Backend\Access\User\PermanentlyDeleteUserRequest;
 use App\Repositories\Frontend\User\UserContract as FrontendUserContract;
 use App\Http\Requests\Backend\Access\User\ResendConfirmationEmailRequest;
+use Maatwebsite\Excel\Facades\Excel;
 
 /**
  * Class UserController
@@ -239,5 +241,12 @@ class UserController extends Controller
     {
         $user->sendConfirmationEmail($user_id);
         return redirect()->back()->withFlashSuccess(trans('alerts.backend.users.confirmation_email'));
+    }
+
+    /**
+     * @param ExportUserRequest $request
+     */
+    public function export(ExportUserRequest $request){
+        $this->users->export($request->all());
     }
 }

@@ -35,6 +35,15 @@ interface UserContract
     public function getSearchUsersPaginated($input, $per_page, $status = 1, $order_by = 'id', $sort = 'asc');
 
     /**
+     * @param $input
+     * @param int $status
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function export($input, $status = 1, $order_by = 'id', $sort = 'asc');
+
+    /**
      * @param  $per_page
      * @return \Illuminate\Pagination\Paginator
      */

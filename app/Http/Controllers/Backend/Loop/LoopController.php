@@ -104,6 +104,9 @@ class LoopController extends Controller
         return redirect()->back()->withFlashSuccess(trans('alerts.backend.loop.destroy-ok'));
     }
 
+    /**
+     * @param ExportLoopRequest $request
+     */
     public function export(ExportLoopRequest $request){
         $this->loop->export($request->all());
     }

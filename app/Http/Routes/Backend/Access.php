@@ -17,6 +17,8 @@ Route::group([
         Route::get('users/business/{id}', 'UserController@business')->name('admin.access.users.business');
         Route::post('users/edit-business', 'UserController@editBusiness')->name('admin.access.users.edit-business');
         Route::post('users/search', 'UserController@search')->name('admin.access.users.search');
+        Route::post('users/export', 'UserController@export')->name('admin.access.users.export');
+
         /**
          * Specific User
          */

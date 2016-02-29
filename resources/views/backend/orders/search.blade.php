@@ -74,9 +74,6 @@
             <a href="{{ route('admin.orders') }}" class="btn btn-warning pull-left">
                 <i class="fa fa-mail-reply-all"></i> 取消搜索
             </a>
-            <button type="button" class="btn btn-success pull-right" style="margin-left: 5px;">
-                <i class="fa fa-download"></i> 导出
-            </button>
             <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;">
                 <i class="fa fa-search"></i> 搜索
             </button>

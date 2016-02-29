@@ -79,7 +79,7 @@
             <button type="button" id="export" class="btn btn-success pull-right" style="margin-left: 5px;">
                 <i class="fa fa-download"></i> 导出
             </button>
-            <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;">
+            <button type="submit" id="search" class="btn btn-primary pull-right" style="margin-left: 5px;">
                 <i class="fa fa-search"></i> 搜索
             </button>
         </div>
@@ -190,7 +190,12 @@
 
         $('#export').on('click',function(){
             var path = "{{ Route('admin.loop.export') }}";
-            $('form:first').attr({'action':path,'method':'post','target':'_blank'}).submit();
+            $(this).parents('form').attr({'action':path,'target':'_blank'}).submit();
+        });
+
+        $('#search').on('click',function(){
+            var path = "{{ Route('admin.goods.search') }}";
+            $(this).parents('form').attr({'action':path}).submit();
         });
     </script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Orders;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Od\StoreLoopRequest;
 use App\Http\Requests\Backend\Od\SearchOrderRequest;
+use App\Http\Requests\Backend\Od\ExportOrderRequest;
 use App\Repositories\Backend\Od\OrdersRepositoryContract;
 
 /**
@@ -38,6 +39,13 @@ class OrdersController extends Controller
         return view('backend.orders.search')
             ->withOrders($this->orders->getSearchOrdersPaginated($request->all(),20))
             ->withStatus(collect(config('orders.orders_status'))->toArray());
+    }
+
+    /**
+     * @param ExportOrderRequest $request
+     */
+    public function export(ExportOrderRequest $request){
+        $this->orders->export($request->all());
     }
 
     /**

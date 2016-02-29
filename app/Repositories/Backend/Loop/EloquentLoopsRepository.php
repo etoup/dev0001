@@ -410,7 +410,12 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
         return $list;
     }
 
-
+    /**
+     * @param $input
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
     public function export($input,$order_by = 'id', $sort = 'desc'){
 
         $builder = Loops::with('users','loops_tags')
@@ -477,7 +482,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
 //            });
 //        })->store('xls');
 
-        $file_name = 'Loop-'.Carbon::now();
+        $file_name = 'Loops-'.Carbon::now();
 
         Excel::create($file_name,function($excel) use ($cellData){
             $excel->sheet('圈子列表', function($sheet) use ($cellData){

@@ -2,12 +2,14 @@
 
 namespace App\Repositories\Backend\User;
 
+use Carbon\Carbon;
 use App\Models\Access\User\Business;
 use App\Models\Access\User\User;
 use App\Exceptions\GeneralException;
 use App\Repositories\Backend\Role\RoleRepositoryContract;
 use App\Exceptions\Backend\Access\User\UserNeedsRolesException;
 use App\Repositories\Frontend\User\UserContract as FrontendUserContract;
+use Maatwebsite\Excel\Facades\Excel;
 
 /**
  * Class EloquentUserRepository
@@ -115,6 +117,69 @@ class EloquentUserRepository implements UserContract
         $list = $builder->paginate($per_page);
 
         return $list;
+    }
+
+    /**
+     * @param $input
+     * @param int $status
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function export($input, $status = 1, $order_by = 'id', $sort = 'asc'){
+        $builder = User::where('status', $status)
+            ->orderBy($order_by, $sort);
+
+        if(count($input)){
+            $fields_search = config('access.fields_search');
+
+            foreach($input as $field => $value){
+                if (empty($value)) {
+                    continue;
+                }
+                if (!isset($fields_search[$field])) {
+                    continue;
+                }
+
+                switch($field){
+                    case 'date':
+                        $date = explode('-',$value);
+                        $value = [date('Y-m-d h:i:s',strtotime($date[0])),date('Y-m-d h:i:s',strtotime($date[1]))];
+                        break;
+                    default:
+                        $value = [$value];
+                }
+
+                $search = $fields_search[$field];
+
+                $builder->whereRaw($search['tags'], $value);
+            }
+        }
+
+        $list = $builder->get();
+
+        $cellData = collect($list)->toArray();
+        if(count($cellData)){
+            foreach($cellData as $k => $v){
+                $cellData[$k] = [
+                    '用户ID' => $v['id'],
+                    '用户名' => $v['name'],
+                    '邮箱' => $v['email']?$v['email']:'NULL',
+                    '手机号码' => $v['mobile']?$v['mobile']:'NULL',
+                    '属性' => $v['loop_roles']?'圈主':'会员',
+                    '认证' => $v['confirmed']?'yes':'no',
+                    '创建时间' => $v['created_at']
+                ];
+            }
+        }
+
+        $file_name = 'Users-'.Carbon::now();
+
+        Excel::create($file_name,function($excel) use ($cellData){
+            $excel->sheet('用户列表', function($sheet) use ($cellData){
+                $sheet->fromArray($cellData);
+            });
+        })->store('xls')->export('xls');
     }
 
     /**

@@ -2,9 +2,11 @@
 
 namespace App\Repositories\Backend\Od;
 
+use Carbon\Carbon;
 use App\Models\Access\User\UsersAddress;
 use App\Exceptions\GeneralException;
 use App\Models\Ods\Orders;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 /**
@@ -63,6 +65,13 @@ class EloquentOrdersRepository implements OrdersRepositoryContract
         return $list;
     }
 
+    /**
+     * @param $input
+     * @param $per_page
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
     public function getSearchOrdersPaginated($input, $per_page, $order_by = 'id', $sort = 'desc')
     {
         $builder = Orders::with('users','goods','business','users_address')
@@ -94,6 +103,72 @@ class EloquentOrdersRepository implements OrdersRepositoryContract
         $list = $builder->paginate($per_page);
 
         return $list;
+    }
+
+    /**
+     * @param $input
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function export($input, $order_by = 'id', $sort = 'desc'){
+        $builder = Orders::with('users','goods','business','users_address')
+            ->orderBy($order_by, $sort);
+
+        if(count($input)){
+            foreach($input as $field => $value){
+                if (empty($value)) {
+                    continue;
+                }
+                if (!isset($this->fields_search[$field])) {
+                    continue;
+                }
+
+                switch($field){
+                    case 'date':
+                        $date = explode('-',$value);
+                        $value = [date('Y-m-d h:i:s',strtotime($date[0])),date('Y-m-d h:i:s',strtotime($date[1]))];
+                        break;
+                    default:
+                        $value = [$value];
+                }
+
+                $search = $this->fields_search[$field];
+                $builder->whereRaw($search['tags'], $value);
+            }
+        }
+
+        $list = $builder->get();
+
+        $cellData = collect($list)->toArray();
+        if(count($cellData)){
+            foreach($cellData as $k => $v){
+                $cellData[$k] = [
+                    '订单ID' => $v['id'],
+                    '订单号' => $v['orders_numbers'],
+                    '商品名称' => $v['goods']['title'],
+                    '金额' => $v['price']?$v['price']:0.00,
+                    '买家' => $v['users']['name']?$v['users']['name']:'NULL',
+                    '买家手机' => $v['users']['mobile']?$v['users']['mobile']:'NULL',
+                    '收货地址' => $v['users_address']['address']?$v['users_address']['address']:'NULL',
+                    '邮编' => $v['users_address']['code']?$v['users_address']['code']:'NULL',
+                    '状态' => config('orders.orders_status')[$v['status']],
+                    '卖家' => $v['business']['business_name']?$v['business']['business_name']:'NULL',
+                    '卖家手机' => $v['business']['business_mobile']?$v['business']['business_mobile']:'NULL',
+                    '卖家卡号' => $v['business']['business_card']?$v['business']['business_card']:'NULL',
+                    '支行' => $v['business']['business_card_bank']?$v['business']['business_card_bank']:'NULL',
+                    '创建时间' => $v['created_at']
+                ];
+            }
+        }
+
+        $file_name = 'Orders-'.Carbon::now();
+
+        Excel::create($file_name,function($excel) use ($cellData){
+            $excel->sheet('订单列表', function($sheet) use ($cellData){
+                $sheet->fromArray($cellData);
+            });
+        })->store('xls')->export('xls');
     }
 
     /**

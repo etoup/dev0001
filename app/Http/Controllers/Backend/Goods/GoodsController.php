@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Goods;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Good\DownGoodRequest;
 use App\Http\Requests\Backend\Good\StoreGoodRequest;
+use App\Http\Requests\Backend\Good\ExportGoodRequest;
 use App\Http\Requests\Backend\Good\SearchGoodRequest;
 use App\Http\Requests\Backend\Good\LookGoodRequest;
 use App\Repositories\Backend\Good\GoodsRepositoryContract;
@@ -64,6 +65,13 @@ class GoodsController extends Controller
     public function store(StoreGoodRequest $request){
         $this->goods->store($request->all());
         return redirect()->back()->withFlashSuccess(trans('alerts.backend.goods.store-ok'));
+    }
+
+    /**
+     * @param ExportGoodRequest $request
+     */
+    public function export(ExportGoodRequest $request){
+        $this->goods->export($request->all());
     }
 
     /**

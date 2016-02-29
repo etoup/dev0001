@@ -42,6 +42,14 @@ interface GoodsRepositoryContract
     public function getSearchGoodsPaginated($input, $per_page, $order_by = 'id', $sort = 'asc');
 
     /**
+     * @param $input
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function export($input, $order_by = 'id', $sort = 'asc');
+
+    /**
      * @param  $id
      * @return mixed
      */

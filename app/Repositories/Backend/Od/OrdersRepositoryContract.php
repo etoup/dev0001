@@ -39,6 +39,14 @@ interface OrdersRepositoryContract
     public function getSearchOrdersPaginated($input, $per_page, $order_by = 'id', $sort = 'asc');
 
     /**
+     * @param $input
+     * @param string $order_by
+     * @param string $sort
+     * @return mixed
+     */
+    public function export($input, $order_by = 'id', $sort = 'asc');
+
+    /**
      * @param $per_page
      * @param int $status
      * @param string $order_by
