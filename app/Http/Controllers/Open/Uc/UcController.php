@@ -71,4 +71,8 @@ class UcController extends Controller
 
         return response()->json($data);
     }
+
+    public function myLoops(){
+
+    }
 }

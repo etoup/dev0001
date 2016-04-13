@@ -37,6 +37,7 @@ class GoodsTableSeeder extends Seeder
                 'stocks'            => 100,
                 'status'            => 10,//上架
                 'name'              => 'admin',
+                'remark'            => '',
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
             ],
@@ -51,6 +52,7 @@ class GoodsTableSeeder extends Seeder
                 'stocks'            => 10,
                 'status'            => 1,//待审
                 'name'              => 'admin',
+                'remark'            => '',
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
             ],
@@ -65,6 +67,7 @@ class GoodsTableSeeder extends Seeder
                 'stocks'            => 20,
                 'status'            => -1,//下架
                 'name'              => 'admin',
+                'remark'            => '',
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
             ],
@@ -79,6 +82,7 @@ class GoodsTableSeeder extends Seeder
                 'stocks'            => 15,
                 'status'            => -2,//未通过
                 'name'              => 'admin',
+                'remark'            => '不让通过审核',
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
             ]
