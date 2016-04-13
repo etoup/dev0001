@@ -170,6 +170,8 @@ return [
         App\Providers\OdServiceProvider::class,
         App\Providers\DashboardServiceProvider::class,
         App\Providers\UcServiceProvider::class,
+        App\Providers\MyServiceProvider::class,
+
 
         /*
          * Third Party Providers

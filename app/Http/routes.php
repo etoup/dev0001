@@ -44,6 +44,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'middleware' => 'ad
  */
 Route::group(['namespace' => 'Open', 'prefix' => 'open', 'middleware' => 'api'], function () {
     require (__DIR__ . '/Routes/Open/Uc.php');
+    require (__DIR__ . '/Routes/Open/My.php');
     require (__DIR__ . '/Routes/Open/Loops.php');
     require (__DIR__ . '/Routes/Open/Goods.php');
 
