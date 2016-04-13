@@ -30,10 +30,11 @@ trait LoopsTagsAttribute
      */
     public function getDeleteButtonAttribute()
     {
-        if (access()->allow('delete-users')) {
-            return '<a href="' . route('admin.loop.tags.destroy', $this->id) . '" data-method="delete" class="btn btn-xs btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.general.crud.delete') . '"></i></a>';
+        if ($this->id > 2 ) {
+            if (access()->allow('delete-users')) {
+                return '<a href="' . route('admin.loop.tags.destroy', $this->id) . '" data-method="delete" class="btn btn-xs btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.general.crud.delete') . '"></i></a>';
+            }
         }
-
         return '';
     }
 

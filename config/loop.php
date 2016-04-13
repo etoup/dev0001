@@ -10,6 +10,8 @@ return [
      */
     'loops' => App\Models\Loop\Loops::class,
     'loops_tags' => App\Models\Loop\LoopsTags::class,
+    'loops_users' => App\Models\Loop\LoopsUsers::class,
+    'loops_follows' => App\Models\Loop\LoopsFollows::class,
     'loops_authority' => App\Models\Loop\LoopsAuthority::class,
 
     /*
@@ -19,7 +21,7 @@ return [
     'loops_tags_table' => 'loops_tags',
     'loops_authority_table' => 'loops_authority',
 
-    'loops_authorith_types' => ['目录','功能'],
+    'loops_authorith_types' => ['目录','功能','默认'],
 
     'expires' => 5,
 

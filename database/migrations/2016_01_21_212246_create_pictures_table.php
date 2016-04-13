@@ -18,7 +18,7 @@ class CreatePicturesTable extends Migration
             $table->integer('foreign_id')->unsigned();//外键ID
             $table->string('path',80);//地址
             $table->string('key',80);//图片名称
-            $table->tinyInteger('types',false,true)->default(1);//类型 1=消息；2=商品；3=圈子
+            $table->tinyInteger('types',false,true)->default(1);//类型 1=消息；2=商品；3=圈子；4=用户头像
             $table->tinyInteger('status')->default(1);//状态 －1=回收；1=正常
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));//创建时间
             $table->timestamp('updated_at')->default('0000-00-00 00:00');//更新时间

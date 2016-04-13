@@ -15,7 +15,8 @@
         "hieu-le/active": "~2.0",
         "arcanedev/log-viewer": "~3.5.0",
         "qiniu/php-sdk": "^7.0",
-        "maatwebsite/excel": "2.1.1"
+        "maatwebsite/excel": "2.1.1",
+        "aobozhang/rongcloud-facades": "^0.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -169,6 +169,7 @@ return [
         App\Providers\GoodServiceProvider::class,
         App\Providers\OdServiceProvider::class,
         App\Providers\DashboardServiceProvider::class,
+        App\Providers\UcServiceProvider::class,
 
         /*
          * Third Party Providers
@@ -191,6 +192,9 @@ return [
          * Has to override the Collective\Html\HtmlServiceProvider form singleton
          */
         App\Providers\MacroServiceProvider::class,
+
+        Aobo\RongCloud\RongCloudServiceProvider::class,
+
     ],
 
     /*
@@ -252,6 +256,7 @@ return [
          * phpexcel
          */
         'Excel'       => Maatwebsite\Excel\Facades\Excel::class,
+
     ],
 
 ];

@@ -38,3 +38,14 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'middleware' => 'ad
     require (__DIR__ . '/Routes/Backend/Goods.php');
     require (__DIR__ . '/Routes/Backend/Orders.php');
 });
+
+/**
+ * Open Routes
+ */
+Route::group(['namespace' => 'Open', 'prefix' => 'open', 'middleware' => 'api'], function () {
+    require (__DIR__ . '/Routes/Open/Uc.php');
+    require (__DIR__ . '/Routes/Open/Loops.php');
+    require (__DIR__ . '/Routes/Open/Goods.php');
+
+});
+

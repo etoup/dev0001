@@ -22,6 +22,7 @@ class LoopTableSeeder extends Seeder
         $this->call(LoopsMessagesTableSeeder::class);
         $this->call(LoopsDiariesTableSeeder::class);
         $this->call(LoopsUsersTableSeeder::class);
+        $this->call(LoopsFollowsTableSeeder::class);
 
         if (env('DB_CONNECTION') == 'mysql') {
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');

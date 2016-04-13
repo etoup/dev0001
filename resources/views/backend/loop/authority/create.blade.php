@@ -21,7 +21,7 @@
         {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => '填写权限名称']) !!}
     </div>
     <div class="form-group">
-        {!! Form::label('icon', '图标') !!}
+        {!! Form::label('icon', '图标代码') !!}
         {!! Form::text('icon', null, ['class' => 'form-control', 'placeholder' => '填写图标标签']) !!}
     </div>
     <div class="form-group">

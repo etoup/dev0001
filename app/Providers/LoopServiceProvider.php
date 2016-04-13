@@ -35,5 +35,9 @@ class LoopServiceProvider extends ServiceProvider
             \App\Repositories\Backend\Loop\Authority\LoopAuthorityRepositoryContract::class,
             \App\Repositories\Backend\Loop\Authority\EloquentLoopAuthorityRepository::class
         );
+        $this->app->bind(
+            \App\Repositories\Open\Loops\LoopsRepositoryContract::class,
+            \App\Repositories\Open\Loops\EloquentLoopsRepository::class
+        );
     }
 }

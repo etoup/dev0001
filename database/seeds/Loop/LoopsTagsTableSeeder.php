@@ -30,14 +30,30 @@ class LoopsTagsTableSeeder extends Seeder
 
         $map = [
             [
-                'title'     => '热门',
-                'types'        => 1,
+                'title'        => '热门',
+                'types'        => 10,
+                'sort'         => 1,
                 'created_at'   => Carbon::now(),
                 'updated_at'   => Carbon::now(),
             ],
             [
-                'title'     => '手工',
+                'title'        => '关注',
+                'types'        => 20,
+                'sort'         => 0,
+                'created_at'   => Carbon::now(),
+                'updated_at'   => Carbon::now(),
+            ],
+            [
+                'title'        => '手工',
                 'types'        => 0,
+                'sort'         => 2,
+                'created_at'   => Carbon::now(),
+                'updated_at'   => Carbon::now(),
+            ],
+            [
+                'title'        => '金器',
+                'types'        => 0,
+                'sort'         => 3,
                 'created_at'   => Carbon::now(),
                 'updated_at'   => Carbon::now(),
             ]

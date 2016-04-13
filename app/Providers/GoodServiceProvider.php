@@ -27,5 +27,9 @@ class GoodServiceProvider extends ServiceProvider
             \App\Repositories\Backend\Good\GoodsRepositoryContract::class,
             \App\Repositories\Backend\Good\EloquentGoodsRepository::class
         );
+        $this->app->bind(
+            \App\Repositories\Open\Goods\GoodsRepositoryContract::class,
+            \App\Repositories\Open\Goods\EloquentGoodsRepository::class
+        );
     }
 }

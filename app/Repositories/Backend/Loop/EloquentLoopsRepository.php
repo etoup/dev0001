@@ -83,6 +83,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
         //保存圈子
         $loop = isset($input['id']) ? $this->find($input['id']) : new Loops;
         $loop->users_id = $usersinfo['id'];
+        $loop->name = $usersinfo['name'];
         $loop->loops_tags_id = $input['loops_tags_id'];
         $loop->title = $input['title'];
         $loop->profiles = $input['profiles'];
@@ -209,7 +210,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      * @return mixed
      */
     public function getTags(){
-        return LoopsTags::get();
+        return LoopsTags::whereIn('types', [0, 10])->get();
     }
 
     /**

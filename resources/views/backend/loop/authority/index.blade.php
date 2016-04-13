@@ -2,6 +2,11 @@
 
 @section ('title', trans('labels.backend.loop.main'))
 
+@section('after-styles-end')
+    {!! Html::style('/icons/iconfont.css') !!}
+@endsection
+
+
 @section('page-header')
     <h1>
         {{ trans('labels.backend.loop.main') }}
@@ -51,7 +56,8 @@
                             <tr>
                                 <td>{{ $auth->id }}</td>
                                 <td>{{ $auth->title }}</td>
-                                <td><i class="fa {{ $auth->icon }}"></i></td>
+                                {{--<td><i class="fa {{ $auth->icon }}"></i></td>--}}
+                                <td><i class="icon iconfont">&#{{ $auth->icon }};</i></td>
                                 <td>{{ $auth->path }}</td>
                                 <td>{{ config('loop.loops_authorith_types')[$auth->types] }}</td>
                                 <td>{{ $auth->created_at }}</td>

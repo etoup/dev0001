@@ -4268,5 +4268,54 @@
             "import",
             "laravel"
         ]
+    },
+    {
+        "name": "aobozhang/rongcloud-facades",
+        "version": "0.1.0",
+        "version_normalized": "0.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/aobozhang/rongcloud-facades.git",
+            "reference": "28c96f2c38344b9e722269d2df4902633e5aa5da"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/aobozhang/rongcloud-facades/zipball/28c96f2c38344b9e722269d2df4902633e5aa5da",
+            "reference": "28c96f2c38344b9e722269d2df4902633e5aa5da",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.9"
+        },
+        "suggest": {
+            "laravel/framework": "5.1.*"
+        },
+        "time": "2016-02-16 09:00:49",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Aobo\\RongCloud\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Aobo",
+                "email": "aobozhang@gmail.com",
+                "homepage": "https://github.com/aobozhang",
+                "role": "Developer"
+            }
+        ],
+        "description": "used RongCloud as laravel facades",
+        "homepage": "https://github.com/aobozhang",
+        "keywords": [
+            "facades",
+            "laravel",
+            "rongCloud"
+        ]
     }
 ]

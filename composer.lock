@@ -4,9 +4,56 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bf9cace1809e958951b76d67588793a8",
-    "content-hash": "8117b83764585192077e5e7d1cf16b86",
+    "hash": "3eeba579cc12bef08e4e93978e1b5348",
+    "content-hash": "663f869e466208600ac58bbf013c33db",
     "packages": [
+        {
+            "name": "aobozhang/rongcloud-facades",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aobozhang/rongcloud-facades.git",
+                "reference": "28c96f2c38344b9e722269d2df4902633e5aa5da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aobozhang/rongcloud-facades/zipball/28c96f2c38344b9e722269d2df4902633e5aa5da",
+                "reference": "28c96f2c38344b9e722269d2df4902633e5aa5da",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "suggest": {
+                "laravel/framework": "5.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Aobo\\RongCloud\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aobo",
+                    "email": "aobozhang@gmail.com",
+                    "homepage": "https://github.com/aobozhang",
+                    "role": "Developer"
+                }
+            ],
+            "description": "used RongCloud as laravel facades",
+            "homepage": "https://github.com/aobozhang",
+            "keywords": [
+                "facades",
+                "laravel",
+                "rongCloud"
+            ],
+            "time": "2016-02-16 09:00:49"
+        },
         {
             "name": "arcanedev/log-viewer",
             "version": "3.5.4",

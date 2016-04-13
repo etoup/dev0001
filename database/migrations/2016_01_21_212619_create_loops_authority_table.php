@@ -17,6 +17,9 @@ class CreateLoopsAuthorityTable extends Migration
             $table->increments('id');
             $table->string('title',20);//标题
             $table->string('icon',20);//图标
+            $table->string('normal_img',80);//图片 widget://image/album1.png
+            $table->string('active_img',80);//选中图片 widget://image/album2.png
+            $table->string('tags',20);//操作标签
             $table->string('path',20);//Route
             $table->tinyInteger('types',false,true)->default(0);//类型 0=目录；1=功能
             $table->tinyInteger('status')->default(1);//状态 －1=禁用；1=正常

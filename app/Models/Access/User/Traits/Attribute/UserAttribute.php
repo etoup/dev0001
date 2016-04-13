@@ -73,6 +73,10 @@ trait UserAttribute
         return $this->confirmed == 1;
     }
 
+    public function isSource() {
+        return $this->source == 0;
+    }
+
     /**
      * @return string
      */
@@ -90,10 +94,11 @@ trait UserAttribute
      */
     public function getChangePasswordButtonAttribute()
     {
-        if (access()->allow('change-user-password')) {
-            return '<a href="' . route('admin.access.user.change-password', $this->id) . '" class="btn btn-xs btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.backend.access.users.change_password') . '"></i></a> ';
+        if($this->isSource()){
+            if (access()->allow('change-user-password')) {
+                return '<a href="' . route('admin.access.user.change-password', $this->id) . '" class="btn btn-xs btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="' . trans('buttons.backend.access.users.change_password') . '"></i></a> ';
+            }
         }
-
         return '';
     }
 

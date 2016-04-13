@@ -46,4 +46,11 @@ trait UserRelationship
     public function business(){
         return $this->belongsTo(config('access.business'));
     }
+
+    /**
+     * @return mixed
+     */
+    public function loops_users(){
+        return $this->hasMany(config('loop.loops_users'));
+    }
 }

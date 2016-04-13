@@ -36,7 +36,7 @@ class LoopController extends Controller
 //        dd(collect($this->loop->getTagsArray())->prepend('全部')->toArray());
         return view('backend.loop.index')
             ->withLiveness($this->loop->cacheLiveness(config('loop.expires')))
-            ->withLoops($this->loop->getLoopsPaginated(20))
+            ->withLoops($this->loop->getLoopsPaginated(10))
             ->withTags(collect($this->loop->getTagsArray())->toArray());
     }
 

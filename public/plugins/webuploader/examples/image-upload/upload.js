@@ -3,43 +3,43 @@
     $(function() {
         var $wrap = $('#uploader'),
 
-            // 图片容器
+        // 图片容器
             $queue = $( '<ul class="filelist"></ul>' )
                 .appendTo( $wrap.find( '.queueList' ) ),
 
-            // 状态栏，包括进度和控制按钮
+        // 状态栏，包括进度和控制按钮
             $statusBar = $wrap.find( '.statusBar' ),
 
-            // 文件总体选择信息。
+        // 文件总体选择信息。
             $info = $statusBar.find( '.info' ),
 
-            // 上传按钮
+        // 上传按钮
             $upload = $wrap.find( '.uploadBtn' ),
 
-            // 没选择文件之前的内容。
+        // 没选择文件之前的内容。
             $placeHolder = $wrap.find( '.placeholder' ),
 
             $progress = $statusBar.find( '.progress' ).hide(),
 
-            // 添加的文件数量
+        // 添加的文件数量
             fileCount = 0,
 
-            // 添加的文件总大小
+        // 添加的文件总大小
             fileSize = 0,
 
-            // 优化retina, 在retina下这个值是2
+        // 优化retina, 在retina下这个值是2
             ratio = window.devicePixelRatio || 1,
 
-            // 缩略图大小
+        // 缩略图大小
             thumbnailWidth = 110 * ratio,
             thumbnailHeight = 110 * ratio,
 
-            // 可能有pedding, ready, uploading, confirm, done.
+        // 可能有pedding, ready, uploading, confirm, done.
             state = 'pedding',
 
-            // 所有文件的进度信息，key为file id
+        // 所有文件的进度信息，key为file id
             percentages = {},
-            // 判断浏览器是否支持图片的base64
+        // 判断浏览器是否支持图片的base64
             isSupportBase64 = ( function() {
                 var data = new Image();
                 var support = true;
@@ -52,7 +52,7 @@
                 return support;
             } )(),
 
-            // 检测是否已经安装flash，检测flash的版本
+        // 检测是否已经安装flash，检测flash的版本
             flashVersion = ( function() {
                 var version;
 
@@ -62,7 +62,7 @@
                 } catch ( ex ) {
                     try {
                         version = new ActiveXObject('ShockwaveFlash.ShockwaveFlash')
-                                .GetVariable('$version');
+                            .GetVariable('$version');
                     } catch ( ex2 ) {
                         version = '0.0';
                     }
@@ -74,15 +74,15 @@
             supportTransition = (function(){
                 var s = document.createElement('p').style,
                     r = 'transition' in s ||
-                            'WebkitTransition' in s ||
-                            'MozTransition' in s ||
-                            'msTransition' in s ||
-                            'OTransition' in s;
+                        'WebkitTransition' in s ||
+                        'MozTransition' in s ||
+                        'msTransition' in s ||
+                        'OTransition' in s;
                 s = null;
                 return r;
             })(),
 
-            // WebUploader实例
+        // WebUploader实例
             uploader;
 
         if ( !WebUploader.Uploader.support('flash') && WebUploader.browser.ie ) {
@@ -110,23 +110,23 @@
                     var swf = './expressInstall.swf';
                     // insert flash object
                     var html = '<object type="application/' +
-                            'x-shockwave-flash" data="' +  swf + '" ';
+                        'x-shockwave-flash" data="' +  swf + '" ';
 
                     if (WebUploader.browser.ie) {
                         html += 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
                     }
 
                     html += 'width="100%" height="100%" style="outline:0">'  +
-                        '<param name="movie" value="' + swf + '" />' +
-                        '<param name="wmode" value="transparent" />' +
-                        '<param name="allowscriptaccess" value="always" />' +
+                    '<param name="movie" value="' + swf + '" />' +
+                    '<param name="wmode" value="transparent" />' +
+                    '<param name="allowscriptaccess" value="always" />' +
                     '</object>';
 
                     container.html(html);
 
                 })($wrap);
 
-            // 压根就没有安转。
+                // 压根就没有安转。
             } else {
                 $wrap.html('<a href="http://www.adobe.com/go/getflashplayer" target="_blank" border="0"><img alt="get flash player" src="http://www.adobe.com/macromedia/style_guide/images/160x41_Get_Flash_Player.jpg" /></a>');
             }
@@ -156,9 +156,9 @@
             // runtimeOrder: 'flash',
 
             accept: {
-                 title: 'Images',
-                 extensions: 'gif,jpg,jpeg,bmp,png',
-                 mimeTypes: 'image/*'
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
             },
 
             // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
@@ -173,7 +173,7 @@
             var denied = false,
                 len = items.length,
                 i = 0,
-                // 修改js类型
+            // 修改js类型
                 unAllowed = 'text/plain;application/javascript ';
 
             for ( ; i < len; i++ ) {
@@ -214,15 +214,15 @@
         // 当有文件添加进来时执行，负责view的创建
         function addFile( file ) {
             var $li = $( '<li id="' + file.id + '">' +
-                    '<p class="title">' + file.name + '</p>' +
-                    '<p class="imgWrap"></p>'+
-                    '<p class="progress"><span></span></p>' +
-                    '</li>' ),
+                '<p class="title">' + file.name + '</p>' +
+                '<p class="imgWrap"></p>'+
+                '<p class="progress"><span></span></p>' +
+                '</li>' ),
 
                 $btns = $('<div class="file-panel">' +
-                    '<span class="cancel">删除</span>' +
-                    '<span class="rotateRight">向右旋转</span>' +
-                    '<span class="rotateLeft">向左旋转</span></div>').appendTo( $li ),
+                '<span class="cancel">删除</span>' +
+                '<span class="rotateRight">向右旋转</span>' +
+                '<span class="rotateLeft">向左旋转</span></div>').appendTo( $li ),
                 $prgress = $li.find('p.progress span'),
                 $wrap = $li.find( 'p.imgWrap' ),
                 $info = $('<p class="error"></p>'),
@@ -404,19 +404,19 @@
 
             if ( state === 'ready' ) {
                 text = '选中' + fileCount + '张图片，共' +
-                        WebUploader.formatSize( fileSize ) + '。';
+                WebUploader.formatSize( fileSize ) + '。';
             } else if ( state === 'confirm' ) {
                 stats = uploader.getStats();
                 if ( stats.uploadFailNum ) {
                     text = '成功上传' + stats.successNum+ '张照片，'+
-                        stats.uploadFailNum + '张照片上传失败，<a class="retry" href="#">重试</a>或<a class="ignore" href="#">忽略</a>'
+                    stats.uploadFailNum + '张照片上传失败，<a class="retry" href="#">重试</a>或<a class="ignore" href="#">忽略</a>'
                 }
 
             } else {
                 stats = uploader.getStats();
                 text = '共' + fileCount + '张（' +
-                        WebUploader.formatSize( fileSize )  +
-                        '），已上传' + stats.successNum + '张';
+                WebUploader.formatSize( fileSize )  +
+                '），已上传' + stats.successNum + '张';
 
                 if ( stats.uploadFailNum ) {
                     text += '，失败' + stats.uploadFailNum + '张';

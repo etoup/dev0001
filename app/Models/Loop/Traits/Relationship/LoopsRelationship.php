@@ -28,6 +28,20 @@ trait LoopsRelationship
     /**
      * @return mixed
      */
+    public function loops_users(){
+        return $this->hasMany(config('loop.loops_users'));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function loops_follows(){
+        return $this->hasMany(config('loop.loops_follows'));
+    }
+
+    /**
+     * @return mixed
+     */
     public function pictures(){
         return $this->belongsTo(config('pictures.pictures'));
     }
