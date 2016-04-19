@@ -21,6 +21,16 @@ class EloquentUcRepository implements UcRepositoryContract
         return User::select('id','nickname','token')->where('token',$token)->first();
     }
 
+    /**
+     * @param $nickname
+     * @param $sex
+     * @param $openid
+     * @param $headimgurl
+     * @param $country
+     * @param $province
+     * @param $city
+     * @return mixed
+     */
     public function addInfo($nickname,$sex,$openid,$headimgurl,$country,$province,$city){
         $user       = new User;
         $user->name = $nickname;

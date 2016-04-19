@@ -21,9 +21,9 @@ class UcController extends Controller
             $data = [
                 'status' => true,
                 'info' => [
-                    'uid' => $info['id'],
-                    'nickname' => $info['nickname'],
-                    'token' =>$info['token']
+                    'uid' => $info->id,
+                    'nickname' => $info->nickname,
+                    'token' =>$info->token
                 ]
             ];
         }else{
