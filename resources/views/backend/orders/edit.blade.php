@@ -19,21 +19,23 @@
             @endforeach
         </select>
     </div>
-    @if($info->status == 0)
+    @if($info->status == 1)
     <div class="form-group">
         {!! Form::label('price', '订单金额') !!}
         {!! Form::text('price', $info->price, ['class' => 'form-control', 'placeholder' => '填写订单金额']) !!}
     </div>
     @endif
     @if($info->status <= 10)
-    <div class="form-group">
-        {!! Form::label('address', '收货地址') !!}
-        {!! Form::text('address', $info->users_address->address, ['class' => 'form-control', 'placeholder' => '填写收货地址']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('code', '邮编') !!}
-        {!! Form::text('code', $info->users_address->code, ['class' => 'form-control', 'placeholder' => '填写邮编']) !!}
-    </div>
+        @if($info->users_address)
+        <div class="form-group">
+            {!! Form::label('address', '收货地址') !!}
+            {!! Form::text('address', $info->users_address->address, ['class' => 'form-control', 'placeholder' => '填写收货地址']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::label('code', '邮编') !!}
+            {!! Form::text('code', $info->users_address->code, ['class' => 'form-control', 'placeholder' => '填写邮编']) !!}
+        </div>
+        @endif
     @endif
 </div>
 <div class="modal-footer">

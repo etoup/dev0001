@@ -22,4 +22,29 @@ interface GoodsRepositoryContract
      */
     public function getFollows($goods_id);
 
+    /**
+     * @param $goods_id
+     * @param $uid
+     * @return mixed
+     */
+    public function getGoodsInfo($goods_id,$uid);
+
+    /**
+     * @param $goods_id
+     * @param int $uid
+     * @return mixed
+     */
+    public function isLike($goods_id,$uid=0);
+
+    /**
+     * @param $goods_id
+     * @return mixed
+     */
+    public function recommendGoods($goods_id);
+
+    /**
+     * @param $goods_id
+     * @return mixed
+     */
+    public function collectionLoops($goods_id);
 }

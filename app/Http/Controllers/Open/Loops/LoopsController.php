@@ -19,6 +19,8 @@ class LoopsController extends Controller
     }
 
     /**
+     * @param $tags_id
+     * @param $page
      * @return \Illuminate\Http\JsonResponse
      */
     public function index($tags_id,$page){
@@ -34,8 +36,10 @@ class LoopsController extends Controller
                 'info' => $list
             ];
         }else{
+            $count = $this->loops->getLoopsCount($tags_id);
             $data = [
                 'status' => false,
+                'count' => intval($count),
                 'info' => [
                     'msg' => '没有数据'
                 ]
@@ -46,6 +50,8 @@ class LoopsController extends Controller
     }
 
     /**
+     * @param $tags_id
+     * @param $page
      * @return \Illuminate\Http\JsonResponse
      */
     public function hot($tags_id,$page){
@@ -62,8 +68,10 @@ class LoopsController extends Controller
             ];
 
         }else{
+            $count = $this->loops->getLoopsCount($tags_id);
             $data = [
                 'status' => false,
+                'count' => intval($count),
                 'info' => [
                     'msg' => '没有数据'
                 ]
@@ -74,6 +82,8 @@ class LoopsController extends Controller
     }
 
     /**
+     * @param $uid
+     * @param $page
      * @return \Illuminate\Http\JsonResponse
      */
     public function follows($uid,$page){
@@ -97,8 +107,10 @@ class LoopsController extends Controller
                 ];
 
             }else{
+                $count = $this->loops->getLoopsCountByUid($uid);
                 $data = [
                     'status' => false,
+                    'count' => intval($count),
                     'info' => [
                         'msg' => '没有数据'
                     ]

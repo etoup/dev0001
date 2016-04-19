@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Loop;
+namespace App\Models\Goods;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class LoopsFollows extends Model
+class GoodsLoops extends Model
 {
     use SoftDeletes;
     /**
@@ -14,7 +14,7 @@ class LoopsFollows extends Model
      *
      * @var string
      */
-    protected $table = 'loops_follows';
+    protected $table = 'goods_loops';
 
     /**
      * The attributes that are not mass assignable.

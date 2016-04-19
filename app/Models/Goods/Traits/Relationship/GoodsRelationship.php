@@ -20,6 +20,13 @@ trait GoodsRelationship
      * @return mixed
      */
     public function pictures(){
-        return $this->belongsTo(config('goods.goods_pictures'));
+        return $this->belongsTo(config('goods.pictures'));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function goods_pictures(){
+        return $this->hasMany(config('goods.goods_pictures'));
     }
 }

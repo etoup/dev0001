@@ -31,6 +31,18 @@ interface LoopsRepositoryContract
 
     /**
      * @param $tags_id
+     * @return mixed
+     */
+    public function getLoopsCount($tags_id);
+
+    /**
+     * @param $uid
+     * @return mixed
+     */
+    public function getLoopsCountByUid($uid);
+
+    /**
+     * @param $tags_id
      * @param $page
      * @param int $take
      * @return mixed

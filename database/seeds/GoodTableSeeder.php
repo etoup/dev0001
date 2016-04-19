@@ -17,6 +17,9 @@ class GoodTableSeeder extends Seeder
         }
 
         $this->call(GoodsTableSeeder::class);
+        $this->call(GoodsFollowsTableSeeder::class);
+        $this->call(GoodsLoopsTableSeeder::class);
+        $this->call(GoodsPicturesTableSeeder::class);
 
         if (env('DB_CONNECTION') == 'mysql') {
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');

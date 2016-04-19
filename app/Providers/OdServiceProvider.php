@@ -27,5 +27,9 @@ class OdServiceProvider extends ServiceProvider
             \App\Repositories\Backend\Od\OrdersRepositoryContract::class,
             \App\Repositories\Backend\Od\EloquentOrdersRepository::class
         );
+        $this->app->bind(
+            \App\Repositories\Open\Ods\OrdersRepositoryContract::class,
+            \App\Repositories\Open\Ods\EloquentOrdersRepository::class
+        );
     }
 }

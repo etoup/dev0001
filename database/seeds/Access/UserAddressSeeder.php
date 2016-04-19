@@ -27,6 +27,8 @@ class UserAddressSeeder extends Seeder
         $map = [
             [
                 'users_id'          => 3,
+                'real_name'         => '姓名3',
+                'mobile'            => '18677788893',
                 'address'           => '湖北省武汉市武昌区楚河汉街1',
                 'code'              => '123456',
                 'types'             => 1,
@@ -35,6 +37,8 @@ class UserAddressSeeder extends Seeder
             ],
             [
                 'users_id'          => 4,
+                'real_name'         => '姓名4',
+                'mobile'            => '18677788894',
                 'address'           => '湖北省武汉市武昌区楚河汉街2',
                 'code'              => '123456',
                 'types'             => 1,
@@ -43,6 +47,8 @@ class UserAddressSeeder extends Seeder
             ],
             [
                 'users_id'          => 5,
+                'real_name'         => '姓名5',
+                'mobile'            => '18677788895',
                 'address'           => '湖北省武汉市武昌区楚河汉街3',
                 'code'              => '123456',
                 'types'             => 1,
@@ -51,6 +57,8 @@ class UserAddressSeeder extends Seeder
             ],
             [
                 'users_id'          => 6,
+                'real_name'         => '姓名6',
+                'mobile'            => '18677788896',
                 'address'           => '湖北省武汉市武昌区楚河汉街4',
                 'code'              => '123456',
                 'types'             => 1,

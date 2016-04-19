@@ -29,7 +29,7 @@ class PicturesTableSeeder extends Seeder
         $map = [
             [
                 'foreign_id'        => 2,
-                'path'              => 'http://7u2i5s.com1.z0.glb.clouddn.com/photo2.png',
+                'path'              => 'http://7u2i5s.com1.z0.glb.clouddn.com/photo1.png',
                 'key'               => 'photo2.png',
                 'types'             => 3,
                 'created_at'        => Carbon::now(),
@@ -45,7 +45,7 @@ class PicturesTableSeeder extends Seeder
             ],
             [
                 'foreign_id'        => 4,
-                'path'              => 'http://7u2i5s.com1.z0.glb.clouddn.com/photo2.png',
+                'path'              => 'http://7u2i5s.com1.z0.glb.clouddn.com/photo1.png',
                 'key'               => 'photo2.png',
                 'types'             => 3,
                 'created_at'        => Carbon::now(),

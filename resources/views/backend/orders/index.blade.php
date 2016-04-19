@@ -99,7 +99,7 @@
                         <th>状态</th>
                         <th>卖家</th>
                         <th>卖家手机</th>
-                        <th>卖家卡号</th>
+                        {{--<th>卖家卡号</th>--}}
                         <th>{{ trans('labels.general.actions') }}</th>
                     </tr>
                     </thead>
@@ -111,8 +111,16 @@
                                 <td>{{ $v->goods->title }}</td>
                                 <td>{{ $v->price }}</td>
                                 <td>{{ $v->users->name }}</td>
-                                <td>{{ $v->users->mobile }}</td>
-                                <td>{{ $v->users_address->address }}</td>
+                                <td>
+                                    @if(isset($v->users_address->mobile))
+                                        {{ $v->users_address->mobile }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(isset($v->users_address->address))
+                                        {{ $v->users_address->address }}
+                                    @endif
+                                </td>
                                 <td>{{ config('orders.orders_status')[$v->status] }}</td>
                                 <td>
                                     @if(isset($v->business->business_name))
@@ -124,11 +132,11 @@
                                         {{ $v->business->business_mobile }}
                                     @endif
                                 </td>
-                                <td>
-                                    @if(isset($v->business->business_card))
-                                        {{ $v->business->business_card }}
-                                    @endif
-                                </td>
+                                {{--<td>--}}
+                                    {{--@if(isset($v->business->business_card))--}}
+                                        {{--{{ $v->business->business_card }}--}}
+                                    {{--@endif--}}
+                                {{--</td>--}}
                                 <td>{!! $v->action_buttons !!}</td>
                             </tr>
                             <div class="modal fade" id="edit-{{ $v->id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">

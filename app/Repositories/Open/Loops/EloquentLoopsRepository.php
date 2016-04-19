@@ -48,6 +48,21 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
 
     /**
      * @param $tags_id
+     * @return mixed
+     */
+    public function getLoopsCount($tags_id){
+        return Loops::where('loops_tags_id',$tags_id)->count();
+    }
+
+    /**
+     * @param $uid
+     * @return mixed
+     */
+    public function getLoopsCountByUid($uid){
+        return LoopsFollows::where('users_id',$uid)->count();
+    }
+    /**
+     * @param $tags_id
      * @param $page
      * @param int $take
      * @return mixed

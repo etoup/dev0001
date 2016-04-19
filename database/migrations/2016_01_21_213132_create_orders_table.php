@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('price',10,2);//价格
             $table->tinyInteger('status')->default(1);//状态 1=待付款；10=已付款待发货；20=已发货；80=已收货；88=已评价；90=申请提现；100=已支付货款
             $table->integer('business_id')->unsigned();//商家信息ID
+            $table->integer('owner_id')->unsigned();//商家用户ID
             $table->tinyInteger('pay_types',false,true)->default(1);//付款方式 1=微信
             $table->string('remark',80);//备注
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));//创建时间

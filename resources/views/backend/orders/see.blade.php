@@ -92,9 +92,12 @@
                         <dl>
                             <dt>买家信息</dt>
                             <dd>用户名：{{ $info->users->name }}</dd>
-                            <dd>手机号码：{{ $info->users->mobile }}</dd>
+                            @if(isset($info->users_address))
+                            <dd>真实姓名：{{ $info->users_address->real_name }}</dd>
+                            <dd>手机号码：{{ $info->users_address->mobile }}</dd>
                             <dd>地址：{{ $info->users_address->address }}</dd>
                             <dd>邮编：{{ $info->users_address->code }}</dd>
+                            @endif
                         </dl>
                     </div>
                     <!-- /.col -->

@@ -47,6 +47,7 @@ Route::group(['namespace' => 'Open', 'prefix' => 'open', 'middleware' => 'api'],
     require (__DIR__ . '/Routes/Open/My.php');
     require (__DIR__ . '/Routes/Open/Loops.php');
     require (__DIR__ . '/Routes/Open/Goods.php');
+    require (__DIR__ . '/Routes/Open/Orders.php');
 
 });
 
