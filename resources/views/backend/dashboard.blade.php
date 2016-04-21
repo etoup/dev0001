@@ -90,7 +90,7 @@
                     <ul class="users-list clearfix">
                         @foreach($new_users as $u)
                         <li>
-                            <img src="/img/user{{ $u->id }}-128x128.jpg" alt="{{ $u->name }}">
+                            <img src="{{ $u->headimgurl }}-128x128.jpg" alt="{{ $u->name }}">
                             <a class="users-list-name" href="#">{{ $u->name }}</a>
                             <span class="users-list-date">{{ $u->created_at->format('y/m/d h:i') }}</span>
                         </li>
