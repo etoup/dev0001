@@ -18,7 +18,7 @@ class EloquentUcRepository implements UcRepositoryContract
      * @return mixed
      */
     public function getInfo($token){
-        return User::select('id','nickname','token')->where('token',$token)->first();
+        return User::select('id','nickname','token','headimgurl','loop_roles','name')->where('token',$token)->first();
     }
 
     /**
