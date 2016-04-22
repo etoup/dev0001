@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email');
-            $table->string('token')->unique();//md5(微信的openId)
+            $table->string('token')->unique();//Crypt::encrypt(微信的openId)
             $table->string('im_token');//即时通讯token
             $table->char('mobile',11);
             $table->string('password', 60)->nullable();

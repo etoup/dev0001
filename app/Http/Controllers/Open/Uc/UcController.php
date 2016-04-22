@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Open\Uc;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Open\Uc\UcRepositoryContract;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
 
 
@@ -15,8 +16,11 @@ class UcController extends Controller
         $this->uc = $uc;
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getInfo(){
-        $info = $this->uc->getInfo(md5(Input::get('openId')));
+        $info = $this->uc->getInfo(Crypt::encrypt(Input::get('openId')));
         if(count($info)){
             $data = [
                 'status' => true,
@@ -38,6 +42,9 @@ class UcController extends Controller
         return response()->json($data);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function addInfo(){
 
         $id = $this->uc->addInfo(
@@ -54,10 +61,9 @@ class UcController extends Controller
             $data = [
                 'status' => true,
                 'info' => [
-                    'id' => $id,
+                    'uid' => $id,
                     'nickname'=>Input::get('nickname'),
-                    'headimgurl'=>Input::get('headimgurl'),
-                    'token'=>md5(Input::get('openid'))
+                    'token'=>Crypt::encrypt(Input::get('openid'))
                 ]
             ];
         }else{
@@ -72,7 +78,26 @@ class UcController extends Controller
         return response()->json($data);
     }
 
-    public function myLoops(){
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUser(){
+        $info = $this->uc->getUser(intval(Input::get('uid')));
+        if($info){
+            $data = [
+                'status' => true,
+                'info' => $info
+            ];
+        }else{
+            $data = [
+                'status' => false,
+                'info' => [
+                    'msg' => '出错了'
+                ]
+            ];
+        }
+
+        return response()->json($data);
 
     }
 }

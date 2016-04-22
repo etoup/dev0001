@@ -27,4 +27,10 @@ interface UcRepositoryContract
      */
     public function addInfo($nickname,$sex,$openid,$headimgurl,$country,$province,$city);
 
+    /**
+     * @param $uid
+     * @return mixed
+     */
+    public function getUser($uid);
+
 }

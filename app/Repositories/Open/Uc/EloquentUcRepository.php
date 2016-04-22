@@ -32,19 +32,18 @@ class EloquentUcRepository implements UcRepositoryContract
      * @return mixed
      */
     public function addInfo($nickname,$sex,$openid,$headimgurl,$country,$province,$city){
-        $user       = new User;
-        $user->name = $nickname;
-        $user->nickname = $nickname;
-        $user->sex = $sex;
-        $user->token = md5($openid);
-        $user->headimgurl = $headimgurl;
-        $user->country = $country;
-        $user->province = $province;
-        $user->city = $city;
-        $user->source = 1;
-        $user->confirmed = 1;
-        $user->save();
-        $id = $user->id;
+        $id = User::insertGetId([
+            'name'=>$nickname,
+            'nickname'=>$nickname,
+            'sex'=>$sex,
+            'token'=>md5($openid),
+            'headimgurl'=>$headimgurl,
+            'country'=>$country,
+            'province'=>$province,
+            'city'=>$city,
+            'source'=>1,
+            'confirmed'=>1,
+        ]);
 
         if($id){
             //关注
@@ -57,10 +56,20 @@ class EloquentUcRepository implements UcRepositoryContract
             $imTokenJson = RongCloud::getToken($id,$nickname,$headimgurl);
             $imTokenObj = json_decode($imTokenJson);
             User::where('id',$id)->update(['im_token'=>$imTokenObj->token]);
+
+            return $id;
         }
 
 
-        return $id;
+        return 0;
+    }
+
+    /**
+     * @param $uid
+     * @return mixed
+     */
+    public function getUser($uid){
+        return User::find($uid);
     }
 
 }

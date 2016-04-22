@@ -31,7 +31,7 @@ class MyController extends Controller
                 'status' => false,
                 'count' => intval($count),
                 'info' => [
-                    'msg' => '没有数据'
+                    'msg' => '已全部加载'
                 ]
             ];
         }
@@ -153,7 +153,7 @@ class MyController extends Controller
                 'status' => false,
                 'count' => intval($count),
                 'info' => [
-                    'msg' => '没有数据'
+                    'msg' => '已全部加载'
                 ]
             ];
         }
@@ -207,7 +207,7 @@ class MyController extends Controller
                 'status' => false,
                 'count' => intval($count),
                 'info' => [
-                    'msg' => '没有数据'
+                    'msg' => '已全部加载'
                 ]
             ];
         }
@@ -240,7 +240,7 @@ class MyController extends Controller
                 'status' => false,
                 'count' => intval($count),
                 'info' => [
-                    'msg' => '没有数据'
+                    'msg' => '已全部加载'
                 ]
             ];
         }
@@ -276,7 +276,7 @@ class MyController extends Controller
                 'status' => false,
                 'count' => intval($count),
                 'info' => [
-                    'msg' => '没有数据'
+                    'msg' => '已全部加载'
                 ]
             ];
         }
@@ -302,7 +302,7 @@ class MyController extends Controller
                 'status' => false,
                 'count' => intval($count),
                 'info' => [
-                    'msg' => '没有数据'
+                    'msg' => '已全部加载'
                 ]
             ];
         }
@@ -328,7 +328,7 @@ class MyController extends Controller
                 'status' => false,
                 'count' => intval($count),
                 'info' => [
-                    'msg' => '没有数据'
+                    'msg' => '已全部加载'
                 ]
             ];
         }
@@ -354,7 +354,7 @@ class MyController extends Controller
                 'status' => false,
                 'count' => intval($count),
                 'info' => [
-                    'msg' => '没有数据'
+                    'msg' => '已全部加载'
                 ]
             ];
         }

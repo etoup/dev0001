@@ -34,7 +34,7 @@ class GoodsController extends Controller
             $data = [
                 'status' => false,
                 'info' => [
-                    'msg' => '没有数据'
+                    'msg' => '已全部加载'
                 ]
             ];
         }
@@ -59,7 +59,7 @@ class GoodsController extends Controller
             $data = [
                 'status' => false,
                 'info' => [
-                    'msg' => '没有数据'
+                    'msg' => '已全部加载'
                 ]
             ];
         }
@@ -82,7 +82,7 @@ class GoodsController extends Controller
             $data = [
                 'status' => false,
                 'info' => [
-                    'msg' => '没有数据'
+                    'msg' => '已全部加载'
                 ]
             ];
         }

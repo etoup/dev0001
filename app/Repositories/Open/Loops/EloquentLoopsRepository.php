@@ -41,7 +41,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      * @param int $take
      * @return mixed
      */
-    public function getLoops($tags_id,$page,$take = 10){
+    public function getLoops($tags_id,$page,$take = 1){
         $skip = $page * $take;
         return Loops::with('pictures','users')->where('loops_tags_id',$tags_id)->orderBy('id')->skip($skip)->take($take)->get();
     }
