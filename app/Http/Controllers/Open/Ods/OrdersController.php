@@ -75,8 +75,8 @@ class OrdersController extends Controller
             'secret' => config('wechat.secret'),
 
             'payment' => [
-                'merchant_id'        => config('wechat.merchant_id'),
-                'key'                => config('wechat.key')
+                'merchant_id'        => config('wechat.payment.merchant_id'),
+                'key'                => config('wechat.payment.key')
             ],
         ];
         $app = new Application($options);
