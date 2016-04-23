@@ -21,7 +21,7 @@ class UcController extends Controller
      */
     public function getInfo(){
         $info = $this->uc->getInfo(Crypt::encrypt(Input::get('openId')));
-        
+
         if(count($info)){
             $data = [
                 'status' => true,
