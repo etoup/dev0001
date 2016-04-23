@@ -89,4 +89,26 @@ class GoodsController extends Controller
 
         return response()->json($data);
     }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function goodsInfo(){
+        $info = $this->goods->getInfoById(Input::get('id'));
+        if($info){
+            $data = [
+                'status' => true,
+                'info' => $info
+            ];
+        }else{
+            $data = [
+                'status' => false,
+                'info' => [
+                    'msg' => '无效商品'
+                ]
+            ];
+        }
+
+        return response()->json($data);
+    }
 }

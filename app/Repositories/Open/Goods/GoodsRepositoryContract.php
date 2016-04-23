@@ -17,6 +17,12 @@ interface GoodsRepositoryContract
     public function getGoods($page,$take = 0);
 
     /**
+     * @param $id
+     * @return mixed
+     */
+    public function getInfoById($id);
+
+    /**
      * @param $goods_id
      * @return mixed
      */
