@@ -16,6 +16,12 @@ interface OrdersRepositoryContract
     public function findOrdersOrThrowException($id, $withRoles = false);
 
     /**
+     * @param $orders_number
+     * @return mixed
+     */
+    public function findOrdersByNum($orders_number);
+
+    /**
      * @param $id
      * @param bool $withRoles
      * @return mixed

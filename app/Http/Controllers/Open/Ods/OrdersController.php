@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Open\Ods\OrdersRepositoryContract;
 use Illuminate\Support\Facades\Input;
 
+use EasyWeChat\Foundation\Application;
+
 class OrdersController extends Controller
 {
     protected $orders;
@@ -60,5 +62,50 @@ class OrdersController extends Controller
         }
         return response()->json($data);
 
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \EasyWeChat\Core\Exceptions\FaultException
+     */
+    public function pay(){
+        $options = [
+
+            'app_id' => config('wechat.app_id'),
+            'secret' => config('wechat.secret'),
+
+            'payment' => [
+                'merchant_id'        => config('wechat.merchant_id'),
+                'key'                => config('wechat.key')
+            ],
+        ];
+        $app = new Application($options);
+
+        $response = $app->payment->handleNotify(function($notify, $successful){
+            // 使用通知里的 "商户订单号" 获取订单
+            $order = $this->orders->findOrdersByNum($notify->out_trade_no);
+
+            if (!$order) { // 如果订单不存在
+                return 'Order not exist.'; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
+            }
+
+            // 如果订单存在
+            // 检查订单是否已经更新过支付状态
+            if ($order->status == 10) { // 假设订单字段“支付时间”不为空代表已经支付
+                return true; // 已经支付成功了就不再更新了
+            }
+
+            // 用户是否支付成功
+            if ($successful) {
+                // 不是已经支付状态则修改为已经支付状态
+                $order->status = 10; // 更新支付状态
+            }
+
+            $order->save(); // 保存订单
+
+            return true; // 返回处理完成
+        });
+
+        return $response;
     }
 }

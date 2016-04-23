@@ -30,6 +30,14 @@ class EloquentOrdersRepository implements OrdersRepositoryContract
     }
 
     /**
+     * @param $orders_number
+     * @return mixed
+     */
+    public function findOrdersByNum($orders_number){
+        return Orders::where('orders_numbers',$orders_number)->first();
+    }
+
+    /**
      * @param $id
      * @param bool $withRoles
      * @return mixed
