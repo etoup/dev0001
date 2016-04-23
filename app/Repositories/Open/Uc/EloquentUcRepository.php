@@ -56,12 +56,9 @@ class EloquentUcRepository implements UcRepositoryContract
             $imTokenJson = RongCloud::getToken($id,$nickname,$headimgurl);
             $imTokenObj = json_decode($imTokenJson);
             User::where('id',$id)->update(['im_token'=>$imTokenObj->token]);
-
-            return $id;
         }
 
-
-        return 0;
+        return $id;
     }
 
     /**
