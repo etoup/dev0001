@@ -32,7 +32,7 @@ class GoodsTableSeeder extends Seeder
                 'pictures_id'       => 1,
                 'title'             => '商品名称1',
                 'profiles'          => '商品介绍1',
-                'price'             => 100.00,
+                'price'             => 1.05,
                 'numbers'           => 100,
                 'stocks'            => 100,
                 'status'            => 10,//上架
