@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Open\Ods;
 
 
 use App\Http\Controllers\Controller;
-use App\Models\Ods\Orders;
 use App\Repositories\Open\Ods\OrdersRepositoryContract;
 use Illuminate\Support\Facades\Input;
 
@@ -97,13 +96,12 @@ class OrdersController extends Controller
             }
 
             // 用户是否支付成功
-            if ($successful) {
+            if (!$successful) {
                 // 不是已经支付状态则修改为已经支付状态
-//                $order->status = 10; // 更新支付状态
-                Orders::where('id',$order->id)->update(['status'=>10]);
+                $order->status = 10; // 更新支付状态
             }
 
-//            $order->save(); // 保存订单
+            $order->save(); // 保存订单
 
             return true; // 返回处理完成
         });
