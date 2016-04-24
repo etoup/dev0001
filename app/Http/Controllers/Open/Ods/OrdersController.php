@@ -108,4 +108,25 @@ class OrdersController extends Controller
 
         return $response;
     }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function bought(){
+        $list = $this->orders->bought(Input::get('goods_id'));
+        if(count($list)){
+            $data = [
+                'status' => true,
+                'info' => $list
+            ];
+        }else{
+            $data = [
+                'status' => false,
+                'info' => [
+                    'msg' => '没有数据'
+                ]
+            ];
+        }
+        return response()->json($data);
+    }
 }

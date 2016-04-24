@@ -50,4 +50,10 @@ interface OrdersRepositoryContract
      * @return mixed
      */
     public function buyer($uid,$name,$mobile,$address,$remark,$orders_numbers);
+
+    /**
+     * @param $goods_id
+     * @return mixed
+     */
+    public function bought($goods_id);
 }
