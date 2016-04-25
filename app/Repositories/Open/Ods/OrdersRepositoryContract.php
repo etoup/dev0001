@@ -56,4 +56,10 @@ interface OrdersRepositoryContract
      * @return mixed
      */
     public function bought($goods_id);
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getOrdersInfoById($id);
 }

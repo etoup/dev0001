@@ -86,6 +86,28 @@ class OrdersController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function info(){
+        $info = $this->orders->getOrdersInfoById(Input::get('id'));
+        if($info){
+            $data = [
+                'status' => true,
+                'info' => $info
+            ];
+        }else{
+            $data = [
+                'status' => false,
+                'info' => [
+                    'msg' => '操作失败'
+                ]
+            ];
+        }
+
+        return response()->json($data);
+    }
+
+    /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \EasyWeChat\Core\Exceptions\FaultException
      */

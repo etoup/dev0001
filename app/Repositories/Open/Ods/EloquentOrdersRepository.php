@@ -151,4 +151,15 @@ class EloquentOrdersRepository implements OrdersRepositoryContract
 
         return count($list)?$list:[];
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getOrdersInfoById($id){
+        return Orders::select('orders.orders_numbers','goods.price','pictures.path')
+            ->leftJoin('goods', 'orders.goods_id', '=', 'goods.id')
+            ->leftJoin('pictures', 'goods.pictures_id', '=', 'pictures.id')
+            ->find($id);
+    }
 }
