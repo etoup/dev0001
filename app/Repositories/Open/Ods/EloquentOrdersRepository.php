@@ -143,7 +143,7 @@ class EloquentOrdersRepository implements OrdersRepositoryContract
      */
     public function bought($goods_id){
         $list = Orders::where('goods.id','!=',$goods_id)
-            ->leftJoin('goods', 'Orders.goods_id', '=', 'goods.id')
+            ->leftJoin('goods', 'orders.goods_id', '=', 'goods.id')
             ->leftJoin('pictures', 'goods.pictures_id', '=', 'pictures.id')
             ->groupBy('orders.goods_id')
             ->take(4)
