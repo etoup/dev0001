@@ -37,7 +37,7 @@ class EloquentUcRepository implements UcRepositoryContract
             'name'=>$nickname,
             'nickname'=>$nickname,
             'sex'=>$sex,
-            'token'=>$openid,
+            'token'=>md5($openid),
             'headimgurl'=>$headimgurl,
             'country'=>$country,
             'province'=>$province,
