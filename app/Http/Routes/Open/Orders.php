@@ -8,5 +8,4 @@ Route::group(['namespace' => 'Ods'], function() {
     Route::post('orders/buyer', 'OrdersController@buyer')->name('open.orders.buyer');
     Route::post('orders/bought', 'OrdersController@bought')->name('open.orders.bought');
     Route::any('orders/pay', 'OrdersController@pay')->name('open.orders.pay');
-
 });
