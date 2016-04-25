@@ -130,5 +130,4 @@ class OrdersController extends Controller
         return $response;
     }
 
-
 }

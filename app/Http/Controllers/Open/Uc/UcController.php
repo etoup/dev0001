@@ -20,7 +20,7 @@ class UcController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function getInfo(){
-        $info = $this->uc->getInfo(Crypt::encrypt(Input::get('openId')));
+        $info = $this->uc->getInfo(Crypt::decrypt(Input::get('openId')));
 
         if(count($info)){
             $data = [
@@ -100,5 +100,13 @@ class UcController extends Controller
 
         return response()->json($data);
 
+    }
+
+    /**
+     * @param $token
+     * @return mixed
+     */
+    public function token($token){
+        return Crypt::encrypt($token);
     }
 }

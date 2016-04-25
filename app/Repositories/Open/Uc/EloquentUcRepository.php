@@ -5,7 +5,6 @@ namespace App\Repositories\Open\Uc;
 use App\Models\Access\User\User;
 use App\Models\Loop\LoopsFollows;
 use Aobo\RongCloud\Facades\RongCloud;
-use Illuminate\Support\Facades\Crypt;
 
 
 /**
@@ -38,7 +37,7 @@ class EloquentUcRepository implements UcRepositoryContract
             'name'=>$nickname,
             'nickname'=>$nickname,
             'sex'=>$sex,
-            'token'=>Crypt::encrypt($openid),
+            'token'=>$openid,
             'headimgurl'=>$headimgurl,
             'country'=>$country,
             'province'=>$province,
