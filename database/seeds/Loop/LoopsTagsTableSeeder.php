@@ -32,14 +32,14 @@ class LoopsTagsTableSeeder extends Seeder
             [
                 'title'        => '热门',
                 'types'        => 10,
-                'sort'         => 1,
+                'sort'         => 0,
                 'created_at'   => Carbon::now(),
                 'updated_at'   => Carbon::now(),
             ],
             [
                 'title'        => '关注',
                 'types'        => 20,
-                'sort'         => 0,
+                'sort'         => 1,
                 'created_at'   => Carbon::now(),
                 'updated_at'   => Carbon::now(),
             ],
