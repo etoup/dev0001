@@ -110,7 +110,9 @@
                                 <td>{{ $v->orders_numbers }}</td>
                                 <td>{{ $v->goods->title }}</td>
                                 <td>{{ $v->price }}</td>
-                                <td>{{ $v->users->name }}</td>
+                                @if(isset($v->users->name))
+                                    <td>{{ $v->users->name }}</td>
+                                @endif
                                 <td>
                                     @if(isset($v->users_address->mobile))
                                         {{ $v->users_address->mobile }}
