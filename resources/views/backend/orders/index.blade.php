@@ -112,6 +112,8 @@
                                 <td>{{ $v->price }}</td>
                                 @if(isset($v->users->name))
                                     <td>{{ $v->users->name }}</td>
+                                    @else
+                                    <td>&nbsp;</td>
                                 @endif
                                 <td>
                                     @if(isset($v->users_address->mobile))

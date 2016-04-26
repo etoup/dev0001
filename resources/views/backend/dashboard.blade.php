@@ -294,7 +294,9 @@
                                 <td><a href="＃">{{ $o->orders_numbers }}</a></td>
                                 <td>{{ $o->goods->title }}</td>
                                 @if(isset($o->users->name))
-                                <td>{{ $o->users->name }}</td>
+                                    <td>{{ $o->users->name }}</td>
+                                    @else
+                                    <td>&nbsp;</td>
                                 @endif
                                 <td>
                                     <span class="label label-success">{{ config('orders.orders_status')[$o->status] }}</span>
