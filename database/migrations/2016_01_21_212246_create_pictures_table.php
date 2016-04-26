@@ -16,8 +16,8 @@ class CreatePicturesTable extends Migration
         Schema::create(self::TBL_NAME,function(Blueprint $table){
             $table->increments('id');
             $table->integer('foreign_id')->unsigned();//外键ID
-            $table->string('path',80);//地址
-            $table->string('key',80);//图片名称
+            $table->string('path');//地址
+            $table->string('key',160);//图片名称
             $table->tinyInteger('types',false,true)->default(1);//类型 1=消息；2=商品；3=圈子；4=用户头像
             $table->tinyInteger('status')->default(1);//状态 －1=回收；1=正常
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));//创建时间
