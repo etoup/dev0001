@@ -251,7 +251,7 @@ class EloquentMyRepository implements MyRepositoryContract
      */
     public function orders($uid,$status,$page,$take = 10){
         $skip = $page * $take;
-        $orders = Orders::with('goods')->where(['users_id'=>$uid,'status'=>$status])->orderBy('id')->skip($skip)->take($take)->get();
+        $orders = Orders::with('goods')->where(['users_id'=>$uid,'status'=>$status])->orderBy('id','desc')->skip($skip)->take($take)->get();
         return $orders;
     }
 
