@@ -50,7 +50,7 @@ final class Operation
             $fops = implode('|', $fops);
         }
 
-        $url = "http://$this->domain/$key?$fops";
+        $url = "$this->domain/$key?$fops";
         if ($this->auth !== null) {
             $url = $this->auth->privateDownloadUrl($url, $this->token_expire);
         }

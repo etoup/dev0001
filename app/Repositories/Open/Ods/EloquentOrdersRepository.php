@@ -162,4 +162,13 @@ class EloquentOrdersRepository implements OrdersRepositoryContract
             ->leftJoin('pictures', 'goods.pictures_id', '=', 'pictures.id')
             ->find($id);
     }
+
+    /**
+     * @param $goods_id
+     * @param int $dec
+     * @return mixed
+     */
+    public function decrementGoodsStocks($goods_id,$dec = 1){
+        return Goods::where('id',$goods_id)->decrement('stocks',$dec);
+    }
 }

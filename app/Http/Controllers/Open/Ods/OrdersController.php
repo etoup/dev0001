@@ -142,6 +142,8 @@ class OrdersController extends Controller
             if ($successful) {
                 // 不是已经支付状态则修改为已经支付状态
                 $order->status = 10; // 更新支付状态
+                //调整库存
+                $this->orders->decrementGoodsStocks($order->goods_id);
             }
 
             $order->save(); // 保存订单

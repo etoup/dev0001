@@ -28,7 +28,8 @@ class UcController extends Controller
                 'info' => [
                     'uid' => $info->id,
                     'nickname' => $info->nickname,
-                    'token' =>$info->token
+                    'token' =>$info->token,
+                    'headimgurl'=>$info->headimgurl
                 ]
             ];
         }else{
@@ -64,7 +65,9 @@ class UcController extends Controller
                 'info' => [
                     'uid' => $id,
                     'nickname'=>Input::get('nickname'),
-                    'token'=>Crypt::encrypt(Input::get('openid'))
+                    'token'=>Crypt::encrypt(Input::get('openid')),
+                    'headimgurl'=>Input::get('headimgurl')
+
                 ]
             ];
         }else{

@@ -215,6 +215,29 @@ class MyController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function followsGoodsAll(){
+        $list = $this->my->followsGoodsAll(Input::get('uid'),Input::get('page'));
+        if(count($list)){
+            $data = [
+                'status' => true,
+                'info' => $list
+            ];
+        }else{
+            $count = $this->my->followsGoodsCountAll(Input::get('uid'));
+            $data = [
+                'status' => false,
+                'count' => intval($count),
+                'info' => [
+                    'msg' => '已全部加载'
+                ]
+            ];
+        }
+        return response()->json($data);
+    }
+
+    /**
      * @param $uid
      * @param $page
      * @return \Illuminate\Http\JsonResponse

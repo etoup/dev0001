@@ -196,7 +196,7 @@ class EloquentMyRepository implements MyRepositoryContract
      */
     public function followsGoods($uid,$page,$take = 10){
         $skip = $page * $take;
-        $followsGoods = GoodsFollows::where('goods_follows.users_id',$uid)
+        $followsGoods = GoodsFollows::where(['goods_follows.users_id'=>$uid,'goods_follows.types'=>0])
             ->leftJoin('goods', 'goods_follows.goods_id', '=', 'goods.id')
             ->leftJoin('pictures', 'goods.pictures_id', '=', 'pictures.id')
             ->orderBy('goods_follows.id')
@@ -211,7 +211,34 @@ class EloquentMyRepository implements MyRepositoryContract
      * @return mixed
      */
     public function followsGoodsCount($uid){
-        return GoodsFollows::where('users_id',$uid)->count();
+        return GoodsFollows::where(['users_id'=>$uid,'types'=>0])->count();
+    }
+
+    /**
+     * @param $uid
+     * @param $page
+     * @param int $take
+     * @return mixed
+     */
+    public function followsGoodsAll($uid,$page,$take = 10){
+        $skip = $page * $take;
+        $followsGoods = GoodsFollows::where(['goods_follows.users_id'=>$uid])
+            ->leftJoin('goods', 'goods_follows.goods_id', '=', 'goods.id')
+            ->leftJoin('pictures', 'goods.pictures_id', '=', 'pictures.id')
+            ->orderBy('goods_follows.types','desc')
+            ->orderBy('goods_follows.id','desc')
+            ->skip($skip)
+            ->take($take)
+            ->get();
+        return $followsGoods;
+    }
+
+    /**
+     * @param $uid
+     * @return mixed
+     */
+    public function followsGoodsCountAll($uid){
+        return GoodsFollows::where(['users_id'=>$uid])->count();
     }
 
     /**
@@ -222,7 +249,7 @@ class EloquentMyRepository implements MyRepositoryContract
      */
     public function followsLoops($uid,$page,$take = 10){
         $skip = $page * $take;
-        $followsLoops = LoopsFollows::where('loops_follows.users_id',$uid)
+        $followsLoops = LoopsFollows::where(['loops_follows.users_id'=>$uid])
             ->select('loops_follows.id','loops_follows.loops_id','loops.title','users.headimgurl','pictures.path')
             ->leftJoin('loops', 'loops_follows.loops_id', '=', 'loops.id')
             ->leftJoin('pictures', 'loops.pictures_id', '=', 'pictures.id')

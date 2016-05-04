@@ -17,6 +17,7 @@ class CreateLoopsMessagesTable extends Migration
             $table->increments('id');
             $table->integer('users_id')->unsigned();//用户ID
             $table->integer('loops_id')->unsigned();//圈子ID
+            $table->integer('goods_id')->unsigned();//商品ID
             $table->integer('loops_authority_id')->unsigned();//权限类型ID
             $table->string('contents');//内容
             $table->integer('pictures_id')->unsigned();//图片ID

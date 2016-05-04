@@ -30,6 +30,12 @@ interface LoopsRepositoryContract
     public function getLoops($tags_id,$page,$take = 0);
 
     /**
+     * @param $uid
+     * @return mixed
+     */
+    public function getLoopsOwn($uid);
+
+    /**
      * @param $tags_id
      * @return mixed
      */
@@ -56,6 +62,20 @@ interface LoopsRepositoryContract
      * @return mixed
      */
     public function getFollowsLoops($uid,$page,$take = 0);
+
+    /**
+     * @param $uid
+     * @param $loops_id
+     * @return mixed
+     */
+    public function hasFollows($uid,$loops_id);
+
+    /**
+     * @param $uid
+     * @param $loops_id
+     * @return mixed
+     */
+    public function join($uid,$loops_id);
 
     /**
      * @param $loops_id
@@ -86,6 +106,12 @@ interface LoopsRepositoryContract
      * @return mixed
      */
     public function getUsers($loops_id,$page,$take = 0);
+
+    /**
+     * @param $loops_id
+     * @return mixed
+     */
+    public function getUsersCount($loops_id);
 
     /**
      * @param $ids

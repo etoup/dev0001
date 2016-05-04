@@ -29,24 +29,60 @@ class GoodsFollowsTableSeeder extends Seeder
             [
                 'users_id'          => 2,
                 'goods_id'          => 1,
+                'types'             => 1,
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
             ],
             [
                 'users_id'          => 2,
                 'goods_id'          => 2,
+                'types'             => 1,
+
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
             ],
             [
                 'users_id'          => 2,
                 'goods_id'          => 3,
+                'types'             => 1,
+
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
             ],
             [
                 'users_id'          => 2,
                 'goods_id'          => 4,
+                'types'             => 1,
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
+            ],
+            [
+                'users_id'          => 3,
+                'goods_id'          => 5,
+                'types'             => 1,
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
+            ],
+            [
+                'users_id'          => 3,
+                'goods_id'          => 6,
+                'types'             => 1,
+
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
+            ],
+            [
+                'users_id'          => 3,
+                'goods_id'          => 7,
+                'types'             => 1,
+
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
+            ],
+            [
+                'users_id'          => 3,
+                'goods_id'          => 8,
+                'types'             => 1,
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
             ]

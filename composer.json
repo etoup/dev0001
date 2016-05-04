@@ -17,7 +17,9 @@
         "qiniu/php-sdk": "^7.0",
         "maatwebsite/excel": "2.1.1",
         "aobozhang/rongcloud-facades": "^0.1.0",
-        "overtrue/wechat": "~3.0"
+        "overtrue/wechat": "~3.0",
+        "zgldh/qiniu-laravel-storage": "^0.3.0",
+        "toplan/laravel-sms": "~2.3.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

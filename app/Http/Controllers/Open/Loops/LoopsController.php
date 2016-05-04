@@ -174,6 +174,33 @@ class LoopsController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDoingTags(){
+        $map = [];
+        $data = $this->loops->getSets(Input::get('uid'),Input::get('loops_id'),Input::get('types'));
+        if(count($data)){
+            foreach($data as $k => $v){
+                $map[] = $v['tags'];
+            }
+        }
+        if($map[Input::get('index')]){
+            $info = [
+                'status' => true,
+                'info' => $map[Input::get('index')]
+            ];
+        }else{
+            $info = [
+                'status' => false,
+                'info' => [
+                    'msg' => '无效参数'
+                ]
+            ];
+        }
+        return response()->json($info);
+    }
+
+    /**
      * @param $loops_id
      * @param $page
      * @return \Illuminate\Http\JsonResponse
@@ -214,8 +241,10 @@ class LoopsController extends Controller
                 'info' => $list
             ];
         }else{
+            $count = $this->loops->getUsersCount($loops_id);
             $data = [
                 'status' => false,
+                'count' => intval($count),
                 'info' => [
                     'msg' => '已全部加载'
                 ]
@@ -240,6 +269,67 @@ class LoopsController extends Controller
                 'status' => false
             ];
         }
+        return response()->json($data);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function hasFollows(){
+        $own = $this->loops->getLoopsOwn(Input::get('uid'));
+        if($own){
+            $data = [
+                'status' => false
+            ];
+        }else{
+            $info = $this->loops->hasFollows(Input::get('uid'),Input::get('loops_id'));
+            if($info){
+                $data = [
+                    'status' => false
+                ];
+            }else{
+                $data = [
+                    'status' => true
+                ];
+            }
+        }
+
+        return response()->json($data);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function join(){
+        $own = $this->loops->getLoopsOwn(Input::get('uid'));
+        if($own){
+            $data = [
+                'status' => false,
+                'msg' => '圈主不需要加入'
+            ];
+        }else{
+            $info = $this->loops->hasFollows(Input::get('uid'),Input::get('loops_id'));
+            if($info){
+                $data = [
+                    'status' => false,
+                    'msg' => '请不要重复加入'
+                ];
+            }else{
+                $id = $this->loops->join(Input::get('uid'),Input::get('loops_id'));
+                if($id){
+                    $data = [
+                        'status' => true
+                    ];
+                }else{
+                    $data = [
+                        'status' => false,
+                        'msg'=>'加入失败'
+                    ];
+                }
+            }
+        }
+
+
         return response()->json($data);
     }
 }

@@ -116,6 +116,20 @@ interface MyRepositoryContract
      * @param int $take
      * @return mixed
      */
+    public function followsGoodsAll($uid,$page,$take = 0);
+
+    /**
+     * @param $uid
+     * @return mixed
+     */
+    public function followsGoodsCountAll($uid);
+
+    /**
+     * @param $uid
+     * @param $page
+     * @param int $take
+     * @return mixed
+     */
     public function followsLoops($uid,$page,$take = 0);
 
     /**

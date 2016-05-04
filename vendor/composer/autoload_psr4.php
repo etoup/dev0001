@@ -6,7 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'zgldh\\QiniuStorage\\' => array($vendorDir . '/zgldh/qiniu-laravel-storage/src'),
     'XdgBaseDir\\' => array($vendorDir . '/dnoegel/php-xdg-base-dir/src'),
+    'Toplan\\TaskBalance\\' => array($vendorDir . '/toplan/task-balancer/src/TaskBalancer'),
+    'Toplan\\PhpSms\\Facades\\' => array($vendorDir . '/toplan/phpsms/src/phpsms/facades'),
+    'Toplan\\PhpSms\\' => array($vendorDir . '/toplan/phpsms/src/phpsms', $vendorDir . '/toplan/phpsms/src/phpsms/agents'),
     'TijsVerkoyen\\CssToInlineStyles\\' => array($vendorDir . '/tijsverkoyen/css-to-inline-styles/src'),
     'Symfony\\Polyfill\\Util\\' => array($vendorDir . '/symfony/polyfill-util'),
     'Symfony\\Polyfill\\Php56\\' => array($vendorDir . '/symfony/polyfill-php56'),

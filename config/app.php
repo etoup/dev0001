@@ -195,9 +195,15 @@ return [
          */
         App\Providers\MacroServiceProvider::class,
 
+        //融云
         Aobo\RongCloud\RongCloudServiceProvider::class,
 
+        //七牛云存储
+        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
 
+        //SMS
+        Toplan\PhpSms\PhpSmsServiceProvider::class,
+        Toplan\Sms\SmsManagerServiceProvider::class,
     ],
 
     /*
@@ -260,6 +266,9 @@ return [
          */
         'Excel'       => Maatwebsite\Excel\Facades\Excel::class,
 
+        //SMS
+        'PhpSms' => Toplan\PhpSms\Facades\Sms::class,
+        'SmsManager' => Toplan\Sms\Facades\SmsManager::class,
 
     ],
 

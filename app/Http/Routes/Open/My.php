@@ -8,12 +8,14 @@ Route::group(['namespace' => 'My'], function() {
     Route::get('my/goods/{uid}', 'MyController@getGoods')->name('open.my.goods');
     Route::get('my/sales/{uid}/{page}', 'MyController@getSales')->name('open.my.sales');
     Route::get('my/follows-goods/{uid}/{page}', 'MyController@getFollowsGoods')->name('open.my.follows-goods');
+    Route::get('my/follows-goods-all/{uid}/{page}', 'MyController@getFollowsGoodsAll')->name('open.my.follows-goods-all');
     Route::get('my/follows-loops/{uid}/{page}', 'MyController@getFollowsLoops')->name('open.my.follows-loops');
 
     Route::post('my/loops', 'MyController@loops')->name('open.my.loops');
     Route::post('my/goods', 'MyController@goods')->name('open.my.goods');
     Route::post('my/sales', 'MyController@sales')->name('open.my.sales');
     Route::post('my/follows-goods', 'MyController@followsGoods')->name('open.my.follows-goods');
+    Route::post('my/follows-goods-all', 'MyController@followsGoodsAll')->name('open.my.follows-goods-all');
     Route::post('my/follows-loops', 'MyController@followsLoops')->name('open.my.follows-loops');
     Route::post('my/orders-unpaid', 'MyController@ordersUnpaid')->name('open.my.orders-unpaid');
     Route::post('my/orders-paid', 'MyController@ordersPaid')->name('open.my.orders-paid');

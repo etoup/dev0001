@@ -79,7 +79,18 @@ return [
             'region'    => 'IAD',
             'url_type'  => 'publicURL',
         ],
-
+        'qiniu' => [
+            'driver'  => 'qiniu',
+            'domains' => [
+                'default'   => 'http://7u2i5s.com1.z0.glb.clouddn.com', //你的七牛域名
+                'https'     => '',         //你的HTTPS域名
+                'custom'    => '',     //你的自定义域名
+            ],
+            'access_key'=> 'CLAeGg5QgsvBP3frmUz_1tmCEZL295RBeDkuARd9',  //AccessKey
+            'secret_key'=> 'QmEkX_oWGQDKMx2yKg5wxwsEkE8y8OKYw8xdsJrJ',  //SecretKey
+            'bucket'    => 'ijiangjiu',  //Bucket名字
+            'notify_url'=> '',  //持久化处理回调地址
+        ],
     ],
 
 ];

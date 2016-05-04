@@ -62,4 +62,11 @@ interface OrdersRepositoryContract
      * @return mixed
      */
     public function getOrdersInfoById($id);
+
+    /**
+     * @param $goods_id
+     * @param int $dec
+     * @return mixed
+     */
+    public function decrementGoodsStocks($goods_id,$dec = 1);
 }

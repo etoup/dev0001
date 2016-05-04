@@ -47,6 +47,14 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
     }
 
     /**
+     * @param $uid
+     * @return mixed
+     */
+    public function getLoopsOwn($uid){
+        return Loops::where('users_id',$uid)->first();
+    }
+
+    /**
      * @param $tags_id
      * @return mixed
      */
@@ -82,6 +90,24 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
         $skip = $page * $take;
         return LoopsFollows::where(['users_id'=>$uid])->orderBy('id')->skip($skip)->take($take)->get();
 
+    }
+
+    /**
+     * @param $uid
+     * @param $loops_id
+     * @return mixed
+     */
+    public function hasFollows($uid,$loops_id){
+        return LoopsFollows::where(['users_id'=>$uid,'loops_id'=>$loops_id])->first();
+    }
+
+    /**
+     * @param $uid
+     * @param $loops_id
+     * @return mixed
+     */
+    public function join($uid,$loops_id){
+        return LoopsFollows::insertGetId(['users_id'=>$uid,'loops_id'=>$loops_id]);
     }
 
     /**
@@ -138,6 +164,14 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
             ->skip($skip)
             ->take($take)
             ->get();
+    }
+
+    /**
+     * @param $loops_id
+     * @return mixed
+     */
+    public function getUsersCount($loops_id){
+        return LoopsUsers::where(['loops_id' => $loops_id,'types'=>0])->count();
     }
 
     /**
