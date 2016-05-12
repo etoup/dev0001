@@ -21,9 +21,9 @@ class GoodsController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index($page){
+    public function index(){
 
-        $list = $this->goods->getGoods($page);
+        $list = $this->goods->getGoods(Input::get('page'));
 
         if(count($list)){
             $data = [
@@ -31,8 +31,10 @@ class GoodsController extends Controller
                 'info' => $list
             ];
         }else{
+            $count = $this->goods->getGoodsCount();
             $data = [
                 'status' => false,
+                'count' => intval($count),
                 'info' => [
                     'msg' => '已全部加载'
                 ]
@@ -105,6 +107,48 @@ class GoodsController extends Controller
                 'status' => false,
                 'info' => [
                     'msg' => '无效商品'
+                ]
+            ];
+        }
+
+        return response()->json($data);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cancelFollows(){
+        $back = $this->goods->cancelFollows(Input::get('id'));
+        if($back){
+            $data = [
+                'status' => true
+            ];
+        }else{
+            $data = [
+                'status' => false,
+                'info' => [
+                    'msg' => '操作失败'
+                ]
+            ];
+        }
+
+        return response()->json($data);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function follows(){
+        $back = $this->goods->follows(Input::get('goods_id'),Input::get('uid'));
+        if($back){
+            $data = [
+                'status' => true
+            ];
+        }else{
+            $data = [
+                'status' => false,
+                'info' => [
+                    'msg' => '操作失败'
                 ]
             ];
         }

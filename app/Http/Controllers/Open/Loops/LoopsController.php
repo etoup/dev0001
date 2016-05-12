@@ -19,13 +19,11 @@ class LoopsController extends Controller
     }
 
     /**
-     * @param $tags_id
-     * @param $page
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index($tags_id,$page){
+    public function index(){
 
-        $list = $this->loops->getLoops($tags_id,$page);
+        $list = $this->loops->getLoops(Input::get('tags_id'),Input::get('page'));
 
         if(count($list)){
             foreach($list as $k => $v){
@@ -36,7 +34,7 @@ class LoopsController extends Controller
                 'info' => $list
             ];
         }else{
-            $count = $this->loops->getLoopsCount($tags_id);
+            $count = $this->loops->getLoopsCount(Input::get('tags_id'));
             $data = [
                 'status' => false,
                 'count' => intval($count),
@@ -51,13 +49,11 @@ class LoopsController extends Controller
     }
 
     /**
-     * @param $tags_id
-     * @param $page
      * @return \Illuminate\Http\JsonResponse
      */
-    public function hot($tags_id,$page){
+    public function hot(){
 
-        $list = $this->loops->getLoops($tags_id,$page);
+        $list = $this->loops->getLoops(Input::get('tags_id'),Input::get('page'));
 
         if(count($list)){
             foreach($list as $k => $v){
@@ -69,7 +65,7 @@ class LoopsController extends Controller
             ];
 
         }else{
-            $count = $this->loops->getLoopsCount($tags_id);
+            $count = $this->loops->getLoopsCount(Input::get('tags_id'));
             $data = [
                 'status' => false,
                 'count' => intval($count),
@@ -84,12 +80,10 @@ class LoopsController extends Controller
     }
 
     /**
-     * @param $uid
-     * @param $page
      * @return \Illuminate\Http\JsonResponse
      */
-    public function follows($uid,$page){
-        if(!$uid){
+    public function follows(){
+        if(!Input::get('uid')){
             $data = [
                 'status' => false,
                 'info' => [
@@ -97,9 +91,10 @@ class LoopsController extends Controller
                 ]
             ];
         }else{
-            $list = $this->loops->getFollowsLoops($uid,$page);
+            $list = $this->loops->getFollowsLoops(Input::get('uid'),Input::get('page'));
 
             if(count($list)){
+                $map = [];
                 foreach($list as $k => $v){
                     $map[$k] = $this->loops->getLoopById($v->loops_id);
                 }
@@ -109,7 +104,7 @@ class LoopsController extends Controller
                 ];
 
             }else{
-                $count = $this->loops->getLoopsCountByUid($uid);
+                $count = $this->loops->getLoopsCountByUid(Input::get('uid'));
                 $data = [
                     'status' => false,
                     'count' => intval($count),
@@ -144,6 +139,7 @@ class LoopsController extends Controller
                 ]
             ];
         }
+        sleep(1);
         return response()->json($data);
     }
 
@@ -178,16 +174,17 @@ class LoopsController extends Controller
      */
     public function getDoingTags(){
         $map = [];
+        $index = Input::get('index');
         $data = $this->loops->getSets(Input::get('uid'),Input::get('loops_id'),Input::get('types'));
         if(count($data)){
             foreach($data as $k => $v){
                 $map[] = $v['tags'];
             }
         }
-        if($map[Input::get('index')]){
+        if($map[$index]){
             $info = [
                 'status' => true,
-                'info' => $map[Input::get('index')]
+                'info' => $map[$index]
             ];
         }else{
             $info = [
@@ -201,13 +198,11 @@ class LoopsController extends Controller
     }
 
     /**
-     * @param $loops_id
-     * @param $page
      * @return \Illuminate\Http\JsonResponse
      */
-    public function goods($loops_id,$page){
+    public function goods(){
 
-        $list = $this->loops->getGoods($loops_id,$page);
+        $list = $this->loops->getGoods(Input::get('loops_id'),Input::get('page'));
 
         if(count($list)){
             $data = [
@@ -227,13 +222,11 @@ class LoopsController extends Controller
     }
 
     /**
-     * @param $loops_id
-     * @param $page
      * @return \Illuminate\Http\JsonResponse
      */
-    public function users($loops_id,$page){
+    public function users(){
 
-        $list = $this->loops->getUsers($loops_id,$page);
+        $list = $this->loops->getUsers(Input::get('loops_id'),Input::get('page'));
 
         if(count($list)){
             $data = [
@@ -241,7 +234,7 @@ class LoopsController extends Controller
                 'info' => $list
             ];
         }else{
-            $count = $this->loops->getUsersCount($loops_id);
+            $count = $this->loops->getUsersCount(Input::get('loops_id'));
             $data = [
                 'status' => false,
                 'count' => intval($count),

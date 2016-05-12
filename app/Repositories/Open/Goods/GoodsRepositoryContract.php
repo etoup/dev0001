@@ -17,6 +17,11 @@ interface GoodsRepositoryContract
     public function getGoods($page,$take = 0);
 
     /**
+     * @return mixed
+     */
+    public function getGoodsCount();
+
+    /**
      * @param $id
      * @return mixed
      */
@@ -27,6 +32,19 @@ interface GoodsRepositoryContract
      * @return mixed
      */
     public function getFollows($goods_id);
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function cancelFollows($id);
+
+    /**
+     * @param $goods_id
+     * @param $uid
+     * @return mixed
+     */
+    public function follows($goods_id,$uid);
 
     /**
      * @param $goods_id

@@ -76,7 +76,7 @@ class MessagesController extends Controller
                 'created_at' => Carbon::now()->toDateTimeString()
             ]);
             //保存图片消息信息
-            $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/100/h/200');
+            $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/300/h/300');
             $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,5,$id);
             $data = [
                 'status' => true,
@@ -117,7 +117,7 @@ class MessagesController extends Controller
                 'created_at' => Carbon::now()->toDateTimeString()
             ]);
             //保存图片消息信息
-            $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/100/h/200');
+            $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/300/h/300');
             $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,6,$id);
             $data = [
                 'status' => true,
@@ -171,7 +171,7 @@ class MessagesController extends Controller
                     //保存商品封面信息
                     Goods::where('id',$goods_id)->update(['pictures_id'=>$pictures_id]);
                     //保存图片消息信息
-                    $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/100/h/200');
+                    $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/300/h/300');
                     $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,7,$pictures_id,$goods_id);
                 }
             }

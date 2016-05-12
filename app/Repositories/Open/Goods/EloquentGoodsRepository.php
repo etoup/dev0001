@@ -15,19 +15,28 @@ class EloquentGoodsRepository implements GoodsRepositoryContract
 {
 
     /**
+     *
      * @param $page
      * @param int $take
      * @return mixed
      */
     public function getGoods($page,$take = 10){
         $skip = $page * $take;
-        $goods = Goods::with('pictures')->orderBy('id')->skip($skip)->take($take)->get();
+        $goods = Goods::with('pictures')->where('status',10)->orderBy('id')->skip($skip)->take($take)->get();
         if(count($goods)){
             foreach($goods as $k => $v){
                 $goods[$k]['follows'] = $this->getFollows($v->id);
             }
         }
         return $goods;
+    }
+
+    /**
+     *
+     * @return mixed
+     */
+    public function getGoodsCount(){
+        return Goods::where('status',10)->count();
     }
 
     /**
@@ -43,7 +52,24 @@ class EloquentGoodsRepository implements GoodsRepositoryContract
      * @return mixed
      */
     public function getFollows($goods_id){
-        return GoodsFollows::where('goods_id',$goods_id)->count();
+        return GoodsFollows::where(['goods_id'=>$goods_id])->count();
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function cancelFollows($id){
+        return GoodsFollows::where('id',$id)->delete();
+    }
+
+    /**
+     * @param $goods_id
+     * @param $uid
+     * @return mixed
+     */
+    public function follows($goods_id,$uid){
+        return GoodsFollows::insertGetId(['goods_id'=>$goods_id,'users_id'=>$uid]);
     }
 
     /**
@@ -81,10 +107,10 @@ class EloquentGoodsRepository implements GoodsRepositoryContract
     public function isLike($goods_id,$uid=0){
         if($uid){
             $info = GoodsFollows::where(['goods_id'=>$goods_id,'users_id'=>$uid])->first();
-            return count($info) ? true : false;
+            return count($info) ? ['has'=>true,'id'=>$info['id'],'goods_id'=>$goods_id,'users_id'=>$uid,'types'=>$info['types']] : ['has'=>false,'goods_id'=>$goods_id,'users_id'=>$uid,'types'=>$info['types']];
         }
 
-        return false;
+        return ['has'=>false,'goods_id'=>$goods_id,'users_id'=>$uid,'types'=>0];
     }
 
     /**
