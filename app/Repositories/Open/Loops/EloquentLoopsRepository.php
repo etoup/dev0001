@@ -7,7 +7,6 @@ use App\Models\Loop\Loops;
 use App\Models\Loop\LoopsSets;
 use App\Models\Loop\LoopsTags;
 use App\Models\Loop\LoopsFollows;
-use App\Models\Loop\LoopsUsers;
 
 /**
  * Class EloquentLoopTagsRepository
@@ -157,10 +156,10 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      */
     public function getUsers($loops_id,$page,$take = 10){
         $skip = $page * $take;
-        return LoopsUsers::where(['loops_id' => $loops_id,'types'=>0])
-            ->select('loops_users.id','users.name','users.headimgurl')
-            ->leftJoin('users', 'loops_users.users_id', '=', 'users.id')
-            ->orderBy('loops_users.id')
+        return LoopsFollows::where(['loops_id' => $loops_id,'types'=>0])
+            ->select('loops_follows.id','users.name','users.headimgurl')
+            ->leftJoin('users', 'loops_follows.users_id', '=', 'users.id')
+            ->orderBy('loops_follows.id')
             ->skip($skip)
             ->take($take)
             ->get();
@@ -171,7 +170,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      * @return mixed
      */
     public function getUsersCount($loops_id){
-        return LoopsUsers::where(['loops_id' => $loops_id,'types'=>0])->count();
+        return LoopsFollows::where(['loops_id' => $loops_id,'types'=>0])->count();
     }
 
     /**
@@ -180,7 +179,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      */
     public function delUsers($ids){
         if(is_array($ids)){
-            LoopsUsers::whereIn('id',$ids)->delete();
+            LoopsFollows::whereIn('id',$ids)->delete();
             return true;
         }else{
             return false;

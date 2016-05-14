@@ -47,7 +47,8 @@ class EloquentUcRepository implements UcRepositoryContract
         ]);
 
         if($id){
-            //关注
+
+            //关注圈子助手
             $follows = new LoopsFollows;
             $follows->users_id = $id;
             $follows->loops_id = 1;

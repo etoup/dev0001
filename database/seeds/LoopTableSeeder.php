@@ -21,7 +21,6 @@ class LoopTableSeeder extends Seeder
         $this->call(LoopsAuthorityTableSeeder::class);
         $this->call(LoopsMessagesTableSeeder::class);
         $this->call(LoopsDiariesTableSeeder::class);
-        $this->call(LoopsUsersTableSeeder::class);
         $this->call(LoopsFollowsTableSeeder::class);
 
         if (env('DB_CONNECTION') == 'mysql') {

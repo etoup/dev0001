@@ -249,7 +249,7 @@ class EloquentMyRepository implements MyRepositoryContract
      */
     public function followsLoops($uid,$page,$take = 10){
         $skip = $page * $take;
-        $followsLoops = LoopsFollows::where(['loops_follows.users_id'=>$uid])
+        $followsLoops = LoopsFollows::where(['loops_follows.users_id'=>$uid,'loops_follows.types'=>0])
             ->select('loops_follows.id','loops_follows.loops_id','loops.title','users.headimgurl','pictures.path')
             ->leftJoin('loops', 'loops_follows.loops_id', '=', 'loops.id')
             ->leftJoin('pictures', 'loops.pictures_id', '=', 'pictures.id')
@@ -266,7 +266,7 @@ class EloquentMyRepository implements MyRepositoryContract
      * @return mixed
      */
     public function followsLoopsCount($uid){
-        return LoopsFollows::where('users_id',$uid)->count();
+        return LoopsFollows::where(['users_id'=>$uid,'types'=>0])->count();
     }
 
     /**

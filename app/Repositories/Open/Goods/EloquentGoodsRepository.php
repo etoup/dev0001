@@ -44,7 +44,7 @@ class EloquentGoodsRepository implements GoodsRepositoryContract
      * @return mixed
      */
     public function getInfoById($id){
-        return Goods::select('id','price','title')->find($id);
+        return Goods::with('pictures')->find($id);
     }
 
     /**

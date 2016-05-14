@@ -20,6 +20,27 @@ interface MessagesRepositoryContract
     public function saveMessages($users_id,$loops_id,$contents,$loops_authority_id,$pictures_id = 0,$goods_id = 0);
 
     /**
+     * @param $loops_id
+     * @param $page
+     * @param int $take
+     * @return mixed
+     */
+    public function getMessages($loops_id,$page,$take = 0);
+
+    /**
+     * @param $loops_id
+     * @return mixed
+     */
+    public function getMessagesCount($loops_id);
+
+    /**
+     * @param $users_id
+     * @param $loops_id
+     * @return mixed
+     */
+    public function loopsFollows($users_id,$loops_id);
+
+    /**
      * @param $users_id
      * @param $loops_id
      * @param $pictures_id

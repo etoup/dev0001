@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Backend\Loop;
 
+use Aobo\RongCloud\Facades\RongCloud;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Access\User\User;
@@ -10,7 +11,7 @@ use App\Models\Loop\Loops;
 use App\Models\Loop\LoopsDiaries;
 use App\Models\Loop\LoopsAuthority;
 use App\Models\Loop\LoopsSets;
-use App\Models\Loop\LoopsUsers;
+use App\Models\Loop\LoopsFollows;
 use App\Models\Loop\LoopsMessages;
 use App\Models\Pictures\Pictures;
 use App\Exceptions\GeneralException;
@@ -77,6 +78,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
     public function saveLoop($input){
         //获取用户ID
         $usersinfo = User::where('name',$input['username'])->first();
+
         //调整用户角色 10=圈主
         User::where('id',$usersinfo['id'])->update(['loop_roles'=>10]);
 
@@ -89,6 +91,9 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
         $loop->profiles = $input['profiles'];
         $loop->save();
         $loop_id = $loop->id;
+
+        //创建群组
+        RongCloud::groupCreate($usersinfo->id,$loop_id,$input['title']);
 
         return $loop_id;
     }
@@ -266,7 +271,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
             foreach($list as $k => $v){
                 $where = ['loops_id'=> $v->id];
                 $diaries = LoopsDiaries::where($where)->count();
-                $members = LoopsUsers::where(['loops_id'=> $v->id,'types'=>0])->count();
+                $members = LoopsFollows::where(['loops_id'=> $v->id,'types'=>0])->count();
                 $last_msg_time = LoopsMessages::where($where)->orderBy('id','desc')->pluck('created_at')->first();
                 $list[$k]['diaries'] = $diaries;
                 $list[$k]['members'] = $members;
@@ -323,7 +328,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
             foreach($list as $k => $v){
                 $where = ['loops_id'=> $v->id];
                 $diaries = LoopsDiaries::where($where)->count();
-                $members = LoopsUsers::where(['loops_id'=> $v->id,'types'=>0])->count();
+                $members = LoopsFollows::where(['loops_id'=> $v->id,'types'=>0])->count();
                 $last_msg_time = LoopsMessages::where($where)->orderBy('id','desc')->pluck('created_at')->first();
                 $list[$k]['diaries'] = $diaries;
                 $list[$k]['members'] = $members;
@@ -452,7 +457,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
             foreach($list as $k => $v){
                 $where = ['loops_id'=> $v->id];
                 $diaries = LoopsDiaries::where($where)->count();
-                $members = LoopsUsers::where(['loops_id'=> $v->id,'types'=>0])->count();
+                $members = LoopsFollows::where(['loops_id'=> $v->id,'types'=>0])->count();
                 $last_msg_time = LoopsMessages::where($where)->orderBy('id','desc')->pluck('created_at')->first();
                 $list[$k]['diaries'] = $diaries;
                 $list[$k]['members'] = $members;
@@ -505,7 +510,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
                 foreach ($list as $k => $v) {
                     $where = ['loops_id' => $v->id];
                     $diaries = LoopsDiaries::where($where)->count();
-                    $members = LoopsUsers::where(['loops_id' => $v->id, 'types' => 0])->count();
+                    $members = LoopsFollows::where(['loops_id' => $v->id, 'types' => 0])->count();
                     $last_msg_time = LoopsMessages::where($where)->orderBy('id', 'desc')->pluck('created_at')->first();
                     $diff = strtotime(date('Y-m-d h:i:s')) - (strtotime($last_msg_time));
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Open\Loops;
 
 
+use Aobo\RongCloud\Facades\RongCloud;
 use App\Http\Controllers\Controller;
 use App\Models\Goods\Goods;
 use App\Models\Goods\GoodsFollows;
@@ -38,11 +39,16 @@ class MessagesController extends Controller
         $id = $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),Input::get('contents'),4);
         $users = $this->messages->getUsers(Input::get('uid'));
         if($id){
+            //加入群组
+            RongCloud::groupJoin(Input::get('uid'),Input::get('loops_id'),Input::get('title'));
+            //发送消息
+            RongCloud::messageGroupPublish(Input::get('uid'),[Input::get('loops_id')],'RC:TxtMsg',Input::get('contents'));
             $data = [
                 'status' => true,
                 'info' => [
-                    'types' => 'text',
-                    'msg' => Input::get('contents'),
+                    'tags' => 'my-text',
+                    'time' => Carbon::now()->toTimeString(),
+                    'contents' => Input::get('contents'),
                     'headimgurl' => $users->headimgurl,
                     'nickname' => $users->nickname
                 ]
@@ -76,13 +82,14 @@ class MessagesController extends Controller
                 'created_at' => Carbon::now()->toDateTimeString()
             ]);
             //保存图片消息信息
-            $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/300/h/300');
+            $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/500/h/500');
             $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,5,$id);
             $data = [
                 'status' => true,
                 'info' => [
-                    'types' => 'img',
-                    'msg' => $previewPath,
+                    'tags' => 'my-img',
+                    'time' => Carbon::now()->toTimeString(),
+                    'contents' => $previewPath,
                     'headimgurl' => $users->headimgurl,
                     'nickname' => $users->nickname
                 ]
@@ -117,13 +124,14 @@ class MessagesController extends Controller
                 'created_at' => Carbon::now()->toDateTimeString()
             ]);
             //保存图片消息信息
-            $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/300/h/300');
+            $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/500/h/500');
             $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,6,$id);
             $data = [
                 'status' => true,
                 'info' => [
-                    'types' => 'photo',
-                    'msg' => $previewPath,
+                    'tags' => 'my-photo',
+                    'time' => Carbon::now()->toTimeString(),
+                    'contents' => $previewPath,
                     'headimgurl' => $users->headimgurl,
                     'nickname' => $users->nickname
                 ]
@@ -171,7 +179,7 @@ class MessagesController extends Controller
                     //保存商品封面信息
                     Goods::where('id',$goods_id)->update(['pictures_id'=>$pictures_id]);
                     //保存图片消息信息
-                    $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/300/h/300');
+                    $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/500/h/500');
                     $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,7,$pictures_id,$goods_id);
                 }
             }
@@ -195,5 +203,33 @@ class MessagesController extends Controller
             ];
         }
         return response()->json($data);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getMessages(){
+        $messages = $this->messages->getMessages(Input::get('loops_id'),Input::get('page'));
+        if(count($messages)){
+            $data = [
+                'status' => true,
+                'info' => [
+                    'uid' => Input::get('uid'),
+                    'list' => $messages
+                ]
+            ];
+        }else{
+            $count = $this->messages->getMessagesCount(Input::get('loops_id'));
+            $data = [
+                'status' => false,
+                'count' => intval($count),
+                'info' => [
+                    'msg' => '全部加载完毕'
+                ]
+            ];
+        }
+
+        return response()->json($data);
+
     }
 }
