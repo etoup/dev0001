@@ -41,7 +41,7 @@ class LoopsMessagesTableSeeder extends Seeder
             [
                 'users_id'     => 2,
                 'loops_id'     => 1,
-                'loops_authority_id' => 5,
+                'loops_authority_id' => 4,
                 'contents'     => '消息测试内容2',
                 'date_node'    => '2016-02-07',
                 'created_at'   => Carbon::now(),
@@ -50,7 +50,7 @@ class LoopsMessagesTableSeeder extends Seeder
             [
                 'users_id'     => 2,
                 'loops_id'     => 1,
-                'loops_authority_id' => 6,
+                'loops_authority_id' => 4,
                 'contents'     => '消息测试内容3',
                 'date_node'    => '2016-02-08',
                 'created_at'   => Carbon::now(),
@@ -59,7 +59,7 @@ class LoopsMessagesTableSeeder extends Seeder
             [
                 'users_id'     => 2,
                 'loops_id'     => 1,
-                'loops_authority_id' => 7,
+                'loops_authority_id' => 4,
                 'contents'     => '消息测试内容4',
                 'date_node'    => '2016-02-08',
                 'created_at'   => Carbon::now(),
@@ -68,7 +68,7 @@ class LoopsMessagesTableSeeder extends Seeder
             [
                 'users_id'     => 2,
                 'loops_id'     => 1,
-                'loops_authority_id' => 8,
+                'loops_authority_id' => 4,
                 'contents'     => '消息测试内容5',
                 'date_node'    => '2016-02-09',
                 'created_at'   => Carbon::now(),
@@ -77,7 +77,7 @@ class LoopsMessagesTableSeeder extends Seeder
             [
                 'users_id'     => 2,
                 'loops_id'     => 1,
-                'loops_authority_id' => 9,
+                'loops_authority_id' => 4,
                 'contents'     => '消息测试内容6',
                 'date_node'    => '2016-02-09',
                 'created_at'   => Carbon::now(),
@@ -95,7 +95,7 @@ class LoopsMessagesTableSeeder extends Seeder
             [
                 'users_id'     => 2,
                 'loops_id'     => 1,
-                'loops_authority_id' => 5,
+                'loops_authority_id' => 4,
                 'contents'     => '消息测试内容8',
                 'date_node'    => Carbon::createFromDate(),
                 'created_at'   => Carbon::now(),
@@ -104,7 +104,7 @@ class LoopsMessagesTableSeeder extends Seeder
             [
                 'users_id'     => 2,
                 'loops_id'     => 1,
-                'loops_authority_id' => 6,
+                'loops_authority_id' => 4,
                 'contents'     => '消息测试内容9',
                 'date_node'    => Carbon::createFromDate(),
                 'created_at'   => Carbon::now(),
@@ -113,7 +113,7 @@ class LoopsMessagesTableSeeder extends Seeder
             [
                 'users_id'     => 2,
                 'loops_id'     => 1,
-                'loops_authority_id' => 7,
+                'loops_authority_id' => 4,
                 'contents'     => '消息测试内容10',
                 'date_node'    => Carbon::createFromDate(),
                 'created_at'   => Carbon::now(),
@@ -122,7 +122,7 @@ class LoopsMessagesTableSeeder extends Seeder
             [
                 'users_id'     => 2,
                 'loops_id'     => 1,
-                'loops_authority_id' => 8,
+                'loops_authority_id' => 4,
                 'contents'     => '消息测试内容11',
                 'date_node'    => Carbon::createFromDate(),
                 'created_at'   => Carbon::now(),
@@ -131,7 +131,7 @@ class LoopsMessagesTableSeeder extends Seeder
             [
                 'users_id'     => 2,
                 'loops_id'     => 1,
-                'loops_authority_id' => 9,
+                'loops_authority_id' => 4,
                 'contents'     => '消息测试内容12',
                 'date_node'    => Carbon::createFromDate(),
                 'created_at'   => Carbon::now(),
