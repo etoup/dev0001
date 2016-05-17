@@ -116,6 +116,10 @@ class EloquentMessagesRepository implements MessagesRepositoryContract
         return LoopsMessages::where('loops_id',$loops_id)->count();
     }
 
+    public function getPicturesFollowsCount($messages_id,$uid,$pictures_id){
+        
+    }
+
     /**
      * @param $users_id
      * @param $loops_id
@@ -166,5 +170,20 @@ class EloquentMessagesRepository implements MessagesRepositoryContract
     public function getUsers($users_id){
         $users = User::select('name','nickname','headimgurl')->find($users_id);
         return $users;
+    }
+
+    /**
+     * @param $messages_id
+     * @return mixed
+     */
+    public function getImages($messages_id){
+        $info = LoopsMessages::find($messages_id);
+        $list = LoopsMessages::where('loops_id',$info->loops_id)
+            ->whereIn('loops_authority_id', [5, 6])
+            ->select('loops_messages.id','pictures.path')
+            ->leftJoin('pictures','loops_messages.pictures_id','=','pictures.id')
+            ->orderBy('loops_messages.id')
+            ->get();
+        return $list;
     }
 }

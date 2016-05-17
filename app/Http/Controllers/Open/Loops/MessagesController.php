@@ -83,10 +83,11 @@ class MessagesController extends Controller
             ]);
             //保存图片消息信息
             $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/500/h/500');
-            $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,5,$id);
+            $messages_id = $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,5,$id);
             $data = [
                 'status' => true,
                 'info' => [
+                    'id' => $messages_id,
                     'tags' => 'my-img',
                     'time' => Carbon::now()->toTimeString(),
                     'contents' => $previewPath,
@@ -125,10 +126,11 @@ class MessagesController extends Controller
             ]);
             //保存图片消息信息
             $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/500/h/500');
-            $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,6,$id);
+            $messages_id = $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,6,$id);
             $data = [
                 'status' => true,
                 'info' => [
+                    'id' => $messages_id,
                     'tags' => 'my-photo',
                     'time' => Carbon::now()->toTimeString(),
                     'contents' => $previewPath,
@@ -228,8 +230,56 @@ class MessagesController extends Controller
                 ]
             ];
         }
-
         return response()->json($data);
 
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function getImages($id){
+        $list = $this->messages->getImages($id);
+        $map = [];
+        if(count($list)){
+            $index = 0;
+            foreach($list as $k => $v){
+                if($v->id == $id){
+                    $index = $k;
+                }
+                $map['index'] = $index;
+                $map['values'][] = $v->path;
+            }
+        }
+        return $map;
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function images(){
+        $id = Input::get('id')?intval(Input::get('id')):0;
+        $list = $this->messages->getImages($id);
+        $map = [];
+        if($pages = count($list)){
+            $index = 0;
+            foreach($list as $k => $v){
+                if($v->id == $id){
+                    $index = $k;
+                }
+                $map['index'] = $index;
+                $map['values'][] = $v->path;
+            }
+            $map['pages'] = $pages;
+            $data = [
+                'status' => true,
+                'info' => $map
+            ];
+        }else{
+            $data = [
+                'status' => false
+            ];
+        }
+        return response()->json($data);
     }
 }

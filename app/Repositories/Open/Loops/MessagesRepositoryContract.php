@@ -57,4 +57,19 @@ interface MessagesRepositoryContract
      * @return mixed
      */
     public function getUsers($users_id);
+
+    /**
+     * @param $messages_id
+     * @return mixed
+     */
+    public function getImages($messages_id);
+
+    /**
+     * @param $messages_id
+     * @param $uid
+     * @param $pictures_id
+     * @return mixed
+     */
+    public function getPicturesFollowsCount($messages_id,$uid,$pictures_id);
+
 }

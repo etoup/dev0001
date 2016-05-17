@@ -10,5 +10,6 @@ Route::group(['namespace' => 'Loops'], function() {
     Route::post('messages/photo', 'MessagesController@photo')->name('open.messages.photo');
     Route::post('messages/goods', 'MessagesController@goods')->name('open.messages.goods');
     Route::post('messages/get-messages', 'MessagesController@getMessages')->name('open.messages.get-messages');
-
+    Route::get('messages/images/{id}', 'MessagesController@getImages')->name('open.messages.images');
+    Route::post('messages/images', 'MessagesController@images')->name('open.messages.images');
 });
