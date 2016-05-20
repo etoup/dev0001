@@ -8,7 +8,7 @@
     <div class="form-group">
         {!! Form::label('types', '类型') !!}
         <div class="radio">
-            @foreach (config('loop.loops_authorith_types') as $k => $v)
+            @foreach (config('loop.loops_authority_types') as $k => $v)
                 <label style="margin-right: 15px">
                     <input type="radio" name="types" value="{!! $k !!}">
                     {!! $v !!}

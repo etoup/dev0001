@@ -32,7 +32,6 @@ class LoopsDiariesTableSeeder extends Seeder
             [
                 'users_id'     => 1,
                 'loops_id'     => 1,
-                'loops_messages_id'     => 1,
                 'title' => '日记1',
                 'created_at'   => Carbon::now(),
                 'updated_at'   => Carbon::now(),
@@ -40,7 +39,6 @@ class LoopsDiariesTableSeeder extends Seeder
             [
                 'users_id'     => 1,
                 'loops_id'     => 1,
-                'loops_messages_id'     => 2,
                 'title' => '日记2',
                 'created_at'   => Carbon::now(),
                 'updated_at'   => Carbon::now(),

@@ -21,11 +21,26 @@ interface MessagesRepositoryContract
 
     /**
      * @param $loops_id
+     * @param $uid
      * @param $page
      * @param int $take
      * @return mixed
      */
-    public function getMessages($loops_id,$page,$take = 0);
+    public function getMessages($loops_id,$uid,$page,$take = 0);
+
+    /**
+     * @param $uid
+     * @param $page
+     * @param int $take
+     * @return mixed
+     */
+    public function getDiaries($uid,$page,$take = 0);
+
+    /**
+     * @param $uid
+     * @return mixed
+     */
+    public function getDiariesCount($uid);
 
     /**
      * @param $loops_id
@@ -65,11 +80,37 @@ interface MessagesRepositoryContract
     public function getImages($messages_id);
 
     /**
-     * @param $messages_id
+     * @param $pictures_id
+     * @return mixed
+     */
+    public function getPicturesFollowsCount($pictures_id);
+
+    /**
      * @param $uid
      * @param $pictures_id
      * @return mixed
      */
-    public function getPicturesFollowsCount($messages_id,$uid,$pictures_id);
+    public function picturesFollows($uid,$pictures_id);
+
+    /**
+     * @param $ids
+     * @return mixed
+     */
+    public function getGoods($ids);
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getGoodsById($id);
+
+    /**
+     * @param $uid
+     * @param $loops_id
+     * @param $title
+     * @param $loops_messages_ids
+     * @return mixed
+     */
+    public function createDiary($uid,$loops_id,$title,$loops_messages_ids);
 
 }

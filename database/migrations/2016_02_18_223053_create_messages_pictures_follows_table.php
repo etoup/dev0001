@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateMessagesPicturesFollowsTable extends Migration
 {
-    const TBL_NAME = 'messages_pictures_follows';//消息图片关注表
+    const TBL_NAME = 'pictures_follows';//图片关注表 old = messages_pictures_follows
     /**
      * Run the migrations.
      *
@@ -15,7 +15,6 @@ class CreateMessagesPicturesFollowsTable extends Migration
     {
         Schema::create(self::TBL_NAME,function(Blueprint $table){
             $table->increments('id');
-            $table->integer('messages_id')->unsigned();//消息ID
             $table->integer('users_id')->unsigned();//用户ID
             $table->integer('pictures_id')->unsigned();//图片ID
             $table->tinyInteger('status')->default(1);//状态 －1=回收；1=正常

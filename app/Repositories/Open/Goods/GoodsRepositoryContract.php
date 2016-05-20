@@ -71,4 +71,10 @@ interface GoodsRepositoryContract
      * @return mixed
      */
     public function collectionLoops($goods_id);
+
+    /**
+     * @param $goods_id
+     * @return mixed
+     */
+    public function getImages($goods_id);
 }

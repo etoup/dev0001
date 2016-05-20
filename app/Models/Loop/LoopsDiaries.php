@@ -2,10 +2,12 @@
 
 namespace App\Models\Loop;
 
+use App\Models\Loop\Traits\Relationship\LoopsDiariesRelationship;
 use Illuminate\Database\Eloquent\Model;
 
 class LoopsDiaries extends Model
 {
+    use LoopsDiariesRelationship;
     /**
      * The database table used by the model.
      *

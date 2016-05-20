@@ -59,7 +59,7 @@
                                 {{--<td><i class="fa {{ $auth->icon }}"></i></td>--}}
                                 <td><i class="icon iconfont">&#{{ $auth->icon }};</i></td>
                                 <td>{{ $auth->path }}</td>
-                                <td>{{ config('loop.loops_authorith_types')[$auth->types] }}</td>
+                                <td>{{ config('loop.loops_authority_types')[$auth->types] }}</td>
                                 <td>{{ $auth->created_at }}</td>
                                 <td>{{ $auth->sort }}</td>
                                 <td>{!! $auth->action_buttons !!}</td>

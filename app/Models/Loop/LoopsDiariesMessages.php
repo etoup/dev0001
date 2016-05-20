@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Models\Pictures;
+namespace App\Models\Loop;
 
 use Illuminate\Database\Eloquent\Model;
 
-
-class Pictures extends Model
+class LoopsDiariesMessages extends Model
 {
 
     /**
@@ -13,7 +12,7 @@ class Pictures extends Model
      *
      * @var string
      */
-    protected $table = 'pictures';
+    protected $table = 'loops_diaries_messages';
 
     /**
      * The attributes that are not mass assignable.

@@ -103,7 +103,7 @@
                             <tr>
                                 <td>{{ $g->id }}</td>
                                 <td>{{ $g->title }}</td>
-                                <td>{{ $g->profiles }}</td>
+                                <td>{!! $g->profiles !!}</td>
                                 <td>{{ $g->price }}</td>
                                 <td>{{ $g->numbers }}</td>
                                 <td>{{ $g->stocks }}</td>
@@ -159,6 +159,7 @@
             $("a[name='look-ok']").click(function(e) {
                 e.preventDefault();
 
+                var dom = $(this);
                 swal({
                     title: "提示",
                     text: "您确定该商品可以通过审核？",
@@ -170,7 +171,7 @@
                     closeOnConfirm: false
                 }, function(isConfirmed){
                     if (isConfirmed){
-                        window.location = $("a[name='look-ok']").attr('href');
+                        window.location = dom.attr('href');
                     }
                 });
             });

@@ -39,19 +39,24 @@ class MessagesController extends Controller
         $id = $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),Input::get('contents'),4);
         $users = $this->messages->getUsers(Input::get('uid'));
         if($id){
+            $info = [
+                'tags' => 'my-text',
+                'time' => Carbon::now()->toTimeString(),
+                'contents' => Input::get('contents'),
+                'headimgurl' => $users->headimgurl,
+                'nickname' => $users->nickname
+            ];
             //加入群组
             RongCloud::groupJoin(Input::get('uid'),Input::get('loops_id'),Input::get('title'));
             //发送消息
-            RongCloud::messageGroupPublish(Input::get('uid'),[Input::get('loops_id')],'RC:TxtMsg',Input::get('contents'));
+            $content = json_encode([
+                'content'=>'my-text',
+                'extra'=>$info
+            ]);
+            RongCloud::messageGroupPublish(Input::get('uid'),[Input::get('loops_id')],'RC:TxtMsg',$content);
             $data = [
                 'status' => true,
-                'info' => [
-                    'tags' => 'my-text',
-                    'time' => Carbon::now()->toTimeString(),
-                    'contents' => Input::get('contents'),
-                    'headimgurl' => $users->headimgurl,
-                    'nickname' => $users->nickname
-                ]
+                'info' => $info
             ];
         }else{
             $data = [
@@ -74,7 +79,6 @@ class MessagesController extends Controller
         $back = $disk->put($name,file_get_contents($file->getRealPath()));
         if($back){
             $users = $this->messages->getUsers(Input::get('uid'));
-
             //保存图片信息
             $id = Pictures::insertGetId([
                 'path' => config('pictures.qiniu_host').'/'.$name,
@@ -84,16 +88,26 @@ class MessagesController extends Controller
             //保存图片消息信息
             $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/500/h/500');
             $messages_id = $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,5,$id);
+
+            $info = [
+                'id' => $messages_id,
+                'tags' => 'my-img',
+                'time' => Carbon::now()->toTimeString(),
+                'contents' => $previewPath,
+                'headimgurl' => $users->headimgurl,
+                'nickname' => $users->nickname
+            ];
+            //加入群组
+            RongCloud::groupJoin(Input::get('uid'),Input::get('loops_id'),Input::get('title'));
+            //发送消息
+            $content = json_encode([
+                'content'=>'my-text',
+                'extra'=>$info
+            ]);
+            RongCloud::messageGroupPublish(Input::get('uid'),[Input::get('loops_id')],'RC:TxtMsg',$content);
             $data = [
                 'status' => true,
-                'info' => [
-                    'id' => $messages_id,
-                    'tags' => 'my-img',
-                    'time' => Carbon::now()->toTimeString(),
-                    'contents' => $previewPath,
-                    'headimgurl' => $users->headimgurl,
-                    'nickname' => $users->nickname
-                ]
+                'info' => $info
             ];
         }else{
             $data = [
@@ -127,16 +141,25 @@ class MessagesController extends Controller
             //保存图片消息信息
             $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/500/h/500');
             $messages_id = $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,6,$id);
+            $info = [
+                'id' => $messages_id,
+                'tags' => 'my-photo',
+                'time' => Carbon::now()->toTimeString(),
+                'contents' => $previewPath,
+                'headimgurl' => $users->headimgurl,
+                'nickname' => $users->nickname
+            ];
+            //加入群组
+            RongCloud::groupJoin(Input::get('uid'),Input::get('loops_id'),Input::get('title'));
+            //发送消息
+            $content = json_encode([
+                'content'=>'my-text',
+                'extra'=>$info
+            ]);
+            RongCloud::messageGroupPublish(Input::get('uid'),[Input::get('loops_id')],'RC:TxtMsg',$content);
             $data = [
                 'status' => true,
-                'info' => [
-                    'id' => $messages_id,
-                    'tags' => 'my-photo',
-                    'time' => Carbon::now()->toTimeString(),
-                    'contents' => $previewPath,
-                    'headimgurl' => $users->headimgurl,
-                    'nickname' => $users->nickname
-                ]
+                'info' => $info
             ];
         }else{
             $data = [
@@ -156,7 +179,7 @@ class MessagesController extends Controller
     public function goods(){
         //保存商品信息
         $uid = Input::get('uid');
-        $goods_id = $this->messages->saveGoods($uid,Input::get('loops_id'),0,Input::get('title'),Input::get('profiles'),Input::get('price'),Input::get('numbers'));
+        $goods_id = $this->messages->saveGoods($uid,Input::get('loops_id'),0,Input::get('title'),nl2br(Input::get('profiles')),Input::get('price'),Input::get('numbers'));
         $disk = QiniuStorage::disk('qiniu');
         $files = Input::file('file');
         if(count($files)){
@@ -181,8 +204,8 @@ class MessagesController extends Controller
                     //保存商品封面信息
                     Goods::where('id',$goods_id)->update(['pictures_id'=>$pictures_id]);
                     //保存图片消息信息
-                    $previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/500/h/500');
-                    $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,7,$pictures_id,$goods_id);
+                    //$previewPath = $disk->imagePreviewUrl($name,'imageView2/0/w/500/h/500');
+                    //$this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,7,$pictures_id,$goods_id);
                 }
             }
             //保存商品收藏信息
@@ -193,8 +216,7 @@ class MessagesController extends Controller
                 'created_at' => Carbon::now()->toDateTimeString()
             ]);
             $data = [
-                'status' => true,
-                'info' => $previewPath
+                'status' => true
             ];
         }else{
             $data = [
@@ -210,8 +232,51 @@ class MessagesController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse
      */
+    public function share(){
+        $ids = explode('-',Input::get('ids'));
+        $goods = $this->messages->getGoods($ids);
+        if(count($goods)){
+            $users = $this->messages->getUsers(Input::get('uid'));
+            //加入群组
+            RongCloud::groupJoin(Input::get('uid'),Input::get('loops_id'),Input::get('title'));
+            foreach($goods as $k => $good){
+                $previewPath = $good['path'].'?'.'imageView2/0/w/500/h/500';
+                $this->messages->saveMessages(Input::get('uid'),Input::get('loops_id'),$previewPath,8,$good['pictures_id'],$good['id']);
+                $goods_info = $this->messages->getGoodsById($good['id']);
+                $info = [
+                    'goods_id' => $good['id'],
+                    'tags' => 'my-share',
+                    'time' => Carbon::now()->toTimeString(),
+                    'contents' => $previewPath,
+                    'price' => $goods_info['price'],
+                    'headimgurl' => $users->headimgurl,
+                    'nickname' => $users->nickname
+                ];
+
+                //发送消息
+                $content = json_encode([
+                    'content'=>'my-text',
+                    'extra'=>$info
+                ]);
+                RongCloud::messageGroupPublish(Input::get('uid'),[Input::get('loops_id')],'RC:TxtMsg',$content);
+            }
+            $data = [
+                'status' => true
+            ];
+        }else{
+            $data = [
+                'status' => false
+            ];
+        }
+
+        return response()->json($data);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getMessages(){
-        $messages = $this->messages->getMessages(Input::get('loops_id'),Input::get('page'));
+        $messages = $this->messages->getMessages(Input::get('loops_id'),Input::get('uid'),Input::get('page'));
         if(count($messages)){
             $data = [
                 'status' => true,
@@ -232,6 +297,32 @@ class MessagesController extends Controller
         }
         return response()->json($data);
 
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDiaries(){
+        $list = $this->messages->getDiaries(Input::get('uid'),Input::get('page'));
+        if(count($list)){
+            $data = [
+                'status' => true,
+                'info' => [
+                    'uid' => Input::get('uid'),
+                    'list' => $list
+                ]
+            ];
+        }else{
+            $count = $this->messages->getDiariesCount(Input::get('uid'));
+            $data = [
+                'status' => false,
+                'count' => intval($count),
+                'info' => [
+                    'msg' => '全部加载完毕'
+                ]
+            ];
+        }
+        return response()->json($data);
     }
 
     /**
@@ -282,4 +373,33 @@ class MessagesController extends Controller
         }
         return response()->json($data);
     }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function picturesFollows(){
+        $info = $this->messages->picturesFollows(Input::get('uid'),Input::get('pictures_id'));
+        return response()->json($info);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function createDiary(){
+        $ids = explode('-',Input::get('ids'));
+        $back = $this->messages->createDiary(Input::get('uid'),Input::get('loops_id'),Input::get('title'),$ids);
+        if($back){
+            $data = [
+                'status' => true
+            ];
+        }else{
+            $data = [
+                'status' => false
+            ];
+        }
+
+        return response()->json($data);
+    }
+
+
 }

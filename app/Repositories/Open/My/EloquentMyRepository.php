@@ -222,7 +222,7 @@ class EloquentMyRepository implements MyRepositoryContract
      */
     public function followsGoodsAll($uid,$page,$take = 10){
         $skip = $page * $take;
-        $followsGoods = GoodsFollows::where(['goods_follows.users_id'=>$uid])
+        $followsGoods = GoodsFollows::where(['goods_follows.users_id'=>$uid,'goods.status'=>10])
             ->leftJoin('goods', 'goods_follows.goods_id', '=', 'goods.id')
             ->leftJoin('pictures', 'goods.pictures_id', '=', 'pictures.id')
             ->orderBy('goods_follows.types','desc')

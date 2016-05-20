@@ -155,4 +155,30 @@ class GoodsController extends Controller
 
         return response()->json($data);
     }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function images(){
+        $id = Input::get('id')?intval(Input::get('id')):0;
+        $list = $this->goods->getImages($id);
+        $map = [];
+        if($pages = count($list)){
+            $index = 0;
+            foreach($list as $k => $v){
+                $map['index'] = $index;
+                $map['values'][] = $v->path;
+            }
+            $map['pages'] = $pages;
+            $data = [
+                'status' => true,
+                'info' => $map
+            ];
+        }else{
+            $data = [
+                'status' => false
+            ];
+        }
+        return response()->json($data);
+    }
 }

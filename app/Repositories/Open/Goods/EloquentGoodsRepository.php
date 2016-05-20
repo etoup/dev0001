@@ -5,6 +5,7 @@ namespace App\Repositories\Open\Goods;
 use App\Models\Goods\Goods;
 use App\Models\Goods\GoodsFollows;
 use App\Models\Goods\GoodsLoops;
+use App\Models\Goods\GoodsPictures;
 use App\Models\Pictures\Pictures;
 
 /**
@@ -118,7 +119,7 @@ class EloquentGoodsRepository implements GoodsRepositoryContract
      * @return array
      */
     public function recommendGoods($goods_id){
-        $list = Goods::select('goods.id','pictures.path')
+        $list = Goods::select('goods.id','goods.title','pictures.path')
             ->where('goods.id','!=',$goods_id)
             ->where(function($query){
                 $query->where('goods.status',10);
@@ -152,5 +153,18 @@ class EloquentGoodsRepository implements GoodsRepositoryContract
             ->leftJoin('pictures','loops.pictures_id','=','pictures.id')
             ->leftJoin('users','loops.users_id','=','users.id')
             ->get();
+    }
+
+    /**
+     * @param $goods_id
+     * @return mixed
+     */
+    public function getImages($goods_id){
+        $list = GoodsPictures::where('goods_id',$goods_id)
+            ->select('goods_pictures.id','pictures.path')
+            ->leftJoin('pictures','goods_pictures.pictures_id','=','pictures.id')
+            ->orderBy('goods_pictures.id')
+            ->get();
+        return $list;
     }
 }
