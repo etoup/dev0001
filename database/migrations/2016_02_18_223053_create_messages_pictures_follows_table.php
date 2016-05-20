@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateMessagesPicturesFollowsTable extends Migration
 {
-    const TBL_NAME = 'messages_pictures_follows';//图片关注表 old = messages_pictures_follows
+    const TBL_NAME = 'pictures_follows';//图片关注表 old = messages_pictures_follows
     /**
      * Run the migrations.
      *
