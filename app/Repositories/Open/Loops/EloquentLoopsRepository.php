@@ -40,7 +40,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      * @param int $take
      * @return mixed
      */
-    public function getLoops($tags_id,$page,$take = 1){
+    public function getLoops($tags_id,$page,$take = 10){
         $skip = $page * $take;
         return Loops::with('pictures','users')->where('loops_tags_id',$tags_id)->orderBy('id')->skip($skip)->take($take)->get();
     }
@@ -139,7 +139,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      */
     public function getGoods($loops_id,$page,$take = 10){
         $skip = $page * $take;
-        return Goods::where(['loops_id'=>$loops_id])
+        return Goods::where(['loops_id'=>$loops_id,'status'=>10])
             ->select('goods.id','goods.title','pictures.path')
             ->leftJoin('pictures', 'goods.pictures_id', '=', 'pictures.id')
             ->orderBy('goods.id')
