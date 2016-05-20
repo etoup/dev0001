@@ -95,7 +95,27 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
         //创建群组
         RongCloud::groupCreate($usersinfo->id,$loop_id,$input['title']);
 
+        //保存关注
+        $this->saveLoopsFollows($usersinfo['id'],$loop_id);
+
         return $loop_id;
+    }
+
+    /**
+     * @param $users_id
+     * @param $loops_id
+     * @return bool
+     */
+    public function saveLoopsFollows($users_id,$loops_id){
+        LoopsFollows::insert([
+            'users_id' => $users_id,
+            'loops_id' => $loops_id,
+            'types' => 1,
+            'created_at' => Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon::now()->toDateTimeString()
+        ]);
+
+        return true;
     }
 
     /**
