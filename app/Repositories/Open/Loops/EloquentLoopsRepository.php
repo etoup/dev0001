@@ -139,7 +139,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      */
     public function getGoods($loops_id,$page,$take = 10){
         $skip = $page * $take;
-        return Goods::where(['loops_id'=>$loops_id,'status'=>10])
+        return Goods::where(['loops_id'=>$loops_id])
             ->select('goods.id','goods.title','pictures.path')
             ->leftJoin('pictures', 'goods.pictures_id', '=', 'pictures.id')
             ->orderBy('goods.id')
