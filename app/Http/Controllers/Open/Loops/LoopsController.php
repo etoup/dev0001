@@ -43,8 +43,6 @@ class LoopsController extends Controller
                 ]
             ];
         }
-
-        sleep(1);
         return response()->json($data);
     }
 
@@ -74,7 +72,6 @@ class LoopsController extends Controller
                 ]
             ];
         }
-        sleep(1);
 
         return response()->json($data);
     }
@@ -114,7 +111,6 @@ class LoopsController extends Controller
                 ];
             }
         }
-        sleep(1);
 
         return response()->json($data);
 
@@ -139,7 +135,6 @@ class LoopsController extends Controller
                 ]
             ];
         }
-        sleep(1);
         return response()->json($data);
     }
 

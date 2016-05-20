@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class LoopsFollowsMiddleware
+class LoopsMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,6 +15,7 @@ class LoopsFollowsMiddleware
      */
     public function handle($request, Closure $next)
     {
+        sleep(2);
         return $next($request);
     }
 }
