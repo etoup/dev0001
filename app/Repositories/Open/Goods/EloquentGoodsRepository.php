@@ -152,6 +152,7 @@ class EloquentGoodsRepository implements GoodsRepositoryContract
             ->leftJoin('loops','goods_loops.loops_id','=','loops.id')
             ->leftJoin('pictures','loops.pictures_id','=','pictures.id')
             ->leftJoin('users','loops.users_id','=','users.id')
+            ->groupBy('loops_id')
             ->get();
     }
 

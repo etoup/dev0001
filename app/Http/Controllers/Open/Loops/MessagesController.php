@@ -252,7 +252,8 @@ class MessagesController extends Controller
                     'headimgurl' => $users->headimgurl,
                     'nickname' => $users->nickname
                 ];
-
+                //圈子收藏商品
+                $this->messages->goodsLoops($good['id'],Input::get('loops_id'),Input::get('uid'));
                 //发送消息
                 $content = json_encode([
                     'content'=>'my-text',

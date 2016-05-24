@@ -113,4 +113,12 @@ interface MessagesRepositoryContract
      */
     public function createDiary($uid,$loops_id,$title,$loops_messages_ids);
 
+    /**
+     * @param $goods_id
+     * @param $loops_id
+     * @param $uid
+     * @return mixed
+     */
+    public function goodsLoops($goods_id,$loops_id,$uid);
+
 }

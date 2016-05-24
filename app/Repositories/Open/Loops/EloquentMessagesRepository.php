@@ -5,6 +5,7 @@ namespace App\Repositories\Open\Loops;
 
 use App\Models\Access\User\User;
 use App\Models\Goods\Goods;
+use App\Models\Goods\GoodsLoops;
 use App\Models\Loop\LoopsDiaries;
 use App\Models\Loop\LoopsDiariesMessages;
 use App\Models\Loop\LoopsFollows;
@@ -333,6 +334,22 @@ class EloquentMessagesRepository implements MessagesRepositoryContract
             }
         }
 
+        return false;
+    }
+
+    /**
+     * @param $goods_id
+     * @param $loops_id
+     * @param $uid
+     * @return bool
+     */
+    public function goodsLoops($goods_id,$loops_id,$uid){
+        $map = ['goods_id'=>$goods_id,'loops_id'=>$loops_id,'users_id'=>$uid];
+        $info = GoodsLoops::where($map)->first();
+        if(!$info){
+            GoodsLoops::insert($map);
+            return true;
+        }
         return false;
     }
 }
