@@ -304,7 +304,7 @@ class MessagesController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function getDiaries(){
-        $list = $this->messages->getDiaries(Input::get('uid'),Input::get('page'));
+        $list = $this->messages->getDiaries(Input::get('uid'),Input::get('loops_id'),Input::get('page'));
         if(count($list)){
             $data = [
                 'status' => true,
@@ -314,7 +314,7 @@ class MessagesController extends Controller
                 ]
             ];
         }else{
-            $count = $this->messages->getDiariesCount(Input::get('uid'));
+            $count = $this->messages->getDiariesCount(Input::get('uid'),Input::get('loops_id'));
             $data = [
                 'status' => false,
                 'count' => intval($count),

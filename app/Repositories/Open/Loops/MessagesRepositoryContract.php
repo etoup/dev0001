@@ -30,17 +30,19 @@ interface MessagesRepositoryContract
 
     /**
      * @param $uid
+     * @param $loops_id
      * @param $page
      * @param int $take
      * @return mixed
      */
-    public function getDiaries($uid,$page,$take = 0);
+    public function getDiaries($uid,$loops_id,$page,$take = 0);
 
     /**
      * @param $uid
+     * @param $loops_id
      * @return mixed
      */
-    public function getDiariesCount($uid);
+    public function getDiariesCount($uid,$loops_id);
 
     /**
      * @param $loops_id

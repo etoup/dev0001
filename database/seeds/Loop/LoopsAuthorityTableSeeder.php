@@ -102,7 +102,7 @@ class LoopsAuthorityTableSeeder extends Seeder
                 'updated_at'   => Carbon::now(),
             ],
             [
-                'title'        => '商品',
+                'title'        => '发布商品',
                 'icon'         => 'xeca0',
                 'normal_img'   => 'widget://image/function/ware.png',
                 'active_img'   => 'widget://image/function/ware.png',
@@ -116,8 +116,8 @@ class LoopsAuthorityTableSeeder extends Seeder
             [
                 'title'        => '分享商品',
                 'icon'         => 'xebe4',
-                'normal_img'   => 'widget://image/function/sale.png',
-                'active_img'   => 'widget://image/function/sale.png',
+                'normal_img'   => 'widget://image/function/share.png',
+                'active_img'   => 'widget://image/function/share.png',
                 'tags'         => 'my-share',
                 'path'         => 'admin/path',
                 'types'        => 1,
@@ -128,8 +128,8 @@ class LoopsAuthorityTableSeeder extends Seeder
             [
                 'title'        => '添加日记',
                 'icon'         => 'xeb28',
-                'normal_img'   => 'widget://image/function/ware.png',
-                'active_img'   => 'widget://image/function/ware.png',
+                'normal_img'   => 'widget://image/function/diary.png',
+                'active_img'   => 'widget://image/function/diary.png',
                 'tags'         => 'my-diary',
                 'path'         => 'admin/path',
                 'types'        => 1,

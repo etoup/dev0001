@@ -138,11 +138,12 @@ class EloquentMessagesRepository implements MessagesRepositoryContract
 
     /**
      * @param $uid
+     * @param $loops_id
      * @param $page
      * @param int $take
      * @return mixed
      */
-    public function getDiaries($uid,$page,$take = 10){
+    public function getDiaries($uid,$loops_id,$page,$take = 10){
         $skip = $page * $take;
         $diaries =LoopsDiaries::with(['loops_diaries_messages'=>function($query){
                 $query->select('loops_diaries_messages.loops_diaries_id','loops_messages.users_id','loops_messages.users_id','loops_messages.contents','loops_messages.created_at','loops_authority.tags','users.nickname','users.headimgurl')
@@ -150,7 +151,7 @@ class EloquentMessagesRepository implements MessagesRepositoryContract
                     ->leftJoin('loops_authority','loops_messages.loops_authority_id','=','loops_authority.id')
                     ->leftJoin('users','loops_messages.users_id','=','users.id')
                     ->orderBy('loops_messages_id','desc');
-            }])->where('users_id',$uid)
+            }])->where(['loops_diaries.users_id'=>$uid,'loops_diaries.loops_id'=>$loops_id])
             ->select('loops_diaries.id','loops_diaries.title','loops_diaries.created_at')
             ->skip($skip)
             ->take($take)
@@ -176,10 +177,11 @@ class EloquentMessagesRepository implements MessagesRepositoryContract
 
     /**
      * @param $uid
+     * @param $loops_id
      * @return mixed
      */
-    public function getDiariesCount($uid){
-        return LoopsDiaries::where('users_id',$uid)->count();
+    public function getDiariesCount($uid,$loops_id){
+        return LoopsDiaries::where(['users_id'=>$uid,'loops_id'=>$loops_id])->count();
     }
 
     /**
