@@ -153,6 +153,7 @@ class EloquentMessagesRepository implements MessagesRepositoryContract
                     ->orderBy('loops_messages_id','desc');
             }])->where(['loops_diaries.users_id'=>$uid,'loops_diaries.loops_id'=>$loops_id])
             ->select('loops_diaries.id','loops_diaries.title','loops_diaries.created_at')
+            ->orderBy('loops_diaries.id','desc')
             ->skip($skip)
             ->take($take)
             ->get();
