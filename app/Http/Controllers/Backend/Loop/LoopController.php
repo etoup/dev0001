@@ -123,7 +123,6 @@ class LoopController extends Controller
                 $authority[$val['id']] = $val['title'];
             }
         }
-
         return view('backend.loop.msg-list')
             ->withInfo($this->loop->getInfo($id))
             ->withMsgs($this->loop->getMsgsPaginated($id,20))

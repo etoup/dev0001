@@ -11,6 +11,7 @@
     {!! Html::style('/plugins/webuploader/css/webuploader.css') !!}
     {!! Html::style('/plugins/webuploader/examples/image-upload/style.css') !!}
     {!! Html::style('/plugins/iCheck/square/blue.css') !!}
+    {!! Html::style('/icons/iconfont.css') !!}
 @endsection
 
 @section('page-header')
@@ -171,7 +172,7 @@
                                     @foreach($val->li as $v)
                                     <!-- timeline item -->
                                     <li>
-                                        <i class="fa {{ $v->loops_authority->icon }} bg-blue" data-toggle="tooltip" title="" data-original-title="{{ $v->loops_authority->title }}"></i>
+                                        <i class="fa iconfont bg-blue" data-toggle="tooltip" title="" data-original-title="{{ $v->loops_authority->title }}">&#{{ $v->loops_authority->icon }};</i>
 
                                         <div class="timeline-item" style="background: #f0f0f0;">
                                             <span class="time"><i class="fa fa-clock-o"></i> {{ $v->created_at->diffForHumans() }}</span>
@@ -179,7 +180,12 @@
                                             <h3 class="timeline-header" style="border-bottom-color:#dddddd;"><i class="fa fa-user"></i> <a href="#">{{ $v->users->name }}</a> {{ $v->created_at }}发布</h3>
 
                                             <div class="timeline-body">
-                                                {{ $v->contents }}
+                                                @if($v->loops_authority->tags == 'my-img' || $v->loops_authority->tags == 'my-photo')
+                                                    <img src="{{ $v->contents }}" alt="{{ $v->loops_authority->title }}" />
+                                                    @else
+                                                   {{ $v->contents }}
+                                                @endif
+
                                             </div>
                                             <div class="timeline-footer">
                                                 <a href="{{ route('admin.loop.msg-destroy', $v->id) }}" class="btn btn-danger btn-xs" data-method="delete">删除</a>
