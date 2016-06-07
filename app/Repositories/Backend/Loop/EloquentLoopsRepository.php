@@ -556,6 +556,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
     {
         $loop = $this->find($id);
         if ($loop->delete()) {
+            LoopsFollows::where('loops_id',$id)->delete();
             return true;
         }
 

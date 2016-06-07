@@ -22,6 +22,14 @@ class CreateLoopsFollowsTable extends Migration
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));//创建时间
             $table->timestamp('updated_at')->default('0000-00-00 00:00');//更新时间
             $table->softDeletes();
+
+            /**
+             * Add Foreign/Unique/Index
+             */
+//            $table->foreign('loops_id')
+//                ->references('id')
+//                ->on(config('loop.loops_table'))
+//                ->onDelete('cascade');
         });
     }
 
@@ -32,6 +40,13 @@ class CreateLoopsFollowsTable extends Migration
      */
     public function down()
     {
+        /**
+         * Remove Foreign/Unique/Index
+         */
+//        Schema::table(self::TBL_NAME, function (Blueprint $table) {
+//            $table->dropForeign(self::TBL_NAME . '_loops_id_foreign');
+//        });
+
         Schema::drop(self::TBL_NAME);
     }
 }

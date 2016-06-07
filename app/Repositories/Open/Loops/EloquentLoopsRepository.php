@@ -7,6 +7,8 @@ use App\Models\Loop\Loops;
 use App\Models\Loop\LoopsSets;
 use App\Models\Loop\LoopsTags;
 use App\Models\Loop\LoopsFollows;
+use Carbon\Carbon;
+
 
 /**
  * Class EloquentLoopTagsRepository
@@ -31,7 +33,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      * @return \Illuminate\Database\Eloquent\Model|null|static
      */
     public function getLoopById($id){
-        return Loops::with('pictures','users')->where(['id'=>$id,'types'=>0])->first();
+        return Loops::with('pictures','users')->where(['id'=>$id])->first();
     }
 
     /**
@@ -88,10 +90,8 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      */
     public function getFollowsLoops($uid,$page,$take = 10){
         $skip = $page * $take;
-        return LoopsFollows::where(['loops_follows.users_id'=>$uid])
-            ->select('loops_follows.id','loops_follows.loops_id','loops_follows.users_id','loops.deleted_at')
-            ->leftJoin('loops', 'loops_follows.loops_id', '=', 'loops.id')
-            ->orderBy('loops_follows.id')
+        return LoopsFollows::where(['users_id'=>$uid])
+            ->orderBy('id')
             ->skip($skip)
             ->take($take)
             ->get();
@@ -113,7 +113,12 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      * @return mixed
      */
     public function join($uid,$loops_id){
-        return LoopsFollows::insertGetId(['users_id'=>$uid,'loops_id'=>$loops_id]);
+        return LoopsFollows::insertGetId([
+            'users_id'=>$uid,
+            'loops_id'=>$loops_id,
+            'created_at' => Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon::now()->toDateTimeString()
+        ]);
     }
 
     /**

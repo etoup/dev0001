@@ -93,8 +93,7 @@ class LoopsController extends Controller
             if(count($list)){
                 $map = [];
                 foreach($list as $k => $v){
-                    if($v->deleted_at == 'NULL')
-                        $map[$k] = $this->loops->getLoopById($v->loops_id);
+                    $map[$k] = $this->loops->getLoopById($v->loops_id);
                 }
                 $data = [
                     'status' => true,
