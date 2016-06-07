@@ -121,7 +121,7 @@
                             <div class="product-info">
                                 <a href="#" class="product-title">{{ $g->title }} <span class="label label-warning pull-right">{{ $g->price }}</span></a>
                         <span class="product-description">
-                          {{ $g->profiles }}
+                          {!! $g->profiles !!}
                         </span>
                             </div>
                         </li><!-- /.item -->
