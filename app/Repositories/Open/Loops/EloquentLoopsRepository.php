@@ -89,6 +89,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
     public function getFollowsLoops($uid,$page,$take = 10){
         $skip = $page * $take;
         return LoopsFollows::where(['loops_follows.users_id'=>$uid])
+            ->whereNull('loops.updated_at')
             ->leftJoin('loops', 'loops_follows.loops_id', '=', 'loops.id')
             ->orderBy('loops_follows.id')
             ->skip($skip)
