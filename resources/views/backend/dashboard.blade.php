@@ -291,7 +291,7 @@
                             <tbody>
                             @foreach($new_orders as $o)
                             <tr>
-                                <td><a href="＃">{{ $o->orders_numbers }}</a></td>
+                                <td><a href="{{ route('admin.orders.see',$o->id) }}">{{ $o->orders_numbers }}</a></td>
                                 <td>{{ $o->goods->title }}</td>
                                 @if(isset($o->users->name))
                                     <td>{{ $o->users->name }}</td>
