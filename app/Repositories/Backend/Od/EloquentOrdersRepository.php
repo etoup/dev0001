@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Backend\Od;
 
+use App\Models\Goods\GoodsPictures;
 use Carbon\Carbon;
 use App\Models\Access\User\UsersAddress;
 use App\Exceptions\GeneralException;
@@ -44,9 +45,17 @@ class EloquentOrdersRepository implements OrdersRepositoryContract
         return Orders::find($id);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null
+     */
     public function getInfo($id){
         $info = Orders::with('users','goods','business','users_address')->find($id);
-//        dd($info);
+        if($info){
+            $info['pictures'] = GoodsPictures::where('goods_id',$info->goods_id)
+                ->leftJoin('pictures','goods_pictures.pictures_id','=','pictures.id')
+                ->get();
+        }
         return $info;
     }
 
