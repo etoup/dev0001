@@ -180,7 +180,7 @@
                                             <h3 class="timeline-header" style="border-bottom-color:#dddddd;"><i class="fa fa-user"></i> <a href="#">{{ $v->users->name }}</a> {{ $v->created_at }}发布</h3>
 
                                             <div class="timeline-body">
-                                                @if($v->loops_authority->tags == 'my-img' || $v->loops_authority->tags == 'my-photo')
+                                                @if($v->loops_authority->tags == 'my-img' || $v->loops_authority->tags == 'my-photo' || $v->loops_authority->tags == 'my-share')
                                                     <img src="{{ $v->contents }}" alt="{{ $v->loops_authority->title }}" />
                                                     @else
                                                    {{ $v->contents }}
