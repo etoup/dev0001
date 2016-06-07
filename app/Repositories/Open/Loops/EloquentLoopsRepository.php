@@ -46,11 +46,12 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
     }
 
     /**
+     * @param $id
      * @param $uid
      * @return mixed
      */
-    public function getLoopsOwn($uid){
-        return Loops::where('users_id',$uid)->first();
+    public function getLoopsOwn($id,$uid){
+        return Loops::where(['id'=>$id,'users_id'=>$uid])->first();
     }
 
     /**

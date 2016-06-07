@@ -267,7 +267,7 @@ class LoopsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function hasFollows(){
-        $own = $this->loops->getLoopsOwn(Input::get('uid'));
+        $own = $this->loops->getLoopsOwn(Input::get('loops_id'),Input::get('uid'));
         if($own){
             $data = [
                 'status' => false
@@ -292,7 +292,7 @@ class LoopsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function join(){
-        $own = $this->loops->getLoopsOwn(Input::get('uid'));
+        $own = $this->loops->getLoopsOwn(Input::get('loops_id'),Input::get('uid'));
         if($own){
             $data = [
                 'status' => false,

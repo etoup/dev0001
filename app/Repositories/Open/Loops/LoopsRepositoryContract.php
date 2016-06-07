@@ -30,10 +30,11 @@ interface LoopsRepositoryContract
     public function getLoops($tags_id,$page,$take = 0);
 
     /**
+     * @param $id
      * @param $uid
      * @return mixed
      */
-    public function getLoopsOwn($uid);
+    public function getLoopsOwn($id,$uid);
 
     /**
      * @param $tags_id
