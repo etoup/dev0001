@@ -31,7 +31,7 @@ class EloquentLoopsRepository implements LoopsRepositoryContract
      * @return \Illuminate\Database\Eloquent\Model|null|static
      */
     public function getLoopById($id){
-        return Loops::with('pictures','users')->where('id',$id)->first();
+        return Loops::with('pictures','users')->where(['id'=>$id,'types'=>0])->first();
     }
 
     /**
