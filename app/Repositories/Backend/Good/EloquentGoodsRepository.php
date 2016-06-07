@@ -47,7 +47,7 @@ class EloquentGoodsRepository implements GoodsRepositoryContract
      */
     public function getGoodsPaginated($per_page, $order_by = 'id', $sort = 'desc')
     {
-        $list = Goods::with('users')
+        $list = Goods::with('users','pictures')
             ->orderBy($order_by, $sort)
             ->paginate($per_page);
 //        dd($list);

@@ -86,8 +86,8 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>图片</th>
                             <th>商品名称</th>
-                            <th>商品描述</th>
                             <th>价格</th>
                             <th>数量</th>
                             <th>库存</th>
@@ -102,8 +102,10 @@
                         @foreach($goods as $g)
                             <tr>
                                 <td>{{ $g->id }}</td>
+                                <td>
+                                    <img src="{{ $g->pictures->path }}" alt="{{ $g->title }}" height="80" />
+                                </td>
                                 <td>{{ $g->title }}</td>
-                                <td>{!! $g->profiles !!}</td>
                                 <td>{{ $g->price }}</td>
                                 <td>{{ $g->numbers }}</td>
                                 <td>{{ $g->stocks }}</td>
