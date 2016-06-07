@@ -21,7 +21,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-//        dd(app_path().'/../vendor/qiniu/php-sdk/autoload.php');
+//        dd($this->dashboard->getNewGoods());
         return view('backend.dashboard')
             ->withCounts($this->dashboard->getCountList())
             ->withNewGoods($this->dashboard->getNewGoods())

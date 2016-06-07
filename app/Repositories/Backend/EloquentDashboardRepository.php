@@ -41,7 +41,10 @@ class EloquentDashboardRepository implements DashboardRepositoryContract
      * @return mixed
      */
     public function getNewGoods(){
-        $map = Goods::take(8)->orderBy('id','desc')->get();
+        $map = Goods::take(8)
+            ->leftJoin('pictures','goods.pictures_id','=','pictures.id')
+            ->orderBy('goods.id','desc')
+            ->get();
         return $map;
     }
 

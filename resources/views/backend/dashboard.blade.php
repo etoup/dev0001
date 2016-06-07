@@ -116,7 +116,7 @@
                         @foreach($new_goods as $g)
                         <li class="item">
                             <div class="product-img">
-                                <img src="/img/default-50x50.gif" alt="Product Image">
+                                <img src="{{$g->path}}" alt="Product Image">
                             </div>
                             <div class="product-info">
                                 <a href="#" class="product-title">{{ $g->title }} <span class="label label-warning pull-right">{{ $g->price }}</span></a>
