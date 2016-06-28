@@ -22,7 +22,7 @@
             <section class="content-header">
                 <h1>
                     手机版
-                    <small>v1.0.1</small>
+                    <small>v1.0.0</small>
                 </h1>
             </section>
 
