@@ -15,7 +15,6 @@ class LoopsMiddleware
      */
     public function handle($request, Closure $next)
     {
-        sleep(2);
         return $next($request);
     }
 }
