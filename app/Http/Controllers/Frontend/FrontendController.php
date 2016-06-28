@@ -19,4 +19,8 @@ class FrontendController extends Controller
         return view('frontend.index');
     }
 
+    public function app(){
+        return view('frontend.app');
+    }
+
 }
